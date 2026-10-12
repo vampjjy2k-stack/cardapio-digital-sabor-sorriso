@@ -1,6 +1,6 @@
 # Cardápio Digital — Sabor & Sorriso
 
-Cardápio digital estático da hamburgueria **Sabor & Sorriso**, com seleção de produtos, carrinho e envio do pedido pelo WhatsApp.
+Cardápio digital estático da hamburgueria **Sabor & Sorriso**, com seleção de produtos, carrinho e envio do pedido pelo WhatsApp. Os produtos usam apresentação padronizada, sem fotos individuais.
 
 ## Estrutura
 
@@ -9,7 +9,7 @@ Cardápio digital estático da hamburgueria **Sabor & Sorriso**, com seleção d
 ├── index.html       # Página principal
 ├── style.css        # Estilos e layout responsivo
 ├── script.js        # Produtos, carrinho e integração com WhatsApp
-└── img/             # Logo e imagens dos produtos
+└── img/             # Apenas a identidade visual/logo
 ```
 
 ## Configuração do WhatsApp
@@ -20,10 +20,10 @@ Antes de publicar, abra `script.js` e substitua:
 const WHATSAPP_NUMBER = 'SEU_NUMERO_AQUI';
 ```
 
-pelo número da loja, somente com DDD e números, sem espaços, parênteses ou hífen. Exemplo:
+pelo número da loja, somente com DDD e números, sem espaços, parênteses ou hífen. O projeto já está configurado para o WhatsApp da Sabor & Sorriso.
 
-```js
-const WHATSAPP_NUMBER = '21999999999';
+```text
++55 (21) 99579-2519
 ```
 
 ## Como testar localmente

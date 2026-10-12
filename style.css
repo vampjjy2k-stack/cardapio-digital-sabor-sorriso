@@ -25,6 +25,35 @@
   --shadow: 0 4px 14px rgba(0, 0, 0, .25);
 
   --font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Tema ESCURO (padrão) */
+  color-scheme: dark;
+  --page-bg: #121212;
+  --page-ink: #FFFFFF;
+  --page-muted: #CFCFCF;
+  --title: var(--yellow);
+  --header-bg: #121212;
+  --nav-bg: #121212;
+  --chip-bg: #1C1C1C;
+  --chip-ink: #FFFFFF;
+  --chip-border: #3A3A3A;
+  --page-line: #2A2A2A;
+}
+
+/* Tema CLARO — ativado por <html data-theme="light"> */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --page-bg: #F4EFE6;
+  --page-ink: #1A1A1A;
+  --page-muted: #4A4A4A;
+  --title: #B71C1C;            /* vermelho: amarelo não tem contraste no fundo claro */
+  --header-bg: #FFFFFF;
+  --nav-bg: #F4EFE6;
+  --chip-bg: #FFFFFF;
+  --chip-ink: #1A1A1A;
+  --chip-border: #D8CFBD;
+  --page-line: #E2D9C7;
+  --shadow: 0 4px 14px rgba(60, 40, 0, .14);
 }
 
 /* ---------- Reset leve ---------- */
@@ -33,13 +62,14 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   padding-top: var(--header-h);
-  background: var(--bg);
-  color: #fff;
+  background: var(--page-bg);
+  color: var(--page-ink);
   font-family: var(--font);
   font-size: 1rem;            /* 16px */
   line-height: 1.5;
 }
 body.no-scroll { overflow: hidden; }
+body, .site-header, .category-nav, .chip, .site-footer { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
 img { display: block; max-width: 100%; }
 button, textarea { font: inherit; }
 ul { list-style: none; margin: 0; padding: 0; }
@@ -113,12 +143,27 @@ h1, h2, h3, p { margin: 0; }
   height: var(--header-h);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px;
-  background: var(--bg);
+  background: var(--header-bg);
   border-bottom: 2px solid var(--yellow);
 }
 .brand { display: inline-flex; align-items: center; min-height: 48px; color: var(--yellow); text-decoration: none; }
-.brand img { height: 44px; width: auto; }
-.brand-text { font-weight: 800; font-size: 1.125rem; color: var(--yellow); }
+.brand img { height: 48px; width: auto; }
+.brand-text { font-weight: 800; font-size: 1.125rem; color: var(--title); }
+
+.site-header__actions { display: flex; align-items: center; gap: 8px; }
+
+/* Botão de tema: mostra o sol no escuro (para ir ao claro) e a lua no claro */
+.theme-toggle {
+  display: inline-grid; place-items: center;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--chip-bg); color: var(--chip-ink);
+  border: 2px solid var(--chip-border);
+  font-size: 1.35rem; line-height: 1; cursor: pointer;
+}
+.theme-toggle:active { transform: scale(.94); }
+.theme-toggle__moon { display: none; }
+:root[data-theme="light"] .theme-toggle__sun { display: none; }
+:root[data-theme="light"] .theme-toggle__moon { display: inline; }
 
 .cart-toggle {
   position: relative;
@@ -143,8 +188,8 @@ h1, h2, h3, p { margin: 0; }
   position: relative; isolation: isolate;
   display: flex; align-items: center; justify-content: center;
   min-height: 360px; padding: 48px 20px 56px;
-  text-align: center;
-  background: #161616 url("img/cheeseburger.png") no-repeat center bottom / auto 88%;
+  text-align: center; color: #fff;   /* o hero é escuro nos dois temas */
+  background: #161616;
 }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
@@ -161,7 +206,7 @@ h1, h2, h3, p { margin: 0; }
 .section-title {
   position: relative;
   font-size: 1.5rem; font-weight: 800; line-height: 1.2;
-  color: var(--yellow);
+  color: var(--title);
   padding-bottom: 10px; margin-bottom: 20px;
 }
 .section-title::after {
@@ -206,8 +251,8 @@ h1, h2, h3, p { margin: 0; }
 /* ---------- 4. Barra de categorias (sticky) ---------- */
 .category-nav {
   position: sticky; top: var(--header-h); z-index: 90;
-  background: var(--bg);
-  border-bottom: 1px solid #2a2a2a;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--page-line);
 }
 .category-nav__list {
   position: relative;
@@ -222,8 +267,8 @@ h1, h2, h3, p { margin: 0; }
   flex: 0 0 auto; white-space: nowrap;
   display: inline-flex; align-items: center; gap: 8px;
   min-height: 48px; padding: 0 18px;
-  background: var(--bg-soft); color: #fff;
-  border: 2px solid #3a3a3a; border-radius: 24px;
+  background: var(--chip-bg); color: var(--chip-ink);
+  border: 2px solid var(--chip-border); border-radius: 24px;
   font-weight: 600; cursor: pointer;
   transition: background-color .2s ease, border-color .2s ease;
 }
@@ -370,8 +415,8 @@ h1, h2, h3, p { margin: 0; }
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- Rodapé ---------- */
-.site-footer { padding: 32px 16px 40px; text-align: center; color: #cfcfcf; border-top: 1px solid #2a2a2a; }
-.site-footer strong { color: var(--yellow); }
+.site-footer { padding: 32px 16px 40px; text-align: center; color: var(--page-muted); border-top: 1px solid var(--page-line); }
+.site-footer strong { color: var(--title); }
 .noscript { padding: 24px 0; }
 
 /* ---------- Telas maiores ---------- */

@@ -8,6 +8,17 @@
   <meta name="theme-color" content="#121212">
   <link rel="icon" href="img/logo.png">
 
+  <!-- Tema (claro/escuro): aplicado antes da página aparecer para não "piscar".
+       Para mudar o tema padrão de quem nunca escolheu, troque 'dark' por 'light'. -->
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem('saborsorriso:tema'); } catch (e) {}
+      if (theme !== 'light' && theme !== 'dark') theme = 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
   <!-- Tipografia: Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,16 +32,23 @@
   <!-- 1. HEADER FIXO -->
   <header class="site-header" id="site-header">
     <a class="brand" href="#conteudo" aria-label="Sabor &amp; Sorriso Hamburgueria, início">
-      <img src="img/logo.png" alt="Sabor &amp; Sorriso Hamburgueria" height="44" data-fallback-text="Sabor &amp; Sorriso">
+      <img src="img/logo.png" alt="Sabor &amp; Sorriso Hamburgueria" width="81" height="48" data-fallback-text="Sabor &amp; Sorriso">
     </a>
 
-    <button type="button" class="cart-toggle" id="cart-toggle"
-            aria-haspopup="dialog" aria-controls="cart-drawer" aria-expanded="false"
-            aria-label="Ver carrinho, 0 itens">
-      <span aria-hidden="true">🛒</span>
-      <span class="cart-toggle__label" aria-hidden="true">Ver Carrinho</span>
-      <span class="cart-count" id="cart-count" aria-hidden="true" hidden>0</span>
-    </button>
+    <div class="site-header__actions">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Mudar para tema claro">
+        <span class="theme-toggle__sun" aria-hidden="true">☀️</span>
+        <span class="theme-toggle__moon" aria-hidden="true">🌙</span>
+      </button>
+
+      <button type="button" class="cart-toggle" id="cart-toggle"
+              aria-haspopup="dialog" aria-controls="cart-drawer" aria-expanded="false"
+              aria-label="Ver carrinho, 0 itens">
+        <span aria-hidden="true">🛒</span>
+        <span class="cart-toggle__label" aria-hidden="true">Ver Carrinho</span>
+        <span class="cart-count" id="cart-count" aria-hidden="true" hidden>0</span>
+      </button>
+    </div>
   </header>
 
   <main id="conteudo">

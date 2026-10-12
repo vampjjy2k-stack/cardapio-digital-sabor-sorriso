@@ -9,29 +9,23 @@
    ========================================================= */
 
 // ⚠️ TROQUE PELO NÚMERO DO WHATSAPP DA LOJA.
-// Informe apenas dígitos, com DDD e SEM o código do país (55 já é adicionado).
+// Número configurado com DDD; o código do país (55) é adicionado automaticamente.
 // Exemplo: '11999999999'  →  https://wa.me/5511999999999
-const WHATSAPP_NUMBER = 'SEU_NUMERO_AQUI';
+const WHATSAPP_NUMBER = '21995792519';
 
 const STORAGE_KEY = 'saborsorriso:carrinho:v1';
+const THEME_KEY = 'saborsorriso:tema';
 const NOTES_KEY = 'saborsorriso:observacoes:v1';
 const MAX_QTY = 99;
 
 // Imagens (pasta img/ ao lado do index.html)
 const IMG = {
   logo: 'img/logo.png',
-  cheeseburger: 'img/cheeseburger.png',
-  burgerBacon: 'img/burger-bacon.png',
-  burgerCamadas: 'img/burger-camadas.png',
-  combo: 'img/combo.png',
-  hotdog: 'img/hotdog.png',
-  acai: 'img/acai.png',
-  milkshake: 'img/milkshake.png',
-  coca: 'img/coca-cola.png',
-  antarctica: 'img/guarana-antarctica.png',
-  guaravita: 'img/guaravita.png',
-  sobremesas: 'img/sobremesas.png'
 };
+
+
+// Qual ícone usar em cada tamanho de bebida
+
 
 /* =========================================================
    DADOS DO CARDÁPIO (fonte oficial)
@@ -43,29 +37,29 @@ const p = (name, price, desc, extra = {}) => ({ name, price, desc, ...extra });
 
 const MENU = [
   {
-    id: 'hamburgueres', title: 'Hambúrgueres', icon: '🍔', img: 'cheeseburger',
+    id: 'hamburgueres', title: 'Hambúrgueres', icon: '🍔',
     items: [
-      p('Churrasco Misto', 75, 'Contrafilé + calabresa + filé de frango + aipim ou batata frita + molhos especiais + geleia de pimenta', { img: 'combo' }),
-      p('Combo Petisco', 79, 'Batata frita + linguiça mineira gourmet + anel de cebola + nuggets + azeitona + ovos de codorna', { img: 'combo' }),
+      p('Churrasco Misto', 75, 'Contrafilé + calabresa + filé de frango + aipim ou batata frita + molhos especiais + geleia de pimenta'),
+      p('Combo Petisco', 79, 'Batata frita + linguiça mineira gourmet + anel de cebola + nuggets + azeitona + ovos de codorna'),
       p('Frango Fresh', 23, 'Pão bimbu + filé de peito de frango empanado (120g) + alface + cream cheese + cheddar fatia + picles + cebola roxa crua + molho especial'),
       p('Frango Croc', 24, 'Pão bimbu + filé de peito de frango empanado (120g) + creme de cheddar + bacon fatia + onion rings + cream cheese + molho especial'),
       p('Abacaxi Smash', 27, 'Pão brioche + blend 180g + queijo mussarela + bacon fatia + abacaxi grelhado + rúcula + molho especial'),
       p('Onion Smash', 24, 'Pão artesanal com gergelim + smash 90g + cream cheese + creme de cheddar + onion rings + molho especial + rúcula'),
-      p('Banana Bacon', 23, 'Pão brioche + smash 90g + banana grelhada + bacon fatia + creme de cheddar', { img: 'burgerBacon' }),
-      p('Doce Bacon', 28, 'Pão brioche + blend 180g + queijo mussarela + farofa de bacon + doce de leite', { img: 'burgerBacon' }),
+      p('Banana Bacon', 23, 'Pão brioche + smash 90g + banana grelhada + bacon fatia + creme de cheddar'),
+      p('Doce Bacon', 28, 'Pão brioche + blend 180g + queijo mussarela + farofa de bacon + doce de leite'),
       p('Big Australiano', 29, 'Pão australiano + blend 180g + creme de cheddar + bacon em tiras + cream cheese + onion rings + rúcula + molho especial'),
-      p('Clássico Bacon', 25, 'Pão artesanal com gergelim + blend 180g + cream cheese + bacon fatia + alface + cebola roxa + molho especial', { img: 'burgerBacon' }),
+      p('Clássico Bacon', 25, 'Pão artesanal com gergelim + blend 180g + cream cheese + bacon fatia + alface + cebola roxa + molho especial'),
       p('Barbecue Rings', 24, 'Pão brioche + blend 180g + cheddar fatia + onion rings + bacon fatia + molho barbecue'),
       p('Smash Duplo', 32, 'Pão brioche + 2 smash 80g (160g total) + cream cheese + onion rings + bacon + molho especial'),
       p('Big Tudo', 45, 'Pão brioche + 2 blends 180g (360g total) + creme de cheddar + cream cheese + bacon fatia + onion rings + alface + cebola roxa + picles + molho barbecue + molho especial'),
-      p('Big Bacon', 30, 'Pão brioche + blend 180g + creme de cheddar + cream cheese + bacon fatia + onion rings + alface + cebola roxa + picles + molho barbecue + molho especial', { img: 'burgerBacon' }),
+      p('Big Bacon', 30, 'Pão brioche + blend 180g + creme de cheddar + cream cheese + bacon fatia + onion rings + alface + cebola roxa + picles + molho barbecue + molho especial'),
       p('Cheddar Coalho', 31, 'Pão brioche + blend 180g + queijo coalho caramelizado + queijo cheddar + bacon em tiras'),
-      p('Bacon Caramel', 25, 'Pão brioche + blend 180g + creme de cheddar + farofa de bacon caramelizada', { img: 'burgerBacon' }),
+      p('Bacon Caramel', 25, 'Pão brioche + blend 180g + creme de cheddar + farofa de bacon caramelizada'),
       p('Smash Super', 34, 'Pão brioche + 4 smash 60g + creme de cheddar + molho especial + cebola caramelizada')
     ]
   },
   {
-    id: 'artesanais', title: 'Artesanais', icon: '🥩', img: 'burgerCamadas',
+    id: 'artesanais', title: 'Artesanais', icon: '🥩',
     items: [
       p('Artesanal 01', 19, 'pão brioche + carne artesanal + queijo cheddar + bacon + tomate + alface + todos os molhos + alho torradinho + cebola'),
       p('Artesanal 02', 23, 'pão brioche + carne artesanal + queijo cheddar + bacon + presunto + calabresa + ovo + tomate + alface + todos os molhos + alho torradinho + cebola'),
@@ -76,7 +70,7 @@ const MENU = [
     ]
   },
   {
-    id: 'linha-cheddar', title: 'Linha Cheddar', icon: '🧀', img: 'cheeseburger',
+    id: 'linha-cheddar', title: 'Linha Cheddar', icon: '🧀',
     items: [
       p('X Cheddar 01', 12, 'pão bimbu + carne + queijo + cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + maionese + ketchup'),
       p('X Cheddar 02', 16, 'pão bimbu + 2 carnes + dobro de cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
@@ -88,7 +82,7 @@ const MENU = [
     ]
   },
   {
-    id: 'combos', title: 'Combos', icon: '🎁', img: 'combo',
+    id: 'combos', title: 'Combos', icon: '🎁',
     items: [
       p('Combo 01', 22, 'X-tudo + batata + guaraná natural'),
       p('Combo 02', 44, '2 x-bacon + batata maluca + 2 anéis de cebola + 2 nuggets + 2 guaraná natural'),
@@ -97,17 +91,17 @@ const MENU = [
       p('Combo 05', 75, '4 x-calabresa + batata maluca + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
       p('Combo 06', 110, '6 x-tudo + batata + 6 anéis de cebola + 6 nuggets + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
       p('Combo 07', 125, '5 x-tudos padrão + batata maluca + 5 anéis de cebola + 5 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
-      p('Combo 08', 95, '4 cachorro-quente (2 de linguiça, 2 de salsicha) + batata + 8 nuggets + 8 anéis de cebola + 1 refrigerante pakera ou kuat guaraná de 2 litros', { img: 'hotdog' }),
-      p('Mini 01', 29, '1 artesanal pão brioche, carne, queijo cheddar, molho especial, batata frita e coca-cola lata', { img: 'cheeseburger' }),
-      p('Dupla Perfeita 02', 57, '2 artesanal pão brioche + carne + queijo cheddar + molho especial + batata + nuggets + 2 coca-cola lata', { img: 'burgerCamadas' }),
-      p('Bomba de Sabor 03', 100, '3 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + salada + batata frita com cheddar + nuggets + anel de cebola + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
-      p('Explosão de Sabor 04', 135, '4 artesanal pão brioche + carne + queijo cheddar + molho especial + cebola caramelizada + batata com cheddar e farofa de bacon + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
-      p('Brutal 05', 149, '5 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + batata frita com cheddar + farofa de bacon + 5 anéis de cebola + 5 nuggets + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
-      p('Piscinão Cheddar 06', 168, '6 artesanal partido ao meio (total de 12 metades) + carne + queijo cheddar + molho especial + mergulhado na piscina de cheddar + batata frita com cheddar + farofa de bacon + 1 coca-cola 2 litros', { img: 'burgerCamadas' })
+      p('Combo 08', 95, '4 cachorro-quente (2 de linguiça, 2 de salsicha) + batata + 8 nuggets + 8 anéis de cebola + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
+      p('Mini 01', 29, '1 artesanal pão brioche, carne, queijo cheddar, molho especial, batata frita e coca-cola lata'),
+      p('Dupla Perfeita 02', 57, '2 artesanal pão brioche + carne + queijo cheddar + molho especial + batata + nuggets + 2 coca-cola lata'),
+      p('Bomba de Sabor 03', 100, '3 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + salada + batata frita com cheddar + nuggets + anel de cebola + 1 coca-cola 2 litros'),
+      p('Explosão de Sabor 04', 135, '4 artesanal pão brioche + carne + queijo cheddar + molho especial + cebola caramelizada + batata com cheddar e farofa de bacon + 1 coca-cola 2 litros'),
+      p('Brutal 05', 149, '5 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + batata frita com cheddar + farofa de bacon + 5 anéis de cebola + 5 nuggets + 1 coca-cola 2 litros'),
+      p('Piscinão Cheddar 06', 168, '6 artesanal partido ao meio (total de 12 metades) + carne + queijo cheddar + molho especial + mergulhado na piscina de cheddar + batata frita com cheddar + farofa de bacon + 1 coca-cola 2 litros')
     ]
   },
   {
-    id: 'hot-dogs', title: 'Hot Dogs', icon: '🌭', img: 'hotdog',
+    id: 'hot-dogs', title: 'Hot Dogs', icon: '🌭',
     items: [
       p('Cachorro Quente Linguiça', 15, 'Linguiça, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
       p('Cachorro Quente Salsicha', 14, 'Salsicha, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
@@ -121,14 +115,14 @@ const MENU = [
     ]
   },
   {
-    id: 'porcoes', title: 'Porções', icon: '🍟', img: 'combo',
+    id: 'porcoes', title: 'Porções', icon: '🍟',
     items: [
-      p('Baguetão Mineiro', 24, 'Pão baguete + linguiça mineira gourmet + molho especial + geleia de pimenta + queijo mussarela + bacon + creme cheddar + salada'),
-      p('Cestinha de Batata', 12, 'Cestinha de batata + creme cheddar + farofa de bacon')
+      p('Baguetão Mineiro', 24, 'Pão baguete + linguiça mineira gourmet + molho especial + geleia de pimenta + queijo mussarela + bacon + creme cheddar + salada', { icon: '🥖' }),
+      p('Cestinha de Batata', 12, 'Cestinha de batata + creme cheddar + farofa de bacon', { icon: '🍟' })
     ]
   },
   {
-    id: 'pasteis', title: 'Pastéis', icon: '🥟', img: 'combo', prefix: 'Pastel de ',
+    id: 'pasteis', title: 'Pastéis', icon: '🥟', prefix: 'Pastel de ',
     items: [
       p('Carne', 10, ''),
       p('Queijo e Presunto', 10, ''),
@@ -139,7 +133,7 @@ const MENU = [
     ]
   },
   {
-    id: 'acai', title: 'Açaí', icon: '🍇', img: 'acai', prefix: 'Açaí ',
+    id: 'acai', title: 'Açaí', icon: '🍇', prefix: 'Açaí ',
     items: [
       p('150 ML', 5, ''),
       p('200 ML', 6, ''),
@@ -151,45 +145,36 @@ const MENU = [
     ]
   },
   {
-    id: 'vitaminas', title: 'Vitaminas', icon: '🥛', img: 'milkshake', prefix: 'Vitamina de ',
+    id: 'vitaminas', title: 'Vitaminas', icon: '🥛', prefix: 'Vitamina de ',
     items: ['Morango ao Leite', 'Cupuaçu ao Leite', 'Maracujá ao Leite', 'Graviola ao Leite'].map(name =>
       p(name, null, '', { options: [{ label: 'Copo 300ML', price: 10 }, { label: 'Copo 500ML', price: 13 }] })
     )
   },
   {
-    id: 'sucos', title: 'Sucos Naturais', icon: '🍹', img: 'milkshake', prefix: 'Suco de ',
-    items: ['Maracujá', 'Laranja', 'Abacaxi com Hortelã', 'Acerola com Laranja', 'Detox'].map(name =>
-      p(name, null, '', { meta: 'Copo 500ML' })
-    )
+    id: 'sucos', title: 'Sucos Naturais', icon: '🍹', prefix: 'Suco de ',
+    items: [
+      ['Maracujá', 'sucoMaracuja'],
+      ['Laranja', 'sucoLaranja'],
+      ['Abacaxi com Hortelã', 'sucoAbacaxi'],
+      ['Acerola com Laranja', 'sucoAcerola'],
+      ['Detox', 'sucoDetox']
+    ].map(([name, img]) => p(name, null, '', { meta: 'Copo 500ML', img }))
   },
   {
     id: 'bebidas', title: 'Bebidas', icon: '🥤',
-    // Sem imagem própria: só marcas que temos foto (as demais usam o ícone 🥤)
+    // Ícone neutro por tamanho (2L, 600ML, Lata). Foto só quando é exatamente o produto.
     items: [
-      p('Kuat', null, '', { meta: '2L' }),
-      p('Sukita', null, '', { meta: '2L' }),
-      p('Coca Cola', null, '', { meta: '2L', img: 'coca' }),
-      p('Coca Cola Zero', null, '', { meta: '2L' }),
-      p('Retornável', null, '', { meta: '2L' }),
-      p('Sprite', null, '', { meta: '2L' }),
-      p('Fanta Uva', null, '', { meta: '2L' }),
-      p('Fanta Laranja', null, '', { meta: '2L' }),
-      p('Coca Cola', null, '', { meta: '600ML', img: 'coca' }),
-      p('Coca Cola Zero', null, '', { meta: '600ML' }),
-      p('Fanta Uva', null, '', { meta: '600ML' }),
-      p('Fanta Laranja', null, '', { meta: '600ML' }),
-      p('Fanta Uva', null, '', { meta: 'Lata' }),
-      p('Fanta Laranja', null, '', { meta: 'Lata' }),
-      p('Antártica', null, '', { meta: 'Lata', img: 'antarctica' }),
-      p('Sprite', null, '', { meta: 'Lata' }),
-      p('Coca Cola', null, '', { meta: 'Lata', img: 'coca' }),
-      p('Coca Cola Zero', null, '', { meta: 'Lata' }),
-      p('Guaravita', null, '', { meta: 'Lata', img: 'guaravita' }),
-      p('Guaraviton', null, '', { meta: 'Lata' })
-    ]
+      ['Kuat', '2L'], ['Sukita', '2L'], ['Coca Cola', '2L'], ['Coca Cola Zero', '2L'],
+      ['Retornável', '2L'], ['Sprite', '2L'], ['Fanta Uva', '2L'], ['Fanta Laranja', '2L'],
+      ['Coca Cola', '600ML'], ['Coca Cola Zero', '600ML'], ['Fanta Uva', '600ML'], ['Fanta Laranja', '600ML'],
+      ['Fanta Uva', 'Lata'], ['Fanta Laranja', 'Lata'], ['Antártica', 'Lata'], ['Sprite', 'Lata'],
+      ['Coca Cola', 'Lata'], ['Coca Cola Zero', 'Lata'], ['Guaravita', 'Lata'], ['Guaraviton', 'Lata']
+    ].map(([name, meta]) =>
+      p(name, null, '', { meta })
+    )
   },
   {
-    id: 'sobremesas', title: 'Sobremesas', icon: '🍨', img: 'sobremesas',
+    id: 'sobremesas', title: 'Sobremesas', icon: '🍨',
     info: 'Temos sim! Consulte as opções disponíveis no momento.',
     items: []
   }
@@ -256,11 +241,8 @@ const els = {
    ========================================================= */
 
 function thumbHTML(item, section) {
-  const key = item.img || section.img;
-  if (key && IMG[key]) {
-    return `<img src="${IMG[key]}" alt="" width="96" height="96" loading="lazy" decoding="async" data-fallback="${section.icon}">`;
-  }
-  return `<span class="thumb-emoji" aria-hidden="true">${section.icon}</span>`;
+  const icon = item.icon || section.icon;
+  return `<span class="thumb-emoji" aria-hidden="true">${icon}</span>`;
 }
 
 function priceHTML(item) {
@@ -583,6 +565,31 @@ function checkout() {
 }
 
 /* =========================================================
+   TEMA CLARO / ESCURO
+   (o tema inicial já foi aplicado por um script no <head>)
+   ========================================================= */
+
+const THEME_COLORS = { dark: '#121212', light: '#F4EFE6' };
+const themeToggle = $('#theme-toggle');
+const themeMeta = $('meta[name="theme-color"]');
+
+const currentTheme = () =>
+  document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+
+function applyTheme(theme, save) {
+  document.documentElement.setAttribute('data-theme', theme);
+  if (themeMeta) themeMeta.setAttribute('content', THEME_COLORS[theme]);
+  themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+  if (save) {
+    try { localStorage.setItem(THEME_KEY, theme); } catch (err) { /* modo privado */ }
+  }
+}
+
+themeToggle.addEventListener('click', () => {
+  applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
+});
+
+/* =========================================================
    TOAST
    ========================================================= */
 
@@ -755,6 +762,7 @@ window.addEventListener('storage', event => {
    INICIALIZAÇÃO
    ========================================================= */
 
+applyTheme(currentTheme(), false);
 renderMenu();
 renderCart();
 
