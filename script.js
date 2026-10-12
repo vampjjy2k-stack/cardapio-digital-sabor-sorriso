@@ -3,12 +3,7 @@
    ========================================================= */
 'use strict';
 
-/* =========================================================
-   CONFIG
-   ========================================================= */
-
-// Número já configurado conforme você passou:
-const WHATSAPP_NUMBER = '5521995792519'; // já com 55, só dígitos
+const WHATSAPP_NUMBER = '5521995792519';
 const INSTAGRAM_URL = 'https://www.instagram.com/sabor.e.sorriso';
 
 const STORAGE_KEY = 'saborsorriso:carrinho:v1';
@@ -40,18 +35,20 @@ const IMG = {
 
 const DRINK_ICON = { '2L': 'garrafa2l', '600ML': 'garrafa600', 'Lata': 'lata' };
 
-/* =========================================================
-   DADOS
-   ========================================================= */
-
 const p = (name, price, desc, extra = {}) => ({ name, price, desc, ...extra });
 
+/* CATEGORIZAÇÃO CORRIGIDA conforme o cardápio impresso */
 const MENU = [
+  {
+    id: 'churrasco-petiscos', title: 'Churrasco e Petiscos', icon: '🍖', img: 'combo',
+    items: [
+      p('Churrasco Misto', 75, 'Contrafilé + calabresa + filé de frango + aipim ou batata frita + molhos especiais + geleia de pimenta', { img: 'combo' }),
+      p('Combo Petisco', 79, 'Batata frita + linguiça mineira gourmet + anel de cebola + nuggets + azeitona + ovos de codorna', { img: 'combo' })
+    ]
+  },
   {
     id: 'hamburgueres', title: 'Hambúrgueres', icon: '🍔', img: 'cheeseburger',
     items: [
-      p('Churrasco Misto', 75, 'Contrafilé + calabresa + filé de frango + aipim ou batata frita + molhos especiais + geleia de pimenta', { img: 'combo' }),
-      p('Combo Petisco', 79, 'Batata frita + linguiça mineira gourmet + anel de cebola + nuggets + azeitona + ovos de codorna', { img: 'combo' }),
       p('Frango Fresh', 23, 'Pão bimbu + filé de peito de frango empanado (120g) + alface + cream cheese + cheddar fatia + picles + cebola roxa crua + molho especial'),
       p('Frango Croc', 24, 'Pão bimbu + filé de peito de frango empanado (120g) + creme de cheddar + bacon fatia + onion rings + cream cheese + molho especial'),
       p('Abacaxi Smash', 27, 'Pão brioche + blend 180g + queijo mussarela + bacon fatia + abacaxi grelhado + rúcula + molho especial'),
@@ -70,26 +67,26 @@ const MENU = [
     ]
   },
   {
-    id: 'artesanais', title: 'Artesanais', icon: '🥩', img: 'burgerCamadas',
+    id: 'linha-cheddar', title: 'Linha Cheddar', icon: '🧀', img: 'cheeseburger',
     items: [
-      p('Artesanal 01', 19, 'pão brioche + carne artesanal + queijo cheddar + bacon + tomate + alface + todos os molhos + alho torradinho + cebola'),
-      p('Artesanal 02', 23, 'pão brioche + carne artesanal + queijo cheddar + bacon + presunto + calabresa + ovo + tomate + alface + todos os molhos + alho torradinho + cebola'),
-      p('Artesanal 03', 33, 'pão brioche + 2 carnes artesanais + dobro de queijo cheddar + dobro de bacon + dobro de presunto + dobro de calabresa + dobro de ovo + tomate + alface + todos os molhos + alho torradinho + cebola'),
-      p('Artesanal 04', 28, 'pão brioche + 2 carnes artesanais + 2 queijos cheddar + 2 presuntos + bacon + calabresa + cebola + tomate + alface + todos os molhos + alho torradinho'),
-      p('Artesanal 05', 21, 'pão brioche + carne artesanal + creme de cheddar + bacon + anéis de cebola'),
-      p('Artesanal 06', 20, 'pão brioche + carne artesanal + creme de cheddar + cebola caramelizada')
+      p('X Cheddar 01', 12, 'Pão bimbu + carne + queijo + cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + maionese + ketchup'),
+      p('X Cheddar 02', 16, 'Pão bimbu + 2 carnes + dobro de cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 03', 15, 'Pão bimbu + carne + cheddar + presunto + ovo + bacon + calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 04', 14, 'Pão bimbu + carne + queijo + cheddar + presunto + bacon + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 05', 24, 'Pão bimbu + carnes, dois queijos + cheddar + o dobro de presunto + 2 ovos + o dobro de bacon + o dobro de calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar Bacon', 27, '2 carnes artesanais + 2 camadas de creme cheddar + 2 camadas de bacon'),
+      p('Onion Cheddar Duplo', 24, '2 carne artesanais + 2 camadas de creme cheddar + 2 camadas de cebola caramelizada')
     ]
   },
   {
-    id: 'linha-cheddar', title: 'Linha Cheddar', icon: '🧀', img: 'cheeseburger',
+    id: 'artesanais', title: 'Artesanais', icon: '🥩', img: 'burgerCamadas',
     items: [
-      p('X Cheddar 01', 12, 'pão bimbu + carne + queijo + cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + maionese + ketchup'),
-      p('X Cheddar 02', 16, 'pão bimbu + 2 carnes + dobro de cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 03', 15, 'pão bimbu + carne + cheddar + presunto + ovo + bacon + calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 04', 14, 'pão bimbu + carne + queijo + cheddar + presunto + bacon + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 05', 24, 'pão bimbu + carnes, dois queijos + cheddar + o dobro de presunto + 2 ovos + o dobro de bacon + o dobro de calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar Bacon', 27, '2 carnes artesanais + 2 camadas de creme cheddar + 2 camadas de bacon'),
-      p('Onion Cheddar Duplo', 24, '2 carne artesanais + 2 camadas de creme cheddar + 2 camadas de cebola caramelizada')
+      p('Artesanal 01', 19, 'Pão brioche + carne artesanal + queijo cheddar + bacon + tomate + alface + todos os molhos + alho torradinho + cebola'),
+      p('Artesanal 02', 23, 'Pão brioche + carne artesanal + queijo cheddar + bacon + presunto + calabresa + ovo + tomate + alface + todos os molhos + alho torradinho + cebola'),
+      p('Artesanal 03', 33, 'Pão brioche + 2 carnes artesanais + dobro de queijo cheddar + dobro de bacon + dobro de presunto + dobro de calabresa + dobro de ovo + tomate + alface + todos os molhos + alho torradinho + cebola'),
+      p('Artesanal 04', 28, 'Pão brioche + 2 carnes artesanais + 2 queijos cheddar + 2 presuntos + bacon + calabresa + cebola + tomate + alface + todos os molhos + alho torradinho'),
+      p('Artesanal 05', 21, 'Pão brioche + carne artesanal + creme de cheddar + bacon + anéis de cebola'),
+      p('Artesanal 06', 20, 'Pão brioche + carne artesanal + creme de cheddar + cebola caramelizada')
     ]
   },
   {
@@ -114,10 +111,10 @@ const MENU = [
   {
     id: 'hot-dogs', title: 'Hot Dogs', icon: '🌭', img: 'hotdog',
     items: [
-      p('Cachorro Quente Linguiça', 15, 'Linguiça, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
-      p('Cachorro Quente Salsicha', 14, 'Salsicha, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
-      p('Dogão Quente Linguiça', 21, 'Linguiça, milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.'),
-      p('Dogão Quente Salsicha', 20, 'Salsicha, milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.'),
+      p('Cachorro Quente Linguiça', 15, 'Milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
+      p('Cachorro Quente Salsicha', 14, 'Milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
+      p('Dogão Quente Linguiça', 21, 'Milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.'),
+      p('Dogão Quente Salsicha', 20, 'Milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.'),
       p('Hot Dog 01', 17, 'Pão + linguiça + queijo cheddar + bacon em cubos + cebola roxa + molho especial + ovo de codorna'),
       p('Hot Dog 02', 16, 'Pão + salsicha + bacon em cubos + cream cheese + cebola roxa + molho especial'),
       p('Hot Dog 03', 18, 'Pão + linguiça + bacon + creme cheddar + cebola caramelizada + molho especial + batata palha'),
@@ -147,7 +144,7 @@ const MENU = [
     )
   },
   {
-    id: 'sucos', title: 'Sucos', icon: '🍹', prefix: 'Suco de ',
+    id: 'sucos', title: 'Sucos Naturais', icon: '🍹', prefix: 'Suco de ',
     items: [
       ['Maracujá', 'sucoMaracuja'], ['Laranja', 'sucoLaranja'], ['Abacaxi com Hortelã', 'sucoAbacaxi'],
       ['Acerola com Laranja', 'sucoAcerola'], ['Detox', 'sucoDetox']
@@ -172,9 +169,7 @@ const MENU = [
 
 const FEATURED_IDS = ['combos-combo-06', 'combos-combo-08', 'combos-mini-01'];
 
-/* =========================================================
-   UTIL
-   ========================================================= */
+/* ---------- Util ---------- */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -205,9 +200,6 @@ const els = {
   sheetPrice: $('#sheet-price'), sheetAdd: $('#sheet-add')
 };
 
-/* =========================================================
-   RENDER
-   ========================================================= */
 function thumbHTML(item, section) {
   const icon = item.icon || section.icon;
   const key = item.img || (item.icon ? null : section.img);
@@ -215,13 +207,11 @@ function thumbHTML(item, section) {
   if (src) return `<img src="${src}" alt="" loading="lazy" decoding="async" data-fallback="${icon}">`;
   return `<span class="thumb-emoji" aria-hidden="true">${icon}</span>`;
 }
-
 function priceHTML(item) {
   if (item.options) return `<p class="card__price" data-price>${money(item.options[0].price)}</p>`;
   if (item.price == null) return `<p class="card__price card__price--consult">Consulte</p>`;
   return `<p class="card__price">${money(item.price)}</p>`;
 }
-
 function optionsHTML(item, inSheet) {
   if (!item.options) return '';
   const radios = item.options.map((opt, i) => `
@@ -231,7 +221,6 @@ function optionsHTML(item, inSheet) {
     </label>`).join('');
   return `<fieldset class="options"><legend class="sr-only">Tamanho</legend>${radios}</fieldset>`;
 }
-
 function cardHTML(item, section) {
   return `
   <li class="card" data-card data-id="${item.id}">
@@ -248,7 +237,6 @@ function cardHTML(item, section) {
     </div>
   </li>`;
 }
-
 function infoCardHTML(section) {
   return `
   <li class="card card--info">
@@ -264,18 +252,14 @@ function infoCardHTML(section) {
     </div>
   </li>`;
 }
-
 function sectionHTML(section) {
-  const cards = section.info
-    ? infoCardHTML(section)
-    : section.items.map(i => cardHTML(i, section)).join('');
+  const cards = section.info ? infoCardHTML(section) : section.items.map(i => cardHTML(i, section)).join('');
   return `
   <section class="menu-section" id="${section.id}" aria-labelledby="${section.id}-title" tabindex="-1">
     <h2 class="section-title" id="${section.id}-title">${esc(section.title)}</h2>
     <ul class="card-list">${cards}</ul>
   </section>`;
 }
-
 function featuredHTML(item, section) {
   return `
   <li class="feat-card" data-card data-id="${item.id}">
@@ -291,28 +275,17 @@ function featuredHTML(item, section) {
     </div>
   </li>`;
 }
-
 function renderMenu() {
   els.menu.insertAdjacentHTML('beforeend', MENU.map(sectionHTML).join(''));
-
-  els.navList.innerHTML = MENU.map(s => `
-    <li><button type="button" class="category-tab" data-scroll="${s.id}">${esc(s.title)}</button></li>
-  `).join('');
-
-  els.featuredGrid.innerHTML = FEATURED_IDS
-    .map(id => ITEM_INDEX.get(id)).filter(Boolean)
-    .map(({ item, section }) => featuredHTML(item, section)).join('');
+  els.navList.innerHTML = MENU.map(s => `<li><button type="button" class="category-tab" data-scroll="${s.id}">${esc(s.title)}</button></li>`).join('');
+  els.featuredGrid.innerHTML = FEATURED_IDS.map(id => ITEM_INDEX.get(id)).filter(Boolean).map(({ item, section }) => featuredHTML(item, section)).join('');
 }
 
-/* =========================================================
-   BUSCA
-   ========================================================= */
 function filterMenu(q) {
   const query = q.trim().toLowerCase();
   els.searchClear.hidden = !query;
   const sections = $$('.menu-section', els.menu);
   let totalVisible = 0;
-
   sections.forEach(section => {
     const cards = $$('.card', section);
     let visible = 0;
@@ -325,20 +298,12 @@ function filterMenu(q) {
     section.hidden = visible === 0;
     totalVisible += visible;
   });
-
   els.searchEmpty.hidden = totalVisible > 0;
 }
 
 els.searchInput.addEventListener('input', e => filterMenu(e.target.value));
-els.searchClear.addEventListener('click', () => {
-  els.searchInput.value = '';
-  filterMenu('');
-  els.searchInput.focus();
-});
+els.searchClear.addEventListener('click', () => { els.searchInput.value = ''; filterMenu(''); els.searchInput.focus(); });
 
-/* =========================================================
-   CARRINHO
-   ========================================================= */
 function describeLine(line) {
   const ref = ITEM_INDEX.get(line.id);
   if (!ref) return null;
@@ -349,12 +314,9 @@ function describeLine(line) {
     if (!opt) return null;
     price = opt.price; label = opt.label;
   }
-  const name = (section.prefix || '') + item.name
-    + (item.meta ? ` - ${item.meta}` : '')
-    + (label ? ` - ${label}` : '');
+  const name = (section.prefix || '') + item.name + (item.meta ? ` - ${item.meta}` : '') + (label ? ` - ${label}` : '');
   return { name, price: price == null ? null : price };
 }
-
 const lineKey = l => `${l.id}|${l.opt == null ? '' : l.opt}`;
 
 function loadCart() {
@@ -383,7 +345,6 @@ function addToCart(id, opt) {
   saveCart(); renderCart(); bumpCount();
   showToast(`✓ ${describeLine({ id, opt }).name}`);
 }
-
 function changeQty(key, d) {
   const i = cart.findIndex(l => lineKey(l) === key);
   if (i === -1) return;
@@ -409,12 +370,10 @@ function totals() {
 
 function renderCart() {
   const { total, pending, count } = totals();
-
   els.cartCount.textContent = count;
   els.cartCount.hidden = count === 0;
   els.cartFab.hidden = count === 0;
   els.cartFab.setAttribute('aria-label', `Ver carrinho, ${count} ${count === 1 ? 'item' : 'itens'}`);
-
   els.list.innerHTML = cart.map(line => {
     const info = describeLine(line);
     if (!info) return '';
@@ -439,34 +398,25 @@ function renderCart() {
       </div>
     </li>`;
   }).join('');
-
   const isEmpty = cart.length === 0;
   els.empty.hidden = !isEmpty;
   els.list.hidden = isEmpty;
   els.checkout.disabled = isEmpty;
   els.clear.hidden = isEmpty;
   els.subtotal.textContent = money(total);
-
   if (pending > 0) {
     els.note.hidden = false;
     els.note.textContent = pending === 1 ? '1 item sem preço definido.' : `${pending} itens sem preço definido.`;
-  } else {
-    els.note.hidden = true; els.note.textContent = '';
-  }
+  } else { els.note.hidden = true; els.note.textContent = ''; }
 }
-
 function bumpCount() {
   els.cartCount.classList.remove('bump');
   void els.cartCount.offsetWidth;
   els.cartCount.classList.add('bump');
 }
 
-/* =========================================================
-   DRAWER
-   ========================================================= */
 const pageRegions = [els.header, els.main, els.footer];
 let lastFocused = null;
-
 function openCart() {
   lastFocused = document.activeElement;
   els.drawer.removeAttribute('inert');
@@ -488,9 +438,6 @@ function closeCart() {
 }
 const isCartOpen = () => els.drawer.classList.contains('is-open');
 
-/* =========================================================
-   SHEET
-   ========================================================= */
 function openSheet(id) {
   const ref = ITEM_INDEX.get(id);
   if (!ref) return;
@@ -498,9 +445,7 @@ function openSheet(id) {
   const icon = item.icon || section.icon;
   const key = item.img || (item.icon ? null : section.img);
   const src = key && IMG[key];
-  els.sheetMedia.innerHTML = src
-    ? `<img src="${src}" alt="" data-fallback="${icon}">`
-    : `<span class="thumb-emoji" aria-hidden="true">${icon}</span>`;
+  els.sheetMedia.innerHTML = src ? `<img src="${src}" alt="" data-fallback="${icon}">` : `<span class="thumb-emoji" aria-hidden="true">${icon}</span>`;
   els.sheetTitle.textContent = item.name;
   els.sheetMeta.textContent = item.meta || '';
   els.sheetMeta.hidden = !item.meta;
@@ -516,12 +461,10 @@ function openSheet(id) {
   }
   els.sheetAdd.dataset.add = item.id;
   els.sheetAdd.dataset.direct = 'false';
-  if (els.sheet.showModal) els.sheet.showModal();
-  else els.sheet.setAttribute('open', '');
+  if (els.sheet.showModal) els.sheet.showModal(); else els.sheet.setAttribute('open', '');
 }
 function closeSheet() {
-  if (els.sheet.close) els.sheet.close();
-  else els.sheet.removeAttribute('open');
+  if (els.sheet.close) els.sheet.close(); else els.sheet.removeAttribute('open');
 }
 els.sheet.addEventListener('click', e => { if (e.target === els.sheet) closeSheet(); });
 els.sheet.addEventListener('cancel', e => { e.preventDefault(); closeSheet(); });
@@ -530,20 +473,13 @@ els.sheetOptions.addEventListener('change', e => {
   if (e.target.type === 'radio') els.sheetPrice.textContent = money(Number(e.target.dataset.priceValue));
 });
 
-/* =========================================================
-   WHATSAPP
-   ========================================================= */
 function openWhatsApp(text) {
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank', 'noopener,noreferrer');
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
 }
-
-// Botões sociais
 $$('[data-contact="wa"]').forEach(el => el.addEventListener('click', e => {
   e.preventDefault();
   openWhatsApp('Olá! Vim pelo cardápio digital da Sabor & Sorriso.');
 }));
-
 function buildOrderMessage() {
   const { total, pending } = totals();
   const lines = ['🍔 *Novo pedido — Sabor & Sorriso*', '', '*Itens:*'];
@@ -560,9 +496,6 @@ function buildOrderMessage() {
 }
 function checkout() { if (cart.length) openWhatsApp(buildOrderMessage()); }
 
-/* =========================================================
-   TEMA
-   ========================================================= */
 const THEME_COLORS = { dark: '#0E0E10', light: '#FAFAFB' };
 const themeToggle = $('#theme-toggle');
 const themeMeta = $('meta[name="theme-color"]');
@@ -570,14 +503,12 @@ const currentTheme = () => document.documentElement.getAttribute('data-theme') =
 function applyTheme(t, save) {
   document.documentElement.setAttribute('data-theme', t);
   if (themeMeta) themeMeta.setAttribute('content', THEME_COLORS[t]);
+  themeToggle.setAttribute('aria-checked', t === 'dark' ? 'true' : 'false');
   themeToggle.setAttribute('aria-label', t === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
   if (save) try { localStorage.setItem(THEME_KEY, t); } catch {}
 }
 themeToggle.addEventListener('click', () => applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true));
 
-/* =========================================================
-   TOAST
-   ========================================================= */
 let toastTimer;
 function showToast(msg) {
   els.toast.textContent = msg;
@@ -586,9 +517,6 @@ function showToast(msg) {
   toastTimer = setTimeout(() => els.toast.classList.remove('is-visible'), 2200);
 }
 
-/* =========================================================
-   NAV / CATEGORIAS
-   ========================================================= */
 function scrollToSection(id) {
   const t = document.getElementById(id);
   if (!t) return;
@@ -596,7 +524,6 @@ function scrollToSection(id) {
   t.focus({ preventScroll: true });
 }
 let tabs = [], sectionEls = [], activeId = null;
-
 function setActiveCategory(id) {
   activeId = id;
   tabs.forEach(tab => {
@@ -626,19 +553,10 @@ function onScroll() {
   requestAnimationFrame(() => { updateActiveCategory(); ticking = false; });
 }
 
-/* =========================================================
-   FALLBACK DE IMAGENS
-   ========================================================= */
 function applyImageFallback(img) {
   const span = document.createElement('span');
-  if (img.dataset.fallbackText) {
-    span.className = 'brand-text';
-    span.textContent = img.dataset.fallbackText;
-  } else {
-    span.className = 'thumb-emoji';
-    span.setAttribute('aria-hidden', 'true');
-    span.textContent = img.dataset.fallback || '🍔';
-  }
+  if (img.dataset.fallbackText) { span.className = 'brand-text'; span.textContent = img.dataset.fallbackText; }
+  else { span.className = 'thumb-emoji'; span.setAttribute('aria-hidden', 'true'); span.textContent = img.dataset.fallback || '🍔'; }
   img.replaceWith(span);
 }
 document.addEventListener('error', e => {
@@ -647,33 +565,22 @@ document.addEventListener('error', e => {
   }
 }, true);
 
-/* =========================================================
-   EVENTOS GLOBAIS
-   ========================================================= */
 document.addEventListener('click', e => {
   const t = e.target;
-
-  // Ripple nos botões
   const btn = t.closest('.btn, .card__add, .social-btn');
   if (btn) {
     const r = btn.getBoundingClientRect();
     btn.style.setProperty('--x', (e.clientX - r.left) + 'px');
     btn.style.setProperty('--y', (e.clientY - r.top) + 'px');
   }
-
-  // Botão + dentro do card (adiciona direto)
   const addBtn = t.closest('[data-add]');
   if (addBtn) {
     e.stopPropagation();
     const direct = addBtn.dataset.direct === 'true';
     if (direct) {
-      // Se tem opções, abre o sheet para escolher
       const ref = ITEM_INDEX.get(addBtn.dataset.add);
-      if (ref && ref.item.options) {
-        openSheet(addBtn.dataset.add);
-      } else {
-        addToCart(addBtn.dataset.add, null);
-      }
+      if (ref && ref.item.options) openSheet(addBtn.dataset.add);
+      else addToCart(addBtn.dataset.add, null);
     } else {
       const checked = els.sheetOptions.querySelector('input[type="radio"]:checked');
       addToCart(addBtn.dataset.add, checked ? Number(checked.value) : null);
@@ -681,32 +588,18 @@ document.addEventListener('click', e => {
     }
     return;
   }
-
-  // Clique no card abre o sheet
   const card = t.closest('[data-card]');
-  if (card && card.dataset.id && !t.closest('[data-action]')) {
-    openSheet(card.dataset.id);
-    return;
-  }
-
-  // Scroll por categoria
+  if (card && card.dataset.id && !t.closest('[data-action]')) { openSheet(card.dataset.id); return; }
   const scrollBtn = t.closest('[data-scroll]');
   if (scrollBtn) { scrollToSection(scrollBtn.dataset.scroll); return; }
-
-  // Ações do carrinho
   const actionBtn = t.closest('[data-action]');
   if (!actionBtn) return;
   const { action, key } = actionBtn.dataset;
-
-  if (action === 'ask-desserts') {
-    openWhatsApp('Olá! Gostaria de saber quais sobremesas estão disponíveis hoje.');
-    return;
-  }
+  if (action === 'ask-desserts') { openWhatsApp('Olá! Gostaria de saber quais sobremesas estão disponíveis hoje.'); return; }
   if (action === 'inc' || action === 'dec') changeQty(key, action === 'inc' ? 1 : -1);
   else if (action === 'remove') removeLine(key);
 });
 
-// Preço do card ao trocar opção
 document.addEventListener('change', e => {
   const input = e.target;
   if (!(input instanceof HTMLInputElement) || input.type !== 'radio') return;
@@ -724,51 +617,26 @@ els.browseBtn.addEventListener('click', () => { closeCart(); scrollToSection('ca
 els.checkout.addEventListener('click', checkout);
 els.clear.addEventListener('click', () => { if (confirm('Remover todos os itens?')) clearCart(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && isCartOpen()) closeCart(); });
-
 try { els.notes.value = localStorage.getItem(NOTES_KEY) || ''; } catch {}
 els.notes.addEventListener('input', () => { try { localStorage.setItem(NOTES_KEY, els.notes.value); } catch {} });
+window.addEventListener('storage', e => { if (e.key === STORAGE_KEY) { cart = loadCart(); renderCart(); } });
 
-window.addEventListener('storage', e => {
-  if (e.key === STORAGE_KEY) { cart = loadCart(); renderCart(); }
-});
-
-/* =========================================================
-   INTERSECTION OBSERVER (fade-in ao scroll)
-   ========================================================= */
 function initReveal() {
-  if (!('IntersectionObserver' in window)) {
-    $$('.menu-section').forEach(s => s.classList.add('is-visible'));
-    return;
-  }
-  const io = new IntersectionObserver((entries) => {
+  if (!('IntersectionObserver' in window)) { $$('.menu-section').forEach(s => s.classList.add('is-visible')); return; }
+  const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
     });
   }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
   $$('.menu-section').forEach(s => io.observe(s));
 }
 
-/* =========================================================
-   INIT
-   ========================================================= */
 applyTheme(currentTheme(), false);
 renderMenu();
 renderCart();
 initReveal();
-
 tabs = $$('.category-tab', els.navList);
 sectionEls = $$('.menu-section', els.menu);
-
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', onScroll);
 updateActiveCategory();
-
-// Fecha o sheet quando clica em "Ver carrinho" a partir do sheet
-els.cartFab.addEventListener('click', () => { if (els.sheet.open) closeSheet(); });
-
-// Fecha sheet ao abrir carrinho
-const _origOpenCart = openCart;
-openCart = function() { if (els.sheet.open) closeSheet(); _origOpenCart(); };
