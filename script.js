@@ -209,7 +209,7 @@ function thumbHTML(item, section) {
 }
 function priceHTML(item) {
   if (item.options) return `<p class="card__price" data-price>${money(item.options[0].price)}</p>`;
-  if (item.price == null) return `<p class="card__price card__price--consult">Consulte</p>`;
+  if (item.price == null) return `<p class="card__price card__price--consult">Pergunte no WhatsApp</p>`;
   return `<p class="card__price">${money(item.price)}</p>`;
 }
 function optionsHTML(item, inSheet) {
