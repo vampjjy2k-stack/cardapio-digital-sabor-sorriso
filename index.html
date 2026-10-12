@@ -3,63 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Sabor &amp; Sorriso Hamburgueria | Cardápio Digital</title>
-  <meta name="description" content="Cardápio digital da Sabor &amp; Sorriso. Monte seu pedido e envie pelo WhatsApp.">
-  <meta name="theme-color" content="#121212">
+  <title>Sabor &amp; Sorriso | Cardápio Digital</title>
+  <meta name="description" content="Cardápio digital da Sabor & Sorriso. Monte seu pedido e envie pelo WhatsApp.">
+  <meta name="theme-color" content="#0E0E10">
   <link rel="icon" href="img/logo.png">
 
   <script>
     (function () {
-      var theme = null;
-      try { theme = localStorage.getItem('saborsorriso:tema'); } catch (e) {}
-      if (theme !== 'light' && theme !== 'dark') theme = 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
+      var t = null;
+      try { t = localStorage.getItem('saborsorriso:tema'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = 'dark';
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a class="skip-link" href="#cardapio">Ir para o cardápio</a>
 
-  <!-- HEADER: Logo + Contato + Carrinho -->
+  <!-- HEADER minimalista -->
   <header class="site-header" id="site-header">
-    <a class="brand" href="#conteudo" aria-label="Sabor & Sorriso, início">
-      <img src="img/logo.png" alt="Sabor &amp; Sorriso" width="72" height="36" data-fallback-text="Sabor &amp; Sorriso">
+    <a class="brand" href="#top" aria-label="Sabor & Sorriso">
+      <img src="img/logo.png" alt="Sabor &amp; Sorriso" width="70" height="32" data-fallback-text="Sabor &amp; Sorriso">
     </a>
-
-    <div class="site-header__actions">
-      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Mudar tema">
-        <span class="theme-toggle__sun" aria-hidden="true">☀️</span>
-        <span class="theme-toggle__moon" aria-hidden="true">🌙</span>
-      </button>
-
-      <!-- Botão de WhatsApp visível no topo -->
-      <a class="btn-contact" id="contact-btn" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-        <span aria-hidden="true">💬</span>
-        <span class="btn-contact__label">Contato</span>
-      </a>
-
-      <button type="button" class="cart-toggle" id="cart-toggle"
-              aria-haspopup="dialog" aria-controls="cart-drawer" aria-expanded="false"
-              aria-label="Ver carrinho, 0 itens">
-        <span aria-hidden="true">🛒</span>
-        <span class="cart-count" id="cart-count" aria-hidden="true" hidden>0</span>
-      </button>
-    </div>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+      <span class="theme-toggle__sun" aria-hidden="true">☀</span>
+      <span class="theme-toggle__moon" aria-hidden="true">☾</span>
+    </button>
   </header>
 
-  <main id="conteudo">
-    <!-- HERO discreto -->
+  <main id="top">
+    <!-- HERO: logo + redes sociais + CTA -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__content">
-        <h1 class="hero__title" id="hero-title">Sabor &amp; Sorriso</h1>
-        <p class="hero__subtitle">Monte seu pedido e envie pelo WhatsApp.</p>
-        <button type="button" class="btn btn--primary" data-scroll="destaques">Ver combos</button>
+      <img class="hero__logo" src="img/logo.png" alt="Sabor &amp; Sorriso Hamburgueria" data-fallback-text="Sabor &amp; Sorriso">
+      <h1 class="sr-only" id="hero-title">Sabor &amp; Sorriso Hamburgueria</h1>
+      <p class="hero__tagline">O sabor que você merece, direto no seu WhatsApp.</p>
+
+      <div class="hero__socials">
+        <a class="social-btn social-btn--whatsapp" href="#" data-contact="wa" aria-label="Falar no WhatsApp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 6.32A8.2 8.2 0 0 0 12.05 4a8.24 8.24 0 0 0-7.1 12.42L4 20l3.7-.93A8.2 8.2 0 0 0 12.06 20a8.23 8.23 0 0 0 5.54-14.18Zm-5.54 12.6a6.8 6.8 0 0 1-3.47-.95l-.25-.15-2.57.65.68-2.5-.16-.26a6.83 6.83 0 1 1 5.77 3.21Zm3.74-5.1c-.2-.1-1.2-.6-1.39-.66-.19-.07-.32-.1-.46.1s-.53.66-.65.8-.24.16-.44.05a5.6 5.6 0 0 1-1.64-1.01 6.15 6.15 0 0 1-1.13-1.41c-.12-.2 0-.32.09-.42l.3-.35c.1-.11.13-.19.2-.32s0-.24 0-.34-.46-1.1-.63-1.5-.33-.34-.46-.35h-.4a.76.76 0 0 0-.55.26 2.3 2.3 0 0 0-.72 1.72 4 4 0 0 0 .84 2.13 9.15 9.15 0 0 0 3.5 3.1 11.87 11.87 0 0 0 1.17.44 2.8 2.8 0 0 0 1.29.08 2.1 2.1 0 0 0 1.38-.97 1.7 1.7 0 0 0 .12-.97c-.05-.09-.18-.14-.38-.24Z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+        <a class="social-btn social-btn--instagram" href="https://www.instagram.com/sabor.e.sorriso" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.42.56.22.96.48 1.38.9s.68.82.9 1.38c.17.42.37 1.06.42 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.42 2.23-.22.56-.48.96-.9 1.38s-.82.68-1.38.9c-.42.17-1.06.37-2.23.42-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.37-1.06-.42-2.23C2.2 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.42-2.23.22-.56.48-.96.9-1.38s.82-.68 1.38-.9c.42-.17 1.06-.37 2.23-.42C8.42 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.15 0-3.5 0-4.73.07-1.14.05-1.76.24-2.17.4-.55.22-.94.47-1.35.88s-.66.8-.88 1.35c-.16.41-.35 1.03-.4 2.17C2.4 8.5 2.4 8.85 2.4 12s0 3.5.07 4.73c.05 1.14.24 1.76.4 2.17.22.55.47.94.88 1.35s.8.66 1.35.88c.41.16 1.03.35 2.17.4 1.23.07 1.58.07 4.73.07s3.5 0 4.73-.07c1.14-.05 1.76-.24 2.17-.4.55-.22.94-.47 1.35-.88s.66-.8.88-1.35c.16-.41.35-1.03.4-2.17.07-1.23.07-1.58.07-4.73s0-3.5-.07-4.73c-.05-1.14-.24-1.76-.4-2.17a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.41-.16-1.03-.35-2.17-.4C15.5 4 15.15 4 12 4Zm0 3.06a4.94 4.94 0 1 1 0 9.88 4.94 4.94 0 0 1 0-9.88Zm0 8.14a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm6.3-8.34a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg>
+          <span>Instagram</span>
+        </a>
       </div>
+
+      <button type="button" class="btn btn--primary" data-scroll="destaques">Ver combos</button>
     </section>
 
     <!-- COMBOS EM DESTAQUE -->
@@ -68,27 +63,43 @@
       <ul class="featured-grid" id="featured-grid"></ul>
     </section>
 
-    <!-- CATEGORIAS (sticky) -->
+    <!-- BUSCA -->
+    <div class="container search-wrap">
+      <label class="search-bar" for="search-input">
+        <svg class="search-bar__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 1 0 3.87 10.6l4.26 4.26a1 1 0 0 0 1.42-1.42l-4.26-4.26A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg>
+        <input type="search" id="search-input" placeholder="Buscar lanches, bebidas..." autocomplete="off">
+        <button type="button" class="search-bar__clear" id="search-clear" aria-label="Limpar busca" hidden>✕</button>
+      </label>
+    </div>
+
+    <!-- CATEGORIAS (tabs) -->
     <nav class="category-nav" id="category-nav" aria-label="Categorias">
       <ul class="category-nav__list" id="category-nav-list"></ul>
     </nav>
 
     <!-- CARDÁPIO -->
     <div class="container menu" id="cardapio" tabindex="-1">
+      <p class="search-empty" id="search-empty" hidden>Nenhum item encontrado. Tente outra busca.</p>
       <noscript><p class="noscript">Ative o JavaScript para ver o cardápio.</p></noscript>
     </div>
   </main>
 
   <footer class="site-footer" id="site-footer">
     <p><strong>Sabor &amp; Sorriso Hamburgueria</strong></p>
-    <p>Pedidos pelo WhatsApp</p>
+    <p>Pedidos pelo WhatsApp • Instagram @sabor.e.sorriso</p>
   </footer>
 
-  <!-- OVERLAY do carrinho -->
+  <!-- CARRINHO FLUTUANTE -->
+  <button type="button" class="cart-fab" id="cart-fab" aria-label="Ver carrinho" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2a1 1 0 0 0 0 2h1.14l1.83 8.24A2.5 2.5 0 0 0 10.41 16H19a1 1 0 0 0 0-2h-8.59a.5.5 0 0 1-.49-.4L9.86 13H18a1 1 0 0 0 .97-.76l1.5-6A1 1 0 0 0 19.5 5H8.7l-.28-1.24A2 2 0 0 0 6.47 2.2H6a1 1 0 0 0-.3 1.9h.77l.53 2.4ZM10 20a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm8 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></svg>
+    <span class="cart-fab__count" id="cart-count" hidden>0</span>
+  </button>
+
+  <!-- OVERLAY -->
   <div class="overlay" id="overlay" aria-hidden="true"></div>
 
-  <!-- CARRINHO LATERAL -->
-  <div class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" inert>
+  <!-- DRAWER CARRINHO -->
+  <aside class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" inert>
     <div class="drawer__header">
       <h2 class="drawer__title" id="cart-title">Seu Pedido</h2>
       <button type="button" class="icon-btn" id="cart-close" aria-label="Fechar carrinho">✕</button>
@@ -110,38 +121,33 @@
         <strong id="cart-subtotal">R$ 0,00</strong>
       </div>
       <p class="cart-note" id="cart-note" hidden></p>
-
       <label class="field-label" for="order-notes">Observações (opcional)</label>
       <textarea class="field" id="order-notes" rows="2" maxlength="300" placeholder="Endereço, troco, retirar no local..."></textarea>
-
       <button type="button" class="btn btn--whatsapp" id="checkout-btn" disabled>
-        <span aria-hidden="true">💬</span> Finalizar Pedido no WhatsApp
+        <span aria-hidden="true">💬</span> Finalizar no WhatsApp
       </button>
       <button type="button" class="btn-link" id="clear-btn" hidden>Limpar carrinho</button>
     </div>
-  </div>
+  </aside>
 
-  <!-- BOTTOM SHEET: Detalhes do Produto (usando <dialog> nativo) -->
+  <!-- BOTTOM SHEET -->
   <dialog class="product-sheet" id="product-sheet" aria-labelledby="sheet-title">
     <div class="product-sheet__handle" aria-hidden="true"></div>
     <button type="button" class="product-sheet__close" id="sheet-close" aria-label="Fechar">✕</button>
-
     <div class="product-sheet__media" id="sheet-media"></div>
-
     <div class="product-sheet__body">
       <h2 class="product-sheet__title" id="sheet-title"></h2>
-      <span class="product-sheet__meta" id="sheet-meta"></span>
+      <span class="product-sheet__meta" id="sheet-meta" hidden></span>
       <p class="product-sheet__desc" id="sheet-desc"></p>
       <div class="product-sheet__options" id="sheet-options"></div>
     </div>
-
     <div class="product-sheet__footer">
       <div class="product-sheet__price">
         <span>Total</span>
         <strong id="sheet-price">R$ 0,00</strong>
       </div>
       <button type="button" class="btn btn--add btn--add-lg" id="sheet-add">
-        <span aria-hidden="true">+</span> Adicionar ao carrinho
+        <span aria-hidden="true">+</span> Adicionar
       </button>
     </div>
   </dialog>
