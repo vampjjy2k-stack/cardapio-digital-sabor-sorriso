@@ -262,27 +262,26 @@ function optionsHTML(item) {
 }
 
 function addButtonHTML(item) {
-  return `<button type="button" class="btn btn--add" data-add="${item.id}" aria-label="Adicionar ${esc(item.name)}${item.meta ? ' ' + esc(item.meta) : ''} ao carrinho">
+  // Botão compacto: apenas o ícone "+" e o texto "Adicionar".
+  return `<button type="button" class="btn btn--add" data-add="${item.id}" aria-label="Adicionar ${esc(item.name)} ao carrinho">
     <span class="btn__plus" aria-hidden="true">+</span> Adicionar</button>`;
 }
-
 function cardHTML(item, section) {
   return `
   <li class="card" data-card>
-    <div class="card__top">
-      <div class="card__thumb">${thumbHTML(item, section)}</div>
-      <div class="card__info">
-        <h3 class="card__name">${esc(item.name)}</h3>
-        ${item.meta ? `<span class="card__meta">${esc(item.meta)}</span>` : ''}
+    <div class="card__thumb">${thumbHTML(item, section)}</div>
+    <div class="card__info">
+      <h3 class="card__name">${esc(item.name)}</h3>
+      ${item.meta ? `<span class="card__meta">${esc(item.meta)}</span>` : ''}
+      ${item.desc ? `<p class="card__desc">${esc(item.desc)}</p>` : ''}
+      ${optionsHTML(item)}
+      <div class="card__footer">
         ${priceHTML(item)}
+        ${addButtonHTML(item)}
       </div>
     </div>
-    ${item.desc ? `<p class="card__desc">${esc(item.desc)}</p>` : ''}
-    ${optionsHTML(item)}
-    ${addButtonHTML(item)}
   </li>`;
 }
-
 function infoCardHTML(section) {
   return `
   <li class="card card--info">
@@ -314,12 +313,13 @@ function featuredHTML(item, section) {
     <div class="feat-card__body">
       <h3 class="card__name">${esc(item.name)}</h3>
       <p class="card__desc card__desc--clamp">${esc(item.desc)}</p>
-      ${priceHTML(item)}
-      ${addButtonHTML(item)}
+      <div class="card__footer">
+        ${priceHTML(item)}
+        ${addButtonHTML(item)}
+      </div>
     </div>
   </li>`;
 }
-
 function renderMenu() {
   els.menu.insertAdjacentHTML('beforeend', MENU.map(sectionHTML).join(''));
 
