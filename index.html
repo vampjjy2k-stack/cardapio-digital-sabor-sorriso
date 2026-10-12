@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sabor &amp; Sorriso Hamburgueria | Cardápio Digital</title>
+  <meta name="description" content="Cardápio digital da hamburgueria Sabor &amp; Sorriso. Escolha seus lanches, combos e bebidas e envie o pedido pelo WhatsApp.">
+  <meta name="theme-color" content="#121212">
+  <link rel="icon" href="img/logo.png">
+
+  <!-- Tipografia: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#cardapio">Ir para o cardápio</a>
+
+  <!-- 1. HEADER FIXO -->
+  <header class="site-header" id="site-header">
+    <a class="brand" href="#conteudo" aria-label="Sabor &amp; Sorriso Hamburgueria, início">
+      <img src="img/logo.png" alt="Sabor &amp; Sorriso Hamburgueria" height="44" data-fallback-text="Sabor &amp; Sorriso">
+    </a>
+
+    <button type="button" class="cart-toggle" id="cart-toggle"
+            aria-haspopup="dialog" aria-controls="cart-drawer" aria-expanded="false"
+            aria-label="Ver carrinho, 0 itens">
+      <span aria-hidden="true">🛒</span>
+      <span class="cart-toggle__label" aria-hidden="true">Ver Carrinho</span>
+      <span class="cart-count" id="cart-count" aria-hidden="true" hidden>0</span>
+    </button>
+  </header>
+
+  <main id="conteudo">
+    <!-- 2. BANNER HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Hamburgueria Sabor &amp; Sorriso</p>
+        <h1 class="hero__title" id="hero-title">O Sabor que Você Merece</h1>
+        <p class="hero__subtitle">Monte seu pedido aqui e finalize direto no WhatsApp.</p>
+        <button type="button" class="btn btn--primary" data-scroll="destaques">Ver combos</button>
+      </div>
+    </section>
+
+    <!-- 3. COMBOS EM DESTAQUE -->
+    <section class="featured container" id="destaques" aria-labelledby="featured-title" tabindex="-1">
+      <h2 class="section-title" id="featured-title">Combos que Salvam</h2>
+      <ul class="featured-grid" id="featured-grid"></ul>
+    </section>
+
+    <!-- 4. BARRA DE CATEGORIAS (STICKY) -->
+    <nav class="category-nav" id="category-nav" aria-label="Categorias do cardápio">
+      <ul class="category-nav__list" id="category-nav-list"></ul>
+    </nav>
+
+    <!-- 5. CARDÁPIO (gerado pelo script.js a partir dos dados oficiais) -->
+    <div class="container menu" id="cardapio" tabindex="-1">
+      <noscript><p class="noscript">Ative o JavaScript para ver o cardápio e montar seu pedido.</p></noscript>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer">
+    <p><strong>Sabor &amp; Sorriso Hamburgueria</strong></p>
+    <p>Pedidos pelo WhatsApp</p>
+  </footer>
+
+  <!-- 6. CARRINHO LATERAL (DRAWER) -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+  <div class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" inert>
+    <div class="drawer__header">
+      <h2 class="drawer__title" id="cart-title">Seu Pedido</h2>
+      <button type="button" class="icon-btn" id="cart-close" aria-label="Fechar carrinho">✕</button>
+    </div>
+
+    <div class="drawer__body">
+      <ul class="cart-list" id="cart-list"></ul>
+
+      <div class="cart-empty" id="cart-empty">
+        <p class="cart-empty__icon" aria-hidden="true">🛒</p>
+        <p class="cart-empty__title">Seu carrinho está vazio</p>
+        <p>Escolha seus lanches favoritos no cardápio.</p>
+        <button type="button" class="btn btn--primary" id="cart-browse">Ver cardápio</button>
+      </div>
+    </div>
+
+    <div class="drawer__footer">
+      <div class="subtotal">
+        <span>Subtotal</span>
+        <strong id="cart-subtotal">R$ 0,00</strong>
+      </div>
+      <p class="cart-note" id="cart-note" hidden></p>
+
+      <label class="field-label" for="order-notes">Observações (opcional)</label>
+      <textarea class="field" id="order-notes" rows="2" maxlength="300"
+                placeholder="Endereço, troco, retirar no local..."></textarea>
+
+      <!-- 7. BOTÃO FINALIZAR PEDIDO -->
+      <button type="button" class="btn btn--whatsapp" id="checkout-btn" disabled>
+        <span aria-hidden="true">💬</span> Finalizar Pedido no WhatsApp
+      </button>
+      <button type="button" class="btn-link" id="clear-btn" hidden>Limpar carrinho</button>
+    </div>
+  </div>
+
+  <!-- Aviso rápido (acessível para leitores de tela) -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
