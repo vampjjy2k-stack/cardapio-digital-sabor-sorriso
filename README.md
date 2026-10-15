@@ -1,41 +1,24 @@
 # Cardápio Digital — Sabor & Sorriso
 
-Cardápio digital estático da hamburgueria **Sabor & Sorriso**, com seleção de produtos, carrinho e envio do pedido pelo WhatsApp. Os produtos usam apresentação padronizada, sem fotos individuais.
+Cardápio digital estático da hamburgueria **Sabor & Sorriso**, com busca, categorias, carrinho e envio do pedido pelo WhatsApp.
 
-## Estrutura
+## Arquivos principais
 
-```text
-.
-├── index.html       # Página principal
-├── style.css        # Estilos e layout responsivo
-├── script.js        # Produtos, carrinho e integração com WhatsApp
-└── img/             # Apenas a identidade visual/logo
-```
+- `index.html` — estrutura da página e acessibilidade.
+- `style.css` — visual responsivo e temas.
+- `script.js` — cardápio, carrinho, busca e WhatsApp.
+- `img/` — logo e imagens padronizadas dos produtos.
 
-## Configuração do WhatsApp
+## WhatsApp
 
-Antes de publicar, abra `script.js` e substitua:
+O pedido é enviado para **+55 (21) 99579-2519**. O número fica configurado em `script.js` somente com DDD e dígitos: `21995792519`.
 
-```js
-const WHATSAPP_NUMBER = 'SEU_NUMERO_AQUI';
-```
+## Teste local
 
-pelo número da loja, somente com DDD e números, sem espaços, parênteses ou hífen. O projeto já está configurado para o WhatsApp da Sabor & Sorriso.
-
-```text
-+55 (21) 99579-2519
-```
-
-## Como testar localmente
-
-Como o projeto é estático, basta abrir `index.html` no navegador. Para evitar limitações do navegador com arquivos locais, também é possível usar qualquer servidor estático, por exemplo:
+Abra `index.html` diretamente no navegador ou use um servidor local:
 
 ```bash
-python3 -m http.server 8080
+python3 -m http.server 8090
 ```
 
-Depois acesse `http://localhost:8080`.
-
-## Publicação
-
-O projeto pode ser publicado em GitHub Pages, Netlify, Vercel ou outro serviço de hospedagem de arquivos estáticos.
+Depois acesse `http://localhost:8090`.
