@@ -582,3 +582,28 @@ h1, h2, h3, p { margin: 0; }
 @media (min-width: 1040px) {
   .card-list { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ---------- Status da loja e checkout expandido ---------- */
+.store-status {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 32px;
+  padding: 0 10px; border: 1px solid var(--chip-border); border-radius: 999px;
+  color: var(--chip-ink); font-size: .72rem; font-weight: 700; white-space: nowrap;
+}
+.store-status__dot { width: 9px; height: 9px; border-radius: 50%; background: #17803A; box-shadow: 0 0 0 3px rgba(23,128,58,.14); }
+.store-status.is-closed .store-status__dot { background: #D32F2F !important; box-shadow: 0 0 0 3px rgba(211,47,47,.14); }
+.checkout-fields { display: grid; gap: 16px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--surface-line); }
+.fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.fieldset__legend { margin-bottom: 8px; color: var(--card-ink); font-size: .9rem; font-weight: 800; }
+.radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.radio-option { position: relative; min-width: 0; }
+.radio-option input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.radio-option span { display: flex; min-height: 46px; align-items: center; justify-content: center; padding: 8px 6px; border: 2px solid var(--field-border); border-radius: 12px; color: var(--card-ink); font-size: .78rem; font-weight: 700; text-align: center; }
+.radio-option input:checked + span { background: var(--yellow); border-color: var(--yellow); color: #1A1A1A; }
+.radio-option input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.radio-option small { display: block; font-size: .66rem; font-weight: 600; }
+.address-fields { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--surface-line); border-radius: 14px; background: var(--field-bg); }
+.field-row { display: grid; grid-template-columns: .75fr 1.25fr; gap: 8px; }
+@media (max-width: 420px) {
+  .store-status { padding: 0 7px; font-size: .65rem; }
+  .radio-group { grid-template-columns: 1fr; }
+}

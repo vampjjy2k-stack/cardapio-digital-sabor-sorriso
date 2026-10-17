@@ -25,8 +25,6 @@
   <meta name="theme-color" content="#14110d">
   <link rel="icon" href="img/logo.webp" type="image/webp">
 
-  <!-- Tema (claro/escuro): aplicado antes da página aparecer para não "piscar".
-       Para mudar o tema padrão de quem nunca escolheu, troque 'dark' por 'light'. -->
   <script>
     (function () {
       var theme = null;
@@ -36,7 +34,6 @@
     })();
   </script>
 
-  <!-- Tipografia: Poppins (só os pesos usados) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -46,13 +43,16 @@
 <body>
   <a class="skip-link" href="#cardapio">Ir para o cardápio</a>
 
-  <!-- 1. HEADER FIXO -->
   <header class="site-header" id="site-header">
     <a class="brand" href="#conteudo" aria-label="Sabor &amp; Sorriso Hamburgueria, início">
       <img src="img/logo.webp" alt="Sabor &amp; Sorriso Hamburgueria" width="88" height="52" data-fallback-text="Sabor &amp; Sorriso">
     </a>
 
     <div class="site-header__actions">
+      <span class="store-status" id="store-status" aria-live="polite">
+        <span class="store-status__dot"></span>
+        <span class="store-status__text">Verificando...</span>
+      </span>
       <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Mudar para tema claro">
         <span class="theme-toggle__sun" aria-hidden="true">☀️</span>
         <span class="theme-toggle__moon" aria-hidden="true">🌙</span>
@@ -68,7 +68,6 @@
   </header>
 
   <main id="conteudo">
-    <!-- 2. HERO (compacto) -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__content">
         <p class="hero__eyebrow">Hamburgueria Sabor &amp; Sorriso</p>
@@ -84,18 +83,15 @@
       </div>
     </section>
 
-    <!-- 3. COMBOS EM DESTAQUE -->
     <section class="featured container" id="destaques" aria-labelledby="featured-title" tabindex="-1">
       <h2 class="section-title" id="featured-title">Combos que Salvam</h2>
       <ul class="featured-grid" id="featured-grid"></ul>
     </section>
 
-    <!-- 4. BARRA DE CATEGORIAS (STICKY) -->
     <nav class="category-nav" id="category-nav" aria-label="Categorias do cardápio">
       <ul class="category-nav__list" id="category-nav-list"></ul>
     </nav>
 
-    <!-- 5. CARDÁPIO (gerado pelo script.js a partir dos dados oficiais) -->
     <div class="container menu" id="cardapio" tabindex="-1">
       <noscript><p class="noscript">Ative o JavaScript para ver o cardápio e montar seu pedido.</p></noscript>
       <p class="no-results" id="no-results" role="status" hidden>
@@ -104,11 +100,6 @@
     </div>
   </main>
 
-  <!--
-    Site desenvolvido por João Lucas Sales Dias
-    E-mail: salesdiasjoaolucas@gmail.com
-    WhatsApp: +55 21 97708-0560
-  -->
   <footer class="site-footer" id="site-footer">
     <p><strong>Sabor &amp; Sorriso Hamburgueria</strong></p>
     <p>Pedidos pelo WhatsApp · Instagram @sabor.e.sorriso</p>
@@ -129,7 +120,6 @@
     </div>
   </footer>
 
-  <!-- Barra do carrinho fixa embaixo (aparece quando há itens) -->
   <div class="cart-bar" id="cart-bar" hidden>
     <button type="button" class="cart-bar__btn" id="cart-bar-btn" aria-haspopup="dialog" aria-controls="cart-drawer">
       <span class="cart-bar__count" id="cart-bar-count" aria-hidden="true">0</span>
@@ -138,7 +128,6 @@
     </button>
   </div>
 
-  <!-- 6. CARRINHO LATERAL (DRAWER) -->
   <div class="overlay" id="overlay" aria-hidden="true"></div>
 
   <div class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" inert>
@@ -156,6 +145,58 @@
         <p>Escolha seus lanches favoritos no cardápio.</p>
         <button type="button" class="btn btn--primary" id="cart-browse">Ver cardápio</button>
       </div>
+
+      <!-- Checkout expandido -->
+      <div class="checkout-fields" id="checkout-fields" hidden>
+        <fieldset class="fieldset">
+          <legend class="fieldset__legend">Tipo de entrega</legend>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="delivery-type" value="delivery" required>
+              <span>Entrega</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="delivery-type" value="pickup" required>
+              <span>Retirada</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="address-fields" id="address-fields" hidden>
+          <label class="field-label" for="address-street">Rua / Avenida</label>
+          <input class="field" id="address-street" type="text" placeholder="Ex: Rua das Flores" autocomplete="street-address">
+          <div class="field-row">
+            <div>
+              <label class="field-label" for="address-number">Número</label>
+              <input class="field" id="address-number" type="text" placeholder="123" autocomplete="off">
+            </div>
+            <div>
+              <label class="field-label" for="address-neighborhood">Bairro</label>
+              <input class="field" id="address-neighborhood" type="text" placeholder="Centro" autocomplete="address-level3">
+            </div>
+          </div>
+          <label class="field-label" for="address-reference">Ponto de referência (opcional)</label>
+          <input class="field" id="address-reference" type="text" placeholder="Próximo ao mercado..." autocomplete="off">
+        </div>
+
+        <fieldset class="fieldset">
+          <legend class="fieldset__legend">Forma de pagamento</legend>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="payment-method" value="cash" required>
+              <span>Dinheiro</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="payment-method" value="card" required>
+              <span>Cartão <small>(+ R$ 2,00)</small></span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="payment-method" value="pix" required>
+              <span>Pix</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
     </div>
 
     <div class="drawer__footer">
@@ -169,7 +210,6 @@
       <textarea class="field" id="order-notes" rows="2" maxlength="300"
                 placeholder="Endereço, troco, retirar no local..."></textarea>
 
-      <!-- 7. BOTÃO FINALIZAR PEDIDO -->
       <button type="button" class="btn btn--whatsapp" id="checkout-btn" disabled>
         <span aria-hidden="true">💬</span> Finalizar Pedido no WhatsApp
       </button>
@@ -177,7 +217,6 @@
     </div>
   </div>
 
-  <!-- Aviso rápido (acessível para leitores de tela) -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
