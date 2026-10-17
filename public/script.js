@@ -12,7 +12,6 @@ const WHATSAPP_NUMBER = '21995792519';
 const STORAGE_KEY = 'saborsorriso:carrinho:v1';
 const THEME_KEY = 'saborsorriso:tema';
 const NOTES_KEY = 'saborsorriso:observacoes:v1';
-const STATUS_KEY = 'saborsorriso:status-loja';
 const DELIVERY_KEY = 'saborsorriso:entrega-dados';
 const MAX_QTY = 99;
 const CARD_FEE = 2.00; // Taxa para pagamento em cartão
@@ -161,10 +160,10 @@ const MENU = [
     id: 'bebidas', compact: true, title: 'Bebidas', icon: '🥤',
     items: [
       // Latas
-      p('Coca Cola', null, '', { meta: 'Lata', img: 'lata' }),
-      p('Fanta Uva', null, '', { meta: 'Lata', img: 'lata' }),
-      p('Fanta Laranja', null, '', { meta: 'Lata', img: 'lata' }),
-      p('Guaraná Antártica', null, '', { meta: 'Lata', img: 'antarctica' }),
+      p('Coca Cola', 7, '', { meta: 'Lata', img: 'lata' }),
+      p('Fanta Uva', 7, '', { meta: 'Lata', img: 'lata' }),
+      p('Fanta Laranja', 7, '', { meta: 'Lata', img: 'lata' }),
+      p('Guaraná Antártica', 7, '', { meta: 'Lata', img: 'antarctica' }),
       // 2 Litros
       p('Coca Cola', 15, '', { meta: '2L', img: 'garrafa2l' }),
       p('Kuat', 8, '', { meta: '2L', img: 'garrafa2l' }),
@@ -172,10 +171,7 @@ const MENU = [
       // 600ml
       p('Coca Cola', 8, '', { meta: '600ML', img: 'garrafa600' }),
       p('H2O', 7, '', { meta: '600ML', img: 'garrafa600' })
-    ].map(item => {
-      if (item.meta === 'Lata') item.price = 7;
-      return item;
-    })
+    ]
   },
   {
     id: 'sobremesas', title: 'Sobremesas', icon: '🍨', img: 'sobremesas',
@@ -194,7 +190,7 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-const money = value => brl.format(value).replace(/ /g, ' ');
+const money = value => brl.format(value).replace(/\u00a0/g, ' ');
 
 const esc = value => String(value).replace(/[&<>"']/g, ch =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -225,6 +221,7 @@ MENU.forEach(section => {
 const els = {
   header: $('#site-header'),
   storeStatus: $('#store-status'),
+  storeBanner: $('#store-banner'),
   main: $('#conteudo'),
   footer: $('#site-footer'),
   nav: $('#category-nav'),
@@ -250,6 +247,11 @@ const els = {
   checkoutFields: $('#checkout-fields'),
   addressFields: $('#address-fields'),
   subtotal: $('#cart-subtotal'),
+  feeRow: $('#fee-row'),
+  fee: $('#cart-fee'),
+  summary: $('#cart-summary'),
+  total: $('#cart-total'),
+  checkoutHint: $('#checkout-hint'),
   note: $('#cart-note'),
   notes: $('#order-notes'),
   checkout: $('#checkout-btn'),
@@ -324,8 +326,8 @@ function cardHTML(item, section) {
     <div class="card__body">
       <h3 class="card__name">${esc(item.name)}</h3>
       ${item.meta ? `<span class="card__meta">${esc(item.meta)}</span>` : ''}
-      ${item.desc ? `<p class="card__desc">${esc(item.desc)}</p>
-      <button type="button" class="more-btn" data-more aria-expanded="false" hidden>Ver mais</button>` : ''}
+      ${item.desc ? `<p class="card__desc" id="desc-${item.id}">${esc(item.desc)}</p>
+      <button type="button" class="more-btn" data-more aria-controls="desc-${item.id}" aria-label="Ver mais ingredientes de ${esc(item.name)}" aria-expanded="false" hidden>Ver mais</button>` : ''}
       ${priceHTML(item)}
     </div>
     <div class="card__media">
@@ -399,63 +401,78 @@ function toggleMore(btn) {
   const open = desc.classList.toggle('is-open');
   btn.setAttribute('aria-expanded', String(open));
   btn.textContent = open ? 'Ver menos' : 'Ver mais';
+  const name = btn.closest('[data-card]').querySelector('.card__name').textContent;
+  btn.setAttribute('aria-label', `${btn.textContent} ingredientes de ${name}`);
 }
 
 /* =========================================================
    STATUS DA LOJA (ABERTO/FECHADO)
+   Vem do servidor (/api/status), então é igual para todos os clientes.
+   Quem muda o status é a dona da loja, em /admin.
    ========================================================= */
 
-let storeOpen = true;
+const STATUS_URL = '/api/status';
+const STATUS_POLL_MS = 60 * 1000;   // reconfere a cada 1 minuto (só com a aba visível)
 
-function loadStoreStatus() {
-  try {
-    const saved = localStorage.getItem(STATUS_KEY);
-    if (saved === 'closed') storeOpen = false;
-    else storeOpen = true;
-  } catch (e) { storeOpen = true; }
+let storeOpen = false;              // Só uma resposta válida pode habilitar envio.
+let statusState = 'checking';       // 'checking' | 'ok' | 'unavailable'
+let statusRequestVersion = 0;
+
+async function loadStoreStatus() {
+  const version = ++statusRequestVersion;
+  const wasKnown = statusState === 'ok';
+  const wasOpen = storeOpen;
+  statusState = 'checking';
+  storeOpen = false;
   updateStoreStatusUI();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  let nextOpen = false;
+  let ok = false;
+
+  try {
+    const res = await fetch(STATUS_URL, { cache: 'no-store', signal: controller.signal });
+    if (res.ok) {
+      const data = await res.json();
+      if (!data.degraded && (data.status === 'open' || data.status === 'closed')) {
+        nextOpen = data.status === 'open';
+        ok = true;
+      }
+    }
+  } catch { /* Estado desconhecido nunca mantém uma abertura anterior. */ }
+  clearTimeout(timer);
+  // Uma resposta antiga de "open" não pode sobrescrever falha mais recente.
+  if (version !== statusRequestVersion) return;
+  statusState = ok ? 'ok' : 'unavailable';
+  storeOpen = ok && nextOpen;
+  updateStoreStatusUI();
+  if (wasKnown && ok && wasOpen !== storeOpen) {
+    showToast(storeOpen ? 'A loja acabou de abrir! Pedidos habilitados.' : 'A loja fechou. Pedidos pausados.');
+  }
 }
 
 function updateStoreStatusUI() {
-  const statusEl = els.storeStatus;
-  if (!statusEl) return;
-  const dot = statusEl.querySelector('.store-status__dot');
-  const text = statusEl.querySelector('.store-status__text');
-  if (storeOpen) {
-    dot.style.background = '#17803A';
-    text.textContent = 'Aberto agora';
-    statusEl.classList.remove('is-closed');
-    statusEl.classList.add('is-open');
-  } else {
-    dot.style.background = '#D32F2F';
-    text.textContent = 'Fechado';
-    statusEl.classList.remove('is-open');
-    statusEl.classList.add('is-closed');
+  const pill = els.storeStatus;
+  if (pill) {
+    pill.hidden = false;
+    pill.classList.toggle('is-open', statusState === 'ok' && storeOpen);
+    pill.classList.toggle('is-closed', statusState === 'ok' && !storeOpen);
+    pill.querySelector('.store-status__text').textContent = statusState === 'checking'
+      ? 'Verificando...' : statusState === 'unavailable' ? 'Status indisponível' : storeOpen ? 'Aberto agora' : 'Fechado';
+  }
+  if (els.storeBanner) {
+    els.storeBanner.hidden = storeOpen;
+    els.storeBanner.innerHTML = statusState === 'ok'
+      ? '<strong>Estamos fechados no momento.</strong> Você pode montar o pedido, mas só consegue enviá-lo quando a loja abrir.'
+      : '<strong>Não foi possível confirmar se a loja está aberta.</strong> O envio está temporariamente bloqueado até confirmar o status.';
   }
   updateCheckoutState();
 }
 
-function toggleStoreStatus() {
-  storeOpen = !storeOpen;
-  try {
-    localStorage.setItem(STATUS_KEY, storeOpen ? 'open' : 'closed');
-  } catch (e) {}
-  updateStoreStatusUI();
-  showToast(storeOpen ? 'Loja aberta! Pedidos habilitados.' : 'Loja fechada. Pedidos pausados.');
-}
-
-function checkAdminMode() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('admin') === '1') {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'theme-toggle';
-    btn.style.marginRight = '4px';
-    btn.innerHTML = '🔧';
-    btn.setAttribute('aria-label', 'Alternar status da loja');
-    btn.addEventListener('click', toggleStoreStatus);
-    els.header.querySelector('.site-header__actions').prepend(btn);
-  }
+function startStatusPolling() {
+  setInterval(() => { if (!document.hidden) loadStoreStatus(); }, STATUS_POLL_MS);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) loadStoreStatus(); });
+  window.addEventListener('online', loadStoreStatus);
 }
 
 /* =========================================================
@@ -487,6 +504,9 @@ function applySearch(query) {
   els.featured.hidden = searching;
   els.noResults.hidden = totalVisible > 0;
 
+  $('#search-results').textContent = searching
+    ? `${totalVisible} ${totalVisible === 1 ? 'resultado encontrado' : 'resultados encontrados'}.`
+    : '';
   if (searching) setActiveCategory(null);
   else refreshActive();
   requestAnimationFrame(measureClamps);
@@ -540,11 +560,15 @@ let cart = loadCart();
 
 function addToCart(id, opt) {
   const ref = ITEM_INDEX.get(id);
-  if (!ref) return;
+  if (!ref) return false;
   if (ref.item.options && opt == null) opt = 0;
   if (!ref.item.options) opt = null;
 
   const existing = cart.find(l => l.id === id && l.opt === opt);
+  if (existing && existing.qty >= MAX_QTY) {
+    showToast(`Limite de ${MAX_QTY} unidades deste item.`);
+    return false;
+  }
   if (existing) existing.qty = Math.min(MAX_QTY, existing.qty + 1);
   else cart.push({ id, opt, qty: 1 });
 
@@ -552,28 +576,43 @@ function addToCart(id, opt) {
   renderCart();
   bumpCounter();
   showToast(`${describeLine({ id, opt }).name} adicionado ao carrinho`);
+  return true;
 }
 
 function changeQty(key, delta) {
   const index = cart.findIndex(l => lineKey(l) === key);
   if (index === -1) return;
+  const name = describeLine(cart[index]).name;
   const next = cart[index].qty + delta;
+  if (next > MAX_QTY) {
+    showToast(`Limite de ${MAX_QTY} unidades deste item.`);
+    return;
+  }
   if (next <= 0) cart.splice(index, 1);
   else cart[index].qty = Math.min(MAX_QTY, next);
   saveCart();
   renderCart();
+  const updated = els.list.querySelector(`[data-key="${CSS.escape(key)}"]`);
+  if (updated) updated.closest('.cart-line').classList.add('is-updated');
+  showToast(next <= 0 ? `${name} removido do carrinho` : `${name}: ${next} ${next === 1 ? 'unidade' : 'unidades'}`);
 }
 
 function removeLine(key) {
+  const line = cart.find(l => lineKey(l) === key);
+  if (!line) return;
+  const name = describeLine(line).name;
   cart = cart.filter(l => lineKey(l) !== key);
   saveCart();
   renderCart();
+  showToast(`${name} removido do carrinho`);
 }
 
 function clearCart() {
   cart = [];
   saveCart();
   renderCart();
+  showToast('Carrinho limpo. Escolha seus favoritos no cardápio.');
+  if (isCartOpen()) els.browseBtn.focus();
 }
 
 function totals() {
@@ -641,6 +680,18 @@ function updateCheckoutState() {
     els.addressFields.hidden = true;
   }
 
+  ['#address-street', '#address-number', '#address-neighborhood'].forEach(sel => {
+    $(sel).required = deliveryType === 'delivery';
+  });
+  const deliveryLabels = { delivery: 'Entrega', pickup: 'Retirada no local' };
+  const paymentLabels = { cash: 'Dinheiro', card: 'Cartão', pix: 'Pix' };
+  const count = totals().count;
+  els.summary.hidden = isEmpty;
+  els.summary.textContent = [
+    `${count} ${count === 1 ? 'item' : 'itens'}`,
+    deliveryLabels[deliveryType], paymentLabels[paymentMethod]
+  ].filter(Boolean).join(' · ');
+
   let valid = !isEmpty && storeOpen;
   if (valid) {
     if (!deliveryType || !paymentMethod) valid = false;
@@ -654,17 +705,40 @@ function updateCheckoutState() {
 
   els.checkout.disabled = !valid;
 
+  // Dica do que falta (antes o botão ficava apagado sem explicar o motivo)
+  let hint = '';
+  if (!isEmpty) {
+    if (!storeOpen) {
+      hint = statusState === 'ok' ? 'A loja está fechada. Você poderá enviar o pedido quando ela abrir.' : 'Status não confirmado. O envio está temporariamente bloqueado.';
+    } else {
+      const missing = [];
+      if (!deliveryType) missing.push('entrega ou retirada');
+      if (deliveryType === 'delivery' && ![$('#address-street'), $('#address-number'), $('#address-neighborhood')].every(f => f && f.value.trim())) missing.push('endereço completo');
+      if (!paymentMethod) missing.push('forma de pagamento');
+      if (missing.length) hint = `Falta informar: ${missing.join(', ')}.`;
+    }
+  }
+  els.checkoutHint.textContent = hint;
+  els.checkoutHint.hidden = !hint;
+
   if (!storeOpen && !isEmpty) {
-    els.checkout.innerHTML = '<span aria-hidden="true">🔒</span> Loja fechada no momento';
+    els.checkout.textContent = statusState === 'ok' ? 'Loja fechada no momento' : 'Status não confirmado';
   } else {
     els.checkout.innerHTML = '<span aria-hidden="true">💬</span> Finalizar Pedido no WhatsApp';
   }
 }
 
+// Taxa de cartão só existe quando há itens no carrinho
+function paymentFee() {
+  const method = document.querySelector('input[name="payment-method"]:checked')?.value;
+  return method === 'card' && cart.length > 0 ? CARD_FEE : 0;
+}
+
 function renderCart() {
   const { total, pending, count } = totals();
+  const fee = paymentFee();
   const countText = `${count} ${count === 1 ? 'item' : 'itens'}`;
-  const totalText = pending && total === 0 ? 'A confirmar' : money(total);
+  const totalText = pending && total === 0 ? 'A confirmar' : money(total + fee);
 
   els.cartCount.textContent = count;
   els.cartCount.hidden = count === 0;
@@ -706,13 +780,9 @@ function renderCart() {
   els.checkoutFields.hidden = isEmpty;
   els.clear.hidden = isEmpty;
   els.subtotal.textContent = money(total);
-
-  const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
-  if (paymentMethod === 'card' && total > 0) {
-    els.subtotal.textContent = `${money(total)} + ${money(CARD_FEE)} (taxa cartão)`;
-  } else {
-    els.subtotal.textContent = money(total);
-  }
+  els.feeRow.hidden = fee === 0;
+  els.fee.textContent = `+ ${money(fee)}`;
+  els.total.textContent = totalText;
 
   if (pending > 0) {
     els.note.hidden = false;
@@ -734,6 +804,19 @@ function bumpCounter() {
   els.cartCount.classList.add('is-bump');
 }
 
+// Mantém o botão disponível para toques repetidos, sem alterar seu nome acessível.
+const addedTimers = new WeakMap();
+function flashAdded(button) {
+  clearTimeout(addedTimers.get(button));
+  button.classList.add('is-added');
+  button.textContent = button.classList.contains('add-btn') ? '✓' : 'Adicionado ✓';
+  addedTimers.set(button, setTimeout(() => {
+    button.classList.remove('is-added');
+    button.textContent = button.classList.contains('add-btn') ? '+' : 'Adicionar';
+    addedTimers.delete(button);
+  }, 900));
+}
+
 /* =========================================================
    DRAWER (CARRINHO LATERAL)
    ========================================================= */
@@ -750,7 +833,10 @@ function openCart() {
   pageRegions.forEach(region => region.setAttribute('inert', ''));
   document.body.classList.add('no-scroll');
   els.cartToggle.setAttribute('aria-expanded', 'true');
-  els.closeBtn.focus();
+  requestAnimationFrame(() => {
+    if (isCartOpen()) els.closeBtn.focus({ preventScroll: true });
+  });
+  loadStoreStatus(); // Bloqueia envio enquanto reconfirma o status ao abrir o carrinho.
 }
 
 function closeCart() {
@@ -811,8 +897,7 @@ function buildOrderMessage() {
     }
   });
 
-  let finalTotal = total;
-  if (paymentMethod === 'card') finalTotal += CARD_FEE;
+  const finalTotal = total + paymentFee();
   lines.push('', `*Total: ${money(finalTotal)}*${pending ? ' (+ itens com preço a confirmar)' : ''}`);
 
   const notes = els.notes.value.trim();
@@ -822,7 +907,11 @@ function buildOrderMessage() {
 }
 
 function checkout() {
-  if (cart.length === 0 || !storeOpen) return;
+  if (cart.length === 0) return;
+  if (statusState !== 'ok' || !storeOpen) {
+    showToast(statusState === 'ok' ? 'A loja está fechada no momento.' : 'Status não confirmado. Tente novamente mais tarde.');
+    return;
+  }
   openWhatsApp(buildOrderMessage());
 }
 
@@ -972,7 +1061,9 @@ document.addEventListener('click', event => {
   if (addBtn) {
     const card = addBtn.closest('[data-card]');
     const checked = card && card.querySelector('input[type="radio"]:checked');
-    addToCart(addBtn.dataset.add, checked ? Number(checked.value) : null);
+    if (addToCart(addBtn.dataset.add, checked ? Number(checked.value) : null)) {
+      flashAdded(addBtn);
+    }
     return;
   }
 
@@ -1042,7 +1133,24 @@ els.clear.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && isCartOpen()) closeCart();
+  if (!isCartOpen()) return;
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    closeCart();
+  }
+  if (event.key === 'Tab') {
+    const focusable = $$('button:not(:disabled), input:not(:disabled), textarea:not(:disabled), a[href], [tabindex="0"]', els.drawer)
+      .filter(el => el.getClientRects().length > 0);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !els.drawer.contains(document.activeElement))) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !els.drawer.contains(document.activeElement))) {
+      event.preventDefault();
+      first?.focus();
+    }
+  }
 });
 
 els.search.addEventListener('input', debounce(() => applySearch(els.search.value), 120));
@@ -1058,9 +1166,6 @@ window.addEventListener('storage', event => {
     cart = loadCart();
     renderCart();
   }
-  if (event.key === STATUS_KEY) {
-    loadStoreStatus();
-  }
 });
 
 window.addEventListener('resize', debounce(measureClamps, 200));
@@ -1070,11 +1175,11 @@ window.addEventListener('resize', debounce(measureClamps, 200));
    ========================================================= */
 
 applyTheme(currentTheme(), false);
-loadStoreStatus();
-checkAdminMode();
 renderMenu();
+loadDeliveryData();   // antes de renderCart(): renderCart salva os campos e apagaria os dados guardados
 renderCart();
-loadDeliveryData();
+loadStoreStatus();
+startStatusPolling();
 
 chips = $$('.chip', els.navList);
 chipItems = chips.map(chip => chip.parentElement);

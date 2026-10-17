@@ -6,3 +6,7 @@ node_modules/
 *.log
 .env
 .env.*
+.dev.vars
+.wrangler/
+test-results/
+playwright-report/

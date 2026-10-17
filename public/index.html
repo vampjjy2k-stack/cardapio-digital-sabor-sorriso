@@ -49,7 +49,7 @@
     </a>
 
     <div class="site-header__actions">
-      <span class="store-status" id="store-status" aria-live="polite">
+      <span class="store-status" id="store-status" role="status" aria-live="polite">
         <span class="store-status__dot"></span>
         <span class="store-status__text">Verificando...</span>
       </span>
@@ -68,6 +68,12 @@
   </header>
 
   <main id="conteudo">
+    <!-- Aviso exibido só quando a loja está fechada (status vem de /api/status) -->
+    <div class="store-banner" id="store-banner" role="status" hidden>
+      <strong>Estamos fechados no momento.</strong>
+      Você pode montar o pedido, mas só consegue enviá-lo quando a loja abrir.
+    </div>
+
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__content">
         <p class="hero__eyebrow">Hamburgueria Sabor &amp; Sorriso</p>
@@ -78,8 +84,9 @@
           <label class="sr-only" for="search">Buscar no cardápio</label>
           <span class="search__icon" aria-hidden="true">🔍</span>
           <input class="search__input" id="search" type="search" placeholder="Buscar no cardápio..."
-                 autocomplete="off" enterkeyhint="search" spellcheck="false">
+                 autocomplete="off" enterkeyhint="search" spellcheck="false" aria-controls="cardapio" aria-describedby="search-results">
         </form>
+        <p class="sr-only" id="search-results" role="status" aria-live="polite"></p>
       </div>
     </section>
 
@@ -152,11 +159,11 @@
           <legend class="fieldset__legend">Tipo de entrega</legend>
           <div class="radio-group">
             <label class="radio-option">
-              <input type="radio" name="delivery-type" value="delivery" required>
+              <input type="radio" name="delivery-type" value="delivery">
               <span>Entrega</span>
             </label>
             <label class="radio-option">
-              <input type="radio" name="delivery-type" value="pickup" required>
+              <input type="radio" name="delivery-type" value="pickup">
               <span>Retirada</span>
             </label>
           </div>
@@ -164,7 +171,7 @@
 
         <div class="address-fields" id="address-fields" hidden>
           <label class="field-label" for="address-street">Rua / Avenida</label>
-          <input class="field" id="address-street" type="text" placeholder="Ex: Rua das Flores" autocomplete="street-address">
+          <input class="field" id="address-street" type="text" placeholder="Ex: Rua das Flores" autocomplete="address-line1">
           <div class="field-row">
             <div>
               <label class="field-label" for="address-number">Número</label>
@@ -183,37 +190,45 @@
           <legend class="fieldset__legend">Forma de pagamento</legend>
           <div class="radio-group">
             <label class="radio-option">
-              <input type="radio" name="payment-method" value="cash" required>
+              <input type="radio" name="payment-method" value="cash">
               <span>Dinheiro</span>
             </label>
             <label class="radio-option">
-              <input type="radio" name="payment-method" value="card" required>
+              <input type="radio" name="payment-method" value="card">
               <span>Cartão <small>(+ R$ 2,00)</small></span>
             </label>
             <label class="radio-option">
-              <input type="radio" name="payment-method" value="pix" required>
+              <input type="radio" name="payment-method" value="pix">
               <span>Pix</span>
             </label>
           </div>
         </fieldset>
+
+        <div>
+          <label class="field-label" for="order-notes">Observações (opcional)</label>
+          <textarea class="field" id="order-notes" rows="2" maxlength="300"
+                    placeholder="Ex: sem cebola, troco para R$ 50..."></textarea>
+        </div>
+
+        <button type="button" class="btn-link" id="clear-btn">Limpar carrinho</button>
       </div>
     </div>
 
     <div class="drawer__footer">
-      <div class="subtotal">
-        <span>Subtotal</span>
-        <strong id="cart-subtotal">R$ 0,00</strong>
+      <p class="cart-summary" id="cart-summary" hidden></p>
+      <div class="totals">
+        <div class="totals__row"><span>Subtotal</span><span id="cart-subtotal">R$ 0,00</span></div>
+        <div class="totals__row" id="fee-row" hidden><span>Taxa do cartão</span><span id="cart-fee">+ R$ 2,00</span></div>
+        <div class="totals__row totals__row--total"><span>Total</span><strong id="cart-total">R$ 0,00</strong></div>
       </div>
       <p class="cart-note" id="cart-note" hidden></p>
 
-      <label class="field-label" for="order-notes">Observações (opcional)</label>
-      <textarea class="field" id="order-notes" rows="2" maxlength="300"
-                placeholder="Endereço, troco, retirar no local..."></textarea>
+      <p class="checkout-hint" id="checkout-hint" role="status" hidden></p>
 
       <button type="button" class="btn btn--whatsapp" id="checkout-btn" disabled>
         <span aria-hidden="true">💬</span> Finalizar Pedido no WhatsApp
       </button>
-      <button type="button" class="btn-link" id="clear-btn" hidden>Limpar carrinho</button>
+      <p class="checkout-caption">No WhatsApp, envie a mensagem para a loja confirmar seu pedido.</p>
     </div>
   </div>
 

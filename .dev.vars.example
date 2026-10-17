@@ -1,0 +1,4 @@
+# Copie este arquivo para ".dev.vars" (sem o .example) para testar no computador.
+# O arquivo .dev.vars NÃO vai para o Git.
+ADMIN_PASSWORD=troque-por-uma-senha-forte
+COOKIE_SECRET=troque-por-um-texto-aleatorio-com-mais-de-32-caracteres

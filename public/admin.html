@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Painel da Loja | Sabor &amp; Sorriso</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#14110d">
+  <link rel="icon" href="img/logo.webp" type="image/webp">
+
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem('saborsorriso:tema'); } catch (e) {}
+      if (theme !== 'light' && theme !== 'dark') theme = 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+  <main class="admin-box">
+    <img class="admin-logo" src="img/logo.webp" alt="Sabor &amp; Sorriso Hamburgueria" width="132" height="78">
+
+    <!-- Verificando se já está logada -->
+    <section id="loading-section" aria-live="polite">
+      <p class="admin-lead">Carregando...</p>
+    </section>
+
+    <!-- Login -->
+    <section id="login-section" hidden>
+      <h1 class="admin-title">Painel da Loja</h1>
+      <p class="admin-lead">Digite a senha para abrir ou fechar a loja.</p>
+
+      <form id="login-form" novalidate>
+        <label class="field-label" for="password">Senha</label>
+        <input class="field" id="password" name="password" type="password" autocomplete="current-password" required>
+
+        <label class="admin-check">
+          <input type="checkbox" id="show-password"> Mostrar senha
+        </label>
+
+        <p class="admin-error" id="login-error" role="alert" hidden></p>
+
+        <button type="submit" class="btn btn--primary admin-btn" id="login-btn">Entrar</button>
+      </form>
+    </section>
+
+    <!-- Painel -->
+    <section id="panel-section" hidden>
+      <h1 class="admin-title">Status da Loja</h1>
+
+      <div class="admin-status" id="status-indicator" role="status" aria-live="polite">
+        <span class="admin-status__label" id="status-label">—</span>
+        <span class="admin-status__hint" id="status-hint"></span>
+      </div>
+
+      <p class="admin-error" id="panel-error" role="alert" hidden></p>
+
+      <button type="button" class="btn admin-btn" id="toggle-btn">—</button>
+      <a class="btn-link admin-link" href="/">Ver o cardápio</a>
+      <button type="button" class="btn-link" id="logout-btn">Sair</button>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

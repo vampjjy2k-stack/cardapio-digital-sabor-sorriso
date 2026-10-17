@@ -1,0 +1,20 @@
+{
+  "name": "sabor-sorriso",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev public --kv SABOR_SORRISO_KV --do ADMIN_LOGIN_LIMITER=AdminLoginLimiter@sabor-sorriso-admin-login-limiter",
+    "test": "node --test tests/*.test.mjs",
+    "deploy": "wrangler pages deploy public --project-name sabor-sorriso",
+    "test:ui": "playwright test",
+    "test:all": "npm test && npm run test:ui",
+    "dev:limiter": "wrangler dev --config wrangler.login-limiter.toml --local",
+    "test:runtime": "node --test tests/login-runtime.test.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "esbuild": "0.28.2",
+    "miniflare": "5.20261012.1-beta",
+    "wrangler": "^4.0.0"
+  }
+}

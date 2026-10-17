@@ -1,0 +1,20 @@
+# Cloudflare Pages — Sabor & Sorriso
+name = "sabor-sorriso"
+pages_build_output_dir = "public"
+compatibility_date = "2025-09-01"
+
+# Armazena somente o status Aberto/Fechado. Não é contador de login.
+# Crie com:  npx wrangler kv namespace create SABOR_SORRISO_KV
+# e cole abaixo o "id" que o comando mostrar.
+[[kv_namespaces]]
+binding = "SABOR_SORRISO_KV"
+id = "COLE_AQUI_O_ID_DO_KV"
+
+# ADMIN_PASSWORD e COOKIE_SECRET NÃO ficam aqui (este arquivo vai para o Git).
+# Eles são cadastrados como segredos — veja o README.
+
+# Obrigatório: sem este serviço, o login responde 503 e nunca cria sessão.
+[[durable_objects.bindings]]
+name = "ADMIN_LOGIN_LIMITER"
+class_name = "AdminLoginLimiter"
+script_name = "sabor-sorriso-admin-login-limiter"
