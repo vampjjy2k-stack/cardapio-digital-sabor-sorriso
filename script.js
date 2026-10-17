@@ -98,8 +98,7 @@ const MENU = [
       p('Dupla Perfeita 02', 57, '2 artesanal pão brioche + carne + queijo cheddar + molho especial + batata + nuggets + 2 coca-cola lata', { img: 'burgerCamadas' }),
       p('Bomba de Sabor 03', 100, '3 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + salada + batata frita com cheddar + nuggets + anel de cebola + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
       p('Explosão de Sabor 04', 135, '4 artesanal pão brioche + carne + queijo cheddar + molho especial + cebola caramelizada + batata com cheddar e farofa de bacon + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
-      p('Brutal 05', 149, '5 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + batata frita com cheddar + farofa de bacon + 5 anéis de cebola + 5 nuggets + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
-      p('Piscinão Cheddar 06', 168, '6 artesanal partido ao meio (total de 12 metades) + carne + queijo cheddar + molho especial + mergulhado na piscina de cheddar + batata frita com cheddar + farofa de bacon + 1 coca-cola 2 litros', { img: 'burgerCamadas' })
+      p('Brutal 05', 149, '5 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + batata frita com cheddar + farofa de bacon + 5 anéis de cebola + 5 nuggets + 1 coca-cola 2 litros', { img: 'burgerCamadas' })
     ]
   },
   {
@@ -108,19 +107,13 @@ const MENU = [
       p('Cachorro Quente Salsicha', 15, 'Salsicha, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
       p('Cachorro Quente Linguiça', 16, 'Linguiça, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.'),
       p('Dogão Quente Salsicha', 22, 'Salsicha, milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.'),
-      p('Dogão Quente Linguiça', 23, 'Linguiça, milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.'),
-      p('Hot Dog 01', 17, 'Pão + linguiça + queijo cheddar + bacon em cubos + cebola roxa + molho especial + ovo de codorna'),
-      p('Hot Dog 02', 16, 'Pão + salsicha + bacon em cubos + cream cheese + cebola roxa + molho especial'),
-      p('Hot Dog 03', 18, 'Pão + linguiça + bacon + creme cheddar + cebola caramelizada + molho especial + batata palha'),
-      p('Hot Dog 04', 14, 'Pão + salsicha + creme de cheddar + ovo de codorna + milho + cebola caramelizada + molho especial + batata palha'),
-      p('Hot Dog 05', 17, 'Pão + linguiça + vinagrete + queijo cheddar + cebola + alho torrado + molho especial')
+      p('Dogão Quente Linguiça', 23, 'Linguiça, milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.')
     ]
   },
   {
     id: 'porcoes', title: 'Porções', icon: '🍟',
     items: [
       p('Baguetão Mineiro', 24, 'Pão baguete + linguiça mineira gourmet + molho especial + geleia de pimenta + queijo mussarela + bacon + creme cheddar + salada', { icon: '🥖' }),
-      p('Cestinha de Batata', 12, 'Cestinha de batata + creme cheddar + farofa de bacon', { icon: '🍟' }),
       p('Batata Maluca P', 16, 'Porção de batata frita com molho especial', { icon: '🍟' }),
       p('Batata Maluca G', 27, 'Porção grande de batata frita com molho especial', { icon: '🍟' }),
       p('Batata Maluca P com Cheddar e Bacon', 18, 'Batata frita com creme cheddar e farofa de bacon', { icon: '🍟' }),
@@ -134,14 +127,12 @@ const MENU = [
       p('Queijo e Presunto', 10, ''),
       p('Pizza', 10, ''),
       p('Queijo Mussarela', 10, ''),
-      p('Carne com Cheddar', 10, ''),
-      p('Frango Catupiry', 10, '')
+      p('Carne com Cheddar', 10, '')
     ]
   },
   {
     id: 'acai', compact: true, title: 'Açaí', icon: '🍇', img: 'acai', prefix: 'Açaí ',
     items: [
-      p('150 ML', 7, ''),
       p('200 ML', 8, ''),
       p('250 ML', 9, ''),
       p('300 ML', 11, ''),
@@ -182,7 +173,6 @@ const MENU = [
       p('Coca Cola', 8, '', { meta: '600ML', img: 'garrafa600' }),
       p('H2O', 7, '', { meta: '600ML', img: 'garrafa600' })
     ].map(item => {
-      // Ajusta o preço das latas para 7
       if (item.meta === 'Lata') item.price = 7;
       return item;
     })
@@ -442,7 +432,6 @@ function updateStoreStatusUI() {
     statusEl.classList.remove('is-open');
     statusEl.classList.add('is-closed');
   }
-  // Bloqueia checkout se fechado
   updateCheckoutState();
 }
 
@@ -455,11 +444,9 @@ function toggleStoreStatus() {
   showToast(storeOpen ? 'Loja aberta! Pedidos habilitados.' : 'Loja fechada. Pedidos pausados.');
 }
 
-// Verifica se está no modo admin (?admin=1)
 function checkAdminMode() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('admin') === '1') {
-    // Adiciona um botão de toggle no header
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'theme-toggle';
@@ -603,10 +590,9 @@ function totals() {
 }
 
 /* =========================================================
-   CHECKOUT (NOVO)
+   CHECKOUT
    ========================================================= */
 
-// Carrega dados salvos de entrega
 function loadDeliveryData() {
   try {
     const data = JSON.parse(localStorage.getItem(DELIVERY_KEY));
@@ -649,14 +635,12 @@ function updateCheckoutState() {
   const deliveryType = document.querySelector('input[name="delivery-type"]:checked')?.value;
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
 
-  // Mostra/oculta campos de endereço
   if (deliveryType === 'delivery') {
     els.addressFields.hidden = false;
   } else {
     els.addressFields.hidden = true;
   }
 
-  // Validação
   let valid = !isEmpty && storeOpen;
   if (valid) {
     if (!deliveryType || !paymentMethod) valid = false;
@@ -670,7 +654,6 @@ function updateCheckoutState() {
 
   els.checkout.disabled = !valid;
 
-  // Atualiza texto do botão se fechado
   if (!storeOpen && !isEmpty) {
     els.checkout.innerHTML = '<span aria-hidden="true">🔒</span> Loja fechada no momento';
   } else {
@@ -724,11 +707,8 @@ function renderCart() {
   els.clear.hidden = isEmpty;
   els.subtotal.textContent = money(total);
 
-  // Aplica taxa de cartão se selecionado
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
-  let finalTotal = total;
   if (paymentMethod === 'card' && total > 0) {
-    finalTotal += CARD_FEE;
     els.subtotal.textContent = `${money(total)} + ${money(CARD_FEE)} (taxa cartão)`;
   } else {
     els.subtotal.textContent = money(total);
@@ -806,7 +786,6 @@ function buildOrderMessage() {
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
   const lines = ['🍔 *Novo pedido — Sabor & Sorriso*', ''];
 
-  // Tipo de entrega
   if (deliveryType === 'delivery') {
     lines.push('*Tipo:* Entrega');
     const street = $('#address-street')?.value.trim();
@@ -818,7 +797,6 @@ function buildOrderMessage() {
     lines.push('*Tipo:* Retirada no local');
   }
 
-  // Forma de pagamento
   const paymentLabels = { cash: 'Dinheiro', card: 'Cartão (+ R$ 2,00)', pix: 'Pix' };
   if (paymentMethod) lines.push(`💳 *Pagamento:* ${paymentLabels[paymentMethod]}`);
 
@@ -1033,21 +1011,18 @@ document.addEventListener('change', event => {
   const input = event.target;
   if (!(input instanceof HTMLInputElement)) return;
 
-  // Atualiza preço de opções
   if (input.type === 'radio' && input.name.startsWith('opt-')) {
     const card = input.closest('[data-card]');
     const priceEl = card && card.querySelector('[data-price]');
     if (priceEl) priceEl.textContent = money(Number(input.dataset.priceValue));
   }
 
-  // Mudanças no checkout
   if (input.name === 'delivery-type' || input.name === 'payment-method') {
     saveDeliveryData();
     renderCart();
   }
 });
 
-// Valida endereço em tempo real
 ['#address-street', '#address-number', '#address-neighborhood'].forEach(sel => {
   const el = document.querySelector(sel);
   if (el) el.addEventListener('input', () => { saveDeliveryData(); updateCheckoutState(); });
