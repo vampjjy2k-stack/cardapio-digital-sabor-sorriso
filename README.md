@@ -45,7 +45,7 @@ npm run deploy
 Para publicar por Git: conecte o repositório em Workers & Pages → Pages, com
 *Build command* vazio e *Build output directory* = `public`. Faça os passos 1 e 3 igual.
 
-Depois de publicado: abra `https://SEU-SITE.pages.dev/admin`.
+Painel administrativo de produção: `https://sabor-sorriso.pages.dev/admin`.
 
 ## Uso diário
 
@@ -70,10 +70,12 @@ npm test                         # testes automáticos das Functions
 - Sem `ADMIN_PASSWORD` (12+), `COOKIE_SECRET` (32+) e `ADMIN_LOGIN_LIMITER` válidos, o login não cria sessão (503 genérico).
 - `_routes.json` limita as Functions a `/api/*`: imagens, CSS e JS continuam estáticos (não gastam a cota de Functions).
 
-## Antes de publicar: ajustes de endereço
+## Endereço de produção
 
-`index.html` ainda tem o endereço antigo (`cardapiosaboresorriso.netlify.app`) em `canonical`, `og:url`,
-`og:image` e `twitter:image`. Troque pelo endereço novo (`*.pages.dev` ou domínio próprio).
+O site usa exclusivamente `https://sabor-sorriso.pages.dev` no Cloudflare Pages.
+Em `public/index.html`, `canonical` e `og:url` apontam para esse endereço; `og:image`,
+`og:image:secure_url` e `twitter:image` usam `/img/og-cardapio-v3.png` no mesmo host.
+O arquivo do banner permanece inalterado. Execute `npm test` para validar esses metadados.
 
 ## WhatsApp
 
