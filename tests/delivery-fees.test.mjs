@@ -100,6 +100,7 @@ function makeRuntime() {
   };
   const window = {
     localStorage,
+    open(url) { this.openedURL = url; },
     matchMedia: () => ({ matches: false }),
     addEventListener() {},
     requestAnimationFrame(callback) { callback(); }
@@ -118,10 +119,10 @@ function makeRuntime() {
   const marker = '/* =========================================================\n   INICIALIZAÇÃO';
   assert.ok(script.includes(marker), 'marcador de inicialização precisa existir');
   const prefix = script.split(marker)[0];
-  const expose = `\nglobalThis.__deliveryTest = { DELIVERY_FEES, deliveryCharge, renderCart, buildOrderMessage, loadDeliveryData, els, setCart: value => { cart = value; }, setOpen: () => { storeOpen = true; statusState = 'ok'; } };`;
+  const expose = `\nglobalThis.__deliveryTest = { DELIVERY_FEES, deliveryCharge, renderCart, buildOrderMessage, loadDeliveryData, checkout, els, setCart: value => { cart = value; }, setOpen: () => { storeOpen = true; statusState = 'ok'; } };`;
   vm.runInContext(prefix + expose, context, { filename: 'public/script.js' });
   const api = context.__deliveryTest;
-  return { ...api, elements, localStorage, radios, neighborhood: elements['address-neighborhood'], delivery, pickup, cash, card, pix };
+  return { ...api, elements, localStorage, window, radios, neighborhood: elements['address-neighborhood'], delivery, pickup, cash, card, pix };
 }
 
 function item(qty = 1) { return [{ id: 'combos-combo-01', opt: null, qty }]; }
@@ -146,16 +147,15 @@ test('DELIVERY_FEES contém exatamente os 12 bairros e valores contratados', () 
   assertVmEqual(runtime.DELIVERY_FEES, fees.map(([neighborhood, fee]) => ({ neighborhood, fee })));
 });
 
-test('deliveryCharge normaliza acentos, caixa, espaços e nunca faz match parcial', () => {
+test('deliveryCharge aceita somente valores exatos da lista e rejeita vazio ou desconhecido', () => {
   const runtime = makeRuntime();
   runtime.setCart(item());
   choose(runtime, 'delivery');
   for (const [neighborhood, fee] of fees) {
-    runtime.neighborhood.value = `  ${neighborhood.toUpperCase().replace('Ã', 'A')}   `;
-    if (neighborhood === 'São Lourenço') runtime.neighborhood.value = ' são   lourenço ';
+    runtime.neighborhood.value = neighborhood;
     assertVmEqual(runtime.deliveryCharge(), { fee, pending: false }, neighborhood);
   }
-  for (const unknown of ['', 'Capivar', 'Capivari Centro', 'Rua 1', 'Rua 12 x', 'Berra boi velho']) {
+  for (const unknown of ['', 'Capivar', 'Capivari Centro', 'Rua 1', 'Rua 12 x', 'Berra boi velho', ' capivari ', 'SAO LOURENCO']) {
     runtime.neighborhood.value = unknown;
     assertVmEqual(runtime.deliveryCharge(), { fee: 0, pending: true }, unknown);
   }
@@ -174,46 +174,64 @@ test('deliveryCharge não cobra em retirada, sem tipo ou com carrinho vazio', ()
   assertVmEqual(runtime.deliveryCharge(), { fee: 0, pending: false });
 });
 
-test('renderCart discrimina taxa, total conhecido e estado pendente no bairro desconhecido', () => {
+test('bairro obrigatório em Entrega; ausente ou adulterado bloqueia envio sem taxa a confirmar', () => {
   const runtime = makeRuntime();
   runtime.setCart(item());
-  choose(runtime, 'delivery', 'cash');
-  runtime.neighborhood.value = ' Capivari ';
-  runtime.renderCart();
-  assert.equal(runtime.els.deliveryFeeRow.hidden, false);
-  assert.match(runtime.els.deliveryFee.textContent, /R\$ 9,00/);
-  assert.equal(runtime.els.totalLabel.textContent, 'Total');
-  assert.match(runtime.els.total.textContent, /R\$ 31,00/);
-  assert.match(runtime.els.cartBarTotal.textContent, /R\$ 31,00/);
-
-  runtime.neighborhood.value = 'Capivari Centro';
-  runtime.renderCart();
-  assert.equal(runtime.els.deliveryFeeRow.hidden, false);
-  assert.equal(runtime.els.deliveryFee.textContent, 'A confirmar no WhatsApp');
-  assert.equal(runtime.els.totalLabel.textContent, 'Parcial (sem entrega)');
-  assert.match(runtime.els.cartBarTotal.textContent, /R\$ 22,00 \+ entrega/);
-  assert.match(runtime.els.note.textContent, /taxa.*WhatsApp/i);
+  runtime.setOpen();
+  choose(runtime, 'delivery', 'card');
+  runtime.elements['address-street'].value = 'Rua das Flores';
+  runtime.elements['address-number'].value = '123';
+  for (const value of ['', 'Capivari Centro']) {
+    runtime.neighborhood.value = value;
+    runtime.renderCart();
+    assert.equal(runtime.neighborhood.required, true);
+    assert.equal(runtime.neighborhood.disabled, false);
+    assert.equal(runtime.els.checkout.disabled, true);
+    assert.equal(runtime.els.deliveryFee.textContent, 'Selecione um bairro');
+    assert.equal(runtime.els.totalLabel.textContent, 'Parcial (sem entrega)');
+    assert.match(runtime.els.cartBarTotal.textContent, /R\$ 24,00 \+ entrega/);
+    assert.doesNotMatch(runtime.els.note.textContent, /confirmar|WhatsApp/);
+    assert.match(runtime.els.checkoutHint.textContent, /bairro atendido/);
+    assert.throws(() => runtime.buildOrderMessage(), /Selecione um bairro atendido/);
+    runtime.checkout();
+    assert.equal(runtime.window.openedURL, undefined);
+  }
+  runtime.neighborhood.value = 'Capivari';
+  runtime.neighborhood.dispatch('change');
+  assert.equal(runtime.els.checkout.disabled, false);
+  runtime.checkout();
+  assert.match(runtime.window.openedURL, /^https:\/\/wa.me\//);
 });
 
-test('mudança de bairro renderiza no mesmo input, retirada não cobra e cartão soma R$ 2', () => {
+test('mudança no mesmo select recalcula; retirada desabilita bairro e cobra cartão só uma vez', () => {
   const runtime = makeRuntime();
   runtime.setCart(item());
   choose(runtime, 'delivery', 'card');
   runtime.neighborhood.value = 'Figueira';
-  const sameInput = runtime.neighborhood;
-  runtime.neighborhood.dispatch('input');
-  assert.equal(runtime.neighborhood, sameInput);
-  assert.match(runtime.els.total.textContent, /R\$ 29,00/); // 22 + 5 + 2
+  const sameSelect = runtime.neighborhood;
+  runtime.neighborhood.dispatch('change');
+  assert.equal(runtime.neighborhood, sameSelect);
+  assert.match(runtime.els.total.textContent, /R\$ 29,00/);
   runtime.neighborhood.value = 'Cangulo';
-  runtime.neighborhood.dispatch('input');
-  assert.match(runtime.els.total.textContent, /R\$ 49,00/); // 22 + 25 + 2
+  runtime.neighborhood.dispatch('change');
+  assert.match(runtime.els.total.textContent, /R\$ 49,00/);
   choose(runtime, 'pickup', 'card');
   runtime.renderCart();
+  assert.equal(runtime.neighborhood.required, false);
+  assert.equal(runtime.neighborhood.disabled, true);
   assert.equal(runtime.els.deliveryFeeRow.hidden, true);
   assert.match(runtime.els.total.textContent, /R\$ 24,00/);
+  const message = runtime.buildOrderMessage();
+  assert.doesNotMatch(message, /Taxa de entrega|Endereço|Cangulo/);
+  assert.equal((message.match(/Taxa do cartão/g) || []).length, 1);
+  assert.match(message, /\*Total: R\$ 24,00\*/);
+  runtime.neighborhood.value = '';
+  runtime.setOpen();
+  runtime.renderCart();
+  assert.equal(runtime.els.checkout.disabled, false);
 });
 
-test('carrinho vazio permanece zerado mesmo com rádio de entrega e cartão', () => {
+test('carrinho vazio permanece zerado mesmo com entrega e cartão', () => {
   const runtime = makeRuntime();
   choose(runtime, 'delivery', 'card');
   runtime.neighborhood.value = 'Capivari';
@@ -225,69 +243,45 @@ test('carrinho vazio permanece zerado mesmo com rádio de entrega e cartão', ()
   assert.equal(runtime.els.feeRow.hidden, true);
 });
 
-test('buildOrderMessage inclui subtotal, entrega e cartão; desconhecido não fixa total final', () => {
-  const runtime = makeRuntime();
-  runtime.setCart(item());
-  choose(runtime, 'delivery', 'card');
-  runtime.neighborhood.value = 'Santa Cruz';
-  const known = runtime.buildOrderMessage();
-  assert.match(known, /\*Pagamento:\* Cartão/);
-  assert.doesNotMatch(known, /Cartão \(\+ R\$ 2,00\)/);
-  assert.match(known, /Subtotal.*R\$ 22,00/i);
-  assert.match(known, /Taxa de entrega.*R\$ 12,00/i);
-  assert.match(known, /taxa.*cart[aã]o.*R\$ 2,00/i);
-  assert.match(known, /\*Total: R\$ 36,00\*/);
-
-  runtime.neighborhood.value = 'Bairro inexistente';
-  const unknown = runtime.buildOrderMessage();
-  assert.match(unknown, /Parcial \(sem entrega\): R\$ 24,00/); // inclui cartão
-  assert.match(unknown, /Taxa de entrega:\* a confirmar no WhatsApp/);
-  assert.match(unknown, /Total final: a confirmar no WhatsApp/);
-  assert.doesNotMatch(unknown, /\*Total(?: final)?:.*R\$/);
-
-  choose(runtime, 'pickup', 'card');
-  const pickup = runtime.buildOrderMessage();
-  assert.doesNotMatch(pickup, /Taxa de entrega/);
-  assert.match(pickup, /\*Total: R\$ 24,00\*/);
-});
-
-test('os 12 bairros têm taxa e total coerentes no carrinho e no WhatsApp', () => {
+test('todos os 12 bairros e meios de pagamento discriminam subtotal, taxa e total no carrinho e WhatsApp', () => {
   const runtime = makeRuntime();
   runtime.setCart(item(2));
-  choose(runtime, 'delivery', 'pix');
-  for (const [neighborhood, fee] of fees) {
-    runtime.neighborhood.value = neighborhood;
-    runtime.neighborhood.dispatch('input');
-    const formattedFee = `R$ ${fee},00`;
-    const formattedTotal = `R$ ${44 + fee},00`;
-    assert.equal(runtime.els.deliveryFee.textContent, `+ ${formattedFee}`, neighborhood);
-    assert.equal(runtime.els.total.textContent, formattedTotal, neighborhood);
-    const message = runtime.buildOrderMessage();
-    assert.ok(message.includes(`*Taxa de entrega:* ${formattedFee}`), neighborhood);
-    assert.ok(message.includes(`*Total: ${formattedTotal}*`), neighborhood);
+  for (const payment of ['pix', 'cash', 'card']) {
+    choose(runtime, 'delivery', payment);
+    for (const [neighborhood, fee] of fees) {
+      runtime.neighborhood.value = neighborhood;
+      runtime.neighborhood.dispatch('change');
+      const formattedFee = `R$ ${fee},00`;
+      const formattedTotal = `R$ ${44 + fee + (payment === 'card' ? 2 : 0)},00`;
+      assert.equal(runtime.els.subtotal.textContent, 'R$ 44,00');
+      assert.equal(runtime.els.deliveryFee.textContent, `+ ${formattedFee}`, neighborhood);
+      assert.equal(runtime.els.totalLabel.textContent, 'Total');
+      assert.equal(runtime.els.total.textContent, formattedTotal, neighborhood);
+      assert.equal(runtime.els.cartBarTotal.textContent, formattedTotal, neighborhood);
+      const message = runtime.buildOrderMessage();
+      assert.ok(message.includes(`*Taxa de entrega:* ${formattedFee}`), neighborhood);
+      assert.ok(message.includes(`*Total: ${formattedTotal}*`), neighborhood);
+      assert.equal((message.match(/Taxa do cartão/g) || []).length, payment === 'card' ? 1 : 0);
+      assert.doesNotMatch(message, /Cartão \(\+ R\$ 2,00\)|taxa.*confirmar/i);
+    }
   }
 });
 
-test('bairro livre é persistido e restaurado sem bloquear checkout por taxa pendente', () => {
+test('restaura bairro válido; dados legados fora da lista são descartados e bloqueiam entrega', () => {
   const runtime = makeRuntime();
   runtime.setCart(item());
   runtime.setOpen();
-  choose(runtime, 'delivery', 'pix');
-  runtime.elements['address-street'].value = 'Rua das Flores';
-  runtime.elements['address-number'].value = '123';
-  runtime.neighborhood.value = 'Outro bairro';
-  runtime.neighborhood.dispatch('input');
-  assert.equal(runtime.els.checkout.disabled, false);
-  const saved = JSON.parse(runtime.localStorage.getItem('saborsorriso:entrega-dados'));
-  assert.equal(saved.address.neighborhood, 'Outro bairro');
-  assert.equal(saved.deliveryType, 'delivery');
-
-  runtime.neighborhood.value = '';
-  choose(runtime, 'pickup', 'cash');
-  runtime.loadDeliveryData();
-  assert.equal(runtime.neighborhood.value, 'Outro bairro');
-  assert.equal(runtime.delivery.checked, true);
-  runtime.renderCart();
-  assert.equal(runtime.els.totalLabel.textContent, 'Parcial (sem entrega)');
-  assert.equal(runtime.els.deliveryFee.textContent, 'A confirmar no WhatsApp');
+  for (const neighborhood of ['São Lourenço', 'Outro bairro', '']) {
+    runtime.localStorage.setItem('saborsorriso:entrega-dados', JSON.stringify({
+      deliveryType: 'delivery', paymentMethod: 'pix',
+      address: { street: 'Rua das Flores', number: '123', neighborhood }
+    }));
+    runtime.loadDeliveryData();
+    runtime.renderCart();
+    const valid = neighborhood === 'São Lourenço';
+    assert.equal(runtime.neighborhood.value, valid ? neighborhood : '');
+    assert.equal(runtime.els.checkout.disabled, !valid);
+    const saved = JSON.parse(runtime.localStorage.getItem('saborsorriso:entrega-dados'));
+    assert.equal(saved.address.neighborhood, valid ? neighborhood : '');
+  }
 });

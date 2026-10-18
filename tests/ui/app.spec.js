@@ -130,7 +130,7 @@ test.describe('carrinho e checkout', () => {
     await expect(page.locator('#order-notes')).toHaveValue('sem cebola');
   });
 
-  test('valida entrega/retirada, taxa, resumo e conteúdo do WhatsApp sem envio externo', async ({ page }) => {
+  test('valida entrega, taxa por bairro, resumo e conteúdo do WhatsApp sem envio externo', async ({ page }) => {
     await add(page, 'X Bacon');
     await openCart(page);
     await expect(page.locator('#checkout-btn')).toBeDisabled();
@@ -139,8 +139,9 @@ test.describe('carrinho e checkout', () => {
     await expect(page.locator('#checkout-btn')).toBeDisabled();
     await page.locator('#address-street').fill('Rua das Flores');
     await page.locator('#address-number').fill('123');
-    await page.locator('#address-neighborhood').fill('Capivari');
-    await expect(page.locator('#fee-row')).toBeVisible();
+    await page.locator('#address-neighborhood').selectOption('Capivari');
+    await expect(page.locator('#delivery-fee-row')).toBeVisible();
+    await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 9,00');
     await expect(page.locator('#cart-total')).toHaveText('R$ 26,00');
     await expect(page.locator('#checkout-btn')).toBeEnabled();
     await expect(page.locator('#cart-summary')).toHaveText('1 item · Entrega · Cartão');
@@ -151,9 +152,9 @@ test.describe('carrinho e checkout', () => {
     expect(url.searchParams.get('text')).toContain('Rua das Flores, 123 - Capivari');
     expect(url.searchParams.get('text')).toContain('Total: R$ 26,00');
     await page.getByLabel('Retirada', { exact: true }).check();
-    await page.getByLabel('Pix', { exact: true }).check();
+    await page.getByLabel('Pix').check();
     await expect(page.locator('#address-fields')).toBeHidden();
-    await expect(page.locator('#fee-row')).toBeHidden();
+    await expect(page.locator('#delivery-fee-row')).toBeHidden();
     await expect(page.locator('#cart-summary')).toHaveText('1 item · Retirada no local · Pix');
     await page.locator('#checkout-btn').click();
     url = new URL(await page.evaluate(() => window.__openedURL));
@@ -162,6 +163,119 @@ test.describe('carrinho e checkout', () => {
     expect(url.searchParams.get('text')).toContain('Total: R$ 15,00');
     await expect(page.locator('#toast')).not.toHaveClass(/is-visible/);
     await page.screenshot({ path: 'review/carrinho-celular.png' });
+  });
+
+  test('exibe exatamente os 12 bairros, taxas e placeholder bloqueado', async ({ page }) => {
+    await add(page, 'X Bacon');
+    await openCart(page);
+    const expected = [
+      ['Capivari', 'R$ 9,00'], ['São Lourenço', 'R$ 4,00'], ['Favela', 'R$ 5,00'],
+      ['Rua 12', 'R$ 5,00'], ['Parque Eldorado', 'R$ 7,00'],
+      ['Ruas da 1 a porta de aço', 'R$ 6,00'], ['Figueira', 'R$ 5,00'],
+      ['Loteamento', 'R$ 5,00'], ['Santa Cruz', 'R$ 12,00'], ['Cangulo', 'R$ 25,00'],
+      ['Primavera', 'R$ 15,00'], ['Berra boi', 'R$ 8,00'],
+    ];
+    const options = page.locator('#address-neighborhood option');
+    await expect(options).toHaveCount(13);
+    await expect(page.locator('select#address-neighborhood')).toHaveCount(1);
+    await expect(options.nth(0)).toHaveText('Selecione seu bairro');
+    await expect(options.nth(0)).toBeDisabled();
+    await expect(options.nth(0)).toHaveAttribute('value', '');
+    for (let i = 0; i < expected.length; i++) {
+      await expect(options.nth(i + 1)).toHaveText(`${expected[i][0]} — ${expected[i][1]}`);
+      await expect(options.nth(i + 1)).toHaveAttribute('value', expected[i][0]);
+    }
+    await page.getByLabel('Entrega', { exact: true }).check();
+    await page.locator('#address-neighborhood').selectOption('Ruas da 1 a porta de aço');
+    expect(await page.locator('.drawer__body').evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
+  });
+
+  test('exige bairro apenas na entrega e mudança atualiza carrinho, barra e WhatsApp', async ({ page }) => {
+    await add(page, 'X Bacon');
+    await openCart(page);
+    await page.getByLabel('Entrega', { exact: true }).check();
+    await page.getByLabel('Pix').check();
+    await page.locator('#address-street').fill('Rua das Flores');
+    await page.locator('#address-number').fill('123');
+    await expect(page.locator('#address-neighborhood')).toHaveJSProperty('required', true);
+    await expect(page.locator('#checkout-btn')).toBeDisabled();
+    await page.locator('#address-neighborhood').selectOption('Capivari');
+    await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 9,00');
+    await expect(page.locator('#cart-total')).toHaveText('R$ 24,00');
+    await expect(page.locator('#cart-bar-total')).toHaveText('R$ 24,00');
+    await page.locator('#address-neighborhood').selectOption('Primavera');
+    await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 15,00');
+    await expect(page.locator('#cart-total')).toHaveText('R$ 30,00');
+    await expect(page.locator('#cart-bar-total')).toHaveText('R$ 30,00');
+    await expect(page.locator('#checkout-btn')).toBeEnabled();
+    await page.locator('#checkout-btn').click();
+    const url = new URL(await page.evaluate(() => window.__openedURL));
+    const message = url.searchParams.get('text');
+    expect(message).toContain('Rua das Flores, 123 - Primavera');
+    expect(message).toContain('*Taxa de entrega:* R$ 15,00');
+    expect(message).toContain('*Total: R$ 30,00*');
+    expect(message).not.toContain('a confirmar');
+    expect(message).not.toContain('desconhecido');
+  });
+
+  test('mostra taxa do cartão uma única vez e soma cartão mais entrega', async ({ page }) => {
+    await add(page, 'X Bacon');
+    await openCart(page);
+    await page.getByLabel('Entrega', { exact: true }).check();
+    await page.getByLabel('Cartão').check();
+    await page.locator('#address-street').fill('Rua das Flores');
+    await page.locator('#address-number').fill('123');
+    await page.locator('#address-neighborhood').selectOption('Capivari');
+    await expect(page.locator('#cart-total')).toHaveText('R$ 26,00');
+    await expect(page.locator('#fee-row')).toBeVisible();
+    await expect(page.locator('#fee-row')).toContainText('Taxa do cartão');
+    await expect(page.locator('#fee-row')).toHaveCount(1);
+    await page.locator('#checkout-btn').click();
+    const message = new URL(await page.evaluate(() => window.__openedURL)).searchParams.get('text');
+    expect((message.match(/Taxa do cartão/g) || []).length).toBe(1);
+    expect((message.match(/Taxa de entrega/g) || []).length).toBe(1);
+    expect(message).toContain('*Total: R$ 26,00*');
+  });
+
+  test('retirada desabilita e não exige bairro nem inclui endereço ou taxa', async ({ page }) => {
+    await add(page, 'X Bacon');
+    await openCart(page);
+    await page.getByLabel('Retirada', { exact: true }).check();
+    await page.getByLabel('Pix').check();
+    await expect(page.locator('#address-fields')).toBeHidden();
+    await expect(page.locator('#address-neighborhood')).toBeDisabled();
+    await expect(page.locator('#address-neighborhood')).toHaveJSProperty('required', false);
+    await expect(page.locator('#delivery-fee-row')).toBeHidden();
+    await expect(page.locator('#checkout-btn')).toBeEnabled();
+    await page.locator('#checkout-btn').click();
+    const message = new URL(await page.evaluate(() => window.__openedURL)).searchParams.get('text');
+    expect(message).toContain('*Tipo:* Retirada no local');
+    expect(message).not.toContain('Taxa de entrega');
+    expect(message).not.toContain('Endereço');
+  });
+
+  test('restaura bairro válido e limpa bairro desconhecido legado, bloqueando entrega', async ({ page }) => {
+    await add(page, 'X Bacon');
+    await openCart(page);
+    await page.evaluate(() => localStorage.setItem('saborsorriso:entrega-dados', JSON.stringify({
+      deliveryType: 'delivery', paymentMethod: 'pix',
+      address: { street: 'Rua das Flores', number: '123', neighborhood: 'Capivari', reference: '' },
+    })));
+    await page.reload();
+    await openCart(page);
+    await expect(page.locator('#address-neighborhood')).toHaveValue('Capivari');
+    await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 9,00');
+    await page.evaluate(() => localStorage.setItem('saborsorriso:entrega-dados', JSON.stringify({
+      deliveryType: 'delivery', paymentMethod: 'pix',
+      address: { street: 'Rua das Flores', number: '123', neighborhood: 'Bairro Antigo', reference: '' },
+    })));
+    await page.reload();
+    await openCart(page);
+    await expect(page.locator('#address-neighborhood')).toHaveValue('');
+    await expect(page.locator('#address-neighborhood')).toBeEnabled();
+    await expect(page.locator('#address-neighborhood')).toHaveJSProperty('required', true);
+    await expect(page.locator('#checkout-btn')).toBeDisabled();
+    await expect(page.locator('#checkout-hint')).toContainText('bairro atendido');
   });
 });
 

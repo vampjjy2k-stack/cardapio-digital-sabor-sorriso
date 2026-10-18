@@ -665,7 +665,8 @@ function loadDeliveryData() {
       if (data.address) {
         $('#address-street').value = data.address.street || '';
         $('#address-number').value = data.address.number || '';
-        $('#address-neighborhood').value = data.address.neighborhood || '';
+        $('#address-neighborhood').value = DELIVERY_FEES.some(entry => entry.neighborhood === data.address.neighborhood)
+          ? data.address.neighborhood : '';
         $('#address-reference').value = data.address.reference || '';
       }
     }
@@ -700,6 +701,7 @@ function updateCheckoutState() {
   ['#address-street', '#address-number', '#address-neighborhood'].forEach(sel => {
     $(sel).required = deliveryType === 'delivery';
   });
+  $('#address-neighborhood').disabled = deliveryType !== 'delivery';
   const deliveryLabels = { delivery: 'Entrega', pickup: 'Retirada no local' };
   const paymentLabels = { cash: 'Dinheiro', card: 'Cartão', pix: 'Pix' };
   const count = totals().count;
@@ -715,8 +717,7 @@ function updateCheckoutState() {
     if (deliveryType === 'delivery') {
       const street = $('#address-street')?.value.trim();
       const number = $('#address-number')?.value.trim();
-      const neighborhood = $('#address-neighborhood')?.value.trim();
-      if (!street || !number || !neighborhood) valid = false;
+      if (!street || !number || !selectedDeliveryNeighborhood()) valid = false;
     }
   }
 
@@ -730,7 +731,10 @@ function updateCheckoutState() {
     } else {
       const missing = [];
       if (!deliveryType) missing.push('entrega ou retirada');
-      if (deliveryType === 'delivery' && ![$('#address-street'), $('#address-number'), $('#address-neighborhood')].every(f => f && f.value.trim())) missing.push('endereço completo');
+      if (deliveryType === 'delivery') {
+        if (![$('#address-street'), $('#address-number')].every(f => f && f.value.trim())) missing.push('endereço completo');
+        if (!selectedDeliveryNeighborhood()) missing.push('um bairro atendido da lista');
+      }
       if (!paymentMethod) missing.push('forma de pagamento');
       if (missing.length) hint = `Falta informar: ${missing.join(', ')}.`;
     }
@@ -751,13 +755,15 @@ function paymentFee() {
   return method === 'card' && cart.length > 0 ? CARD_FEE : 0;
 }
 
-// null/ausência de correspondência não significa entrega grátis.
+// A entrega exige uma opção exata da lista; bairros legados/desconhecidos não são aceitos.
+function selectedDeliveryNeighborhood() {
+  return DELIVERY_FEES.find(entry => entry.neighborhood === $('#address-neighborhood').value);
+}
+
 function deliveryCharge() {
   const type = document.querySelector('input[name="delivery-type"]:checked')?.value;
   if (cart.length === 0 || type !== 'delivery') return { fee: 0, pending: false };
-  const normalizeNeighborhood = value => norm(value).trim().replace(/\s+/g, ' ');
-  const neighborhood = normalizeNeighborhood($('#address-neighborhood').value);
-  const match = DELIVERY_FEES.find(entry => normalizeNeighborhood(entry.neighborhood) === neighborhood);
+  const match = selectedDeliveryNeighborhood();
   return match ? { fee: match.fee, pending: false } : { fee: 0, pending: true };
 }
 
@@ -812,7 +818,7 @@ function renderCart() {
   els.feeRow.hidden = fee === 0;
   els.fee.textContent = `+ ${money(fee)}`;
   els.deliveryFeeRow.hidden = isEmpty || document.querySelector('input[name="delivery-type"]:checked')?.value !== 'delivery';
-  els.deliveryFee.textContent = delivery.pending ? 'A confirmar no WhatsApp' : `+ ${money(delivery.fee)}`;
+  els.deliveryFee.textContent = delivery.pending ? 'Selecione um bairro' : `+ ${money(delivery.fee)}`;
   els.totalLabel.textContent = delivery.pending ? 'Parcial (sem entrega)' : 'Total';
   els.total.textContent = totalText;
 
@@ -822,7 +828,7 @@ function renderCart() {
       ? '1 item está sem preço definido. O valor será confirmado no WhatsApp.'
       : `${pending} itens estão sem preço definido. Os valores serão confirmados no WhatsApp.`);
   }
-  if (delivery.pending) notices.push('A taxa de entrega será confirmada no WhatsApp. O valor parcial não inclui a entrega; o total final ainda será confirmado.');
+  if (delivery.pending) notices.push('Selecione um dos bairros atendidos para calcular a entrega e finalizar o pedido.');
   els.note.hidden = notices.length === 0;
   els.note.textContent = notices.join(' ');
 
@@ -902,6 +908,9 @@ function buildOrderMessage() {
   const { total, pending } = totals();
   const deliveryType = document.querySelector('input[name="delivery-type"]:checked')?.value;
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
+  if (deliveryType === 'delivery' && !selectedDeliveryNeighborhood()) {
+    throw new Error('Selecione um bairro atendido para entrega.');
+  }
   const lines = ['🍔 *Novo pedido — Sabor & Sorriso*', ''];
 
   if (deliveryType === 'delivery') {
@@ -935,14 +944,9 @@ function buildOrderMessage() {
   lines.push('', `*Subtotal:* ${money(total)}`);
   if (fee) lines.push(`*Taxa do cartão:* ${money(fee)}`);
   if (deliveryType === 'delivery') {
-    lines.push(`*Taxa de entrega:* ${delivery.pending ? 'a confirmar no WhatsApp' : money(delivery.fee)}`);
+    lines.push(`*Taxa de entrega:* ${money(delivery.fee)}`);
   }
-  if (delivery.pending) {
-    lines.push(`*Parcial (sem entrega): ${money(finalTotal)}*${pending ? ' (+ itens com preço a confirmar)' : ''}`);
-    lines.push('*Total final: a confirmar no WhatsApp.*');
-  } else {
-    lines.push(`*Total: ${money(finalTotal)}*${pending ? ' (+ itens com preço a confirmar)' : ''}`);
-  }
+  lines.push(`*Total: ${money(finalTotal)}*${pending ? ' (+ itens com preço a confirmar)' : ''}`);
 
   const notes = els.notes.value.trim();
   if (notes) lines.push('', `📝 *Observações:* ${notes}`);
@@ -956,6 +960,8 @@ function checkout() {
     showToast(statusState === 'ok' ? 'A loja está fechada no momento.' : 'Status não confirmado. Tente novamente mais tarde.');
     return;
   }
+  updateCheckoutState();
+  if (els.checkout.disabled) return;
   openWhatsApp(buildOrderMessage());
 }
 
@@ -1158,11 +1164,12 @@ document.addEventListener('change', event => {
   }
 });
 
-['#address-street', '#address-number', '#address-neighborhood'].forEach(sel => {
+$('#address-neighborhood').addEventListener('change', renderCart);
+['#address-street', '#address-number'].forEach(sel => {
   const el = document.querySelector(sel);
   if (el) el.addEventListener('input', () => {
-    if (sel === '#address-neighborhood') renderCart();
-    else { saveDeliveryData(); updateCheckoutState(); }
+    saveDeliveryData();
+    updateCheckoutState();
   });
 });
 
@@ -1186,7 +1193,7 @@ document.addEventListener('keydown', event => {
     closeCart();
   }
   if (event.key === 'Tab') {
-    const focusable = $$('button:not(:disabled), input:not(:disabled), textarea:not(:disabled), a[href], [tabindex="0"]', els.drawer)
+    const focusable = $$('button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), a[href], [tabindex="0"]', els.drawer)
       .filter(el => el.getClientRects().length > 0);
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -1223,8 +1230,8 @@ window.addEventListener('resize', debounce(measureClamps, 200));
 
 applyTheme(currentTheme(), false);
 renderMenu();
-$('#delivery-neighborhoods').innerHTML = DELIVERY_FEES.map(entry =>
-  `<option value="${esc(entry.neighborhood)}">${money(entry.fee)}</option>`).join('');
+$('#address-neighborhood').innerHTML = '<option value="" disabled selected>Selecione seu bairro</option>' + DELIVERY_FEES.map(entry =>
+  `<option value="${esc(entry.neighborhood)}">${esc(entry.neighborhood)} — ${money(entry.fee)}</option>`).join('');
 loadDeliveryData();   // antes de renderCart(): renderCart salva os campos e apagaria os dados guardados
 renderCart();
 loadStoreStatus();
