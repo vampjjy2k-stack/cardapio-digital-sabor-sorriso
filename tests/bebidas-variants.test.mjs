@@ -76,7 +76,7 @@ function runtime() {
   const utilityEnd = script.indexOf('function loadCart', utilityStart);
   assert.ok(utilityStart > -1 && utilityEnd > utilityStart, 'utilidades de linha precisam existir');
   const utilities = script.slice(utilityStart, utilityEnd);
-  const expose = `\nglobalThis.__beverageTest = { MENU, ITEM_INDEX, ITEM_PHOTOS, BEVERAGE_GROUPS, describeLine, lineKey };`;
+  const expose = `\nglobalThis.__beverageTest = { MENU, ITEM_INDEX, ITEM_PHOTOS, ITEM_PHOTO_SETS, BEVERAGE_GROUPS, describeLine, lineKey };`;
   vm.runInContext(prefix + utilities + expose, context, { filename: 'public/script.js' });
   return context.__beverageTest;
 }
@@ -143,7 +143,7 @@ test('metadados de sabor e embalagem são exatos e referências inválidas são 
   const groups = Object.fromEntries(api.BEVERAGE_GROUPS.map(group => [group.key, group]));
   assert.deepEqual([...new Set(groups.fanta.variants.filter(v => v.id === 'bebidas-fanta-2l').map(v => v.flavor))].sort(), ['Laranja', 'Uva']);
   assert.deepEqual([...new Set(groups.fanta.variants.map(v => v.pack).filter(Boolean))].sort(), ['Lata 350 ml', 'PET 2 L']);
-  assert.deepEqual([...new Set(groups['coca-cola'].variants.map(v => v.pack))].sort(), ['Lata (volume a confirmar)', 'PET 2 L', 'PET 600 ml']);
+  assert.deepEqual([...new Set(groups['coca-cola'].variants.map(v => v.pack))].sort(), ['Lata 350 ml', 'PET 2 L', 'PET 600 ml']);
   assert.deepEqual([...new Set(groups.vitaminas.variants.map(v => v.flavor))].sort(), ['Cupuaçu ao Leite', 'Graviola ao Leite', 'Maracujá ao Leite', 'Morango ao Leite']);
   assert.deepEqual([...new Set(groups.vitaminas.variants.map(v => v.pack))].sort(), ['Copo 300ML', 'Copo 500ML']);
   assert.deepEqual([...new Set(groups.sucos.variants.map(v => v.pack))], ['Copo 500ML']);
@@ -230,7 +230,7 @@ test('pão Bimbo fica restrito aos cinco Cheddars, sem generalização para hamb
   }
 });
 
-test('mapa de fotos contém exatamente as seis bebidas atuais, Coca 2L, sem fotos PDF', () => {
+test('mapa preserva sete bebidas, oito fotos individuais e as duas fotos iguais em importância do Artesanal 03', () => {
   const api = runtime();
   const expected = {
     'bebidas-guarana-antartica-lata': 'img/guarana-antarctica-350ml.png',
@@ -240,9 +240,17 @@ test('mapa de fotos contém exatamente as seis bebidas atuais, Coca 2L, sem foto
     'bebidas-coca-cola-600ml': 'img/coca-cola-600ml.png',
     'bebidas-coca-cola-lata': 'img/coca-cola-lata.png',
     'bebidas-coca-cola-2l': 'img/coca-cola-2l.png',
+    'artesanais-artesanal-02': 'img/produtos/artesanal-02.webp',
+    'artesanais-artesanal-04': 'img/produtos/artesanal-04.webp',
+    'linha-cheddar-x-cheddar-03': 'img/produtos/cheddar-03.webp',
+    'linha-cheddar-x-cheddar-05': 'img/produtos/cheddar-05.webp',
+    'combos-combo-02': 'img/produtos/combo-02.webp',
+    'combos-combo-03': 'img/produtos/combo-03.webp',
+    'combos-combo-04': 'img/produtos/combo-04.webp',
+    'combos-combo-06': 'img/produtos/combo-06.webp',
   };
   assert.deepEqual(plain(api.ITEM_PHOTOS), expected);
-  assert.equal(Object.keys(api.ITEM_PHOTOS).length, 7);
+  assert.equal(Object.keys(api.ITEM_PHOTOS).length, 15);
   for (const [id, path] of Object.entries(expected)) {
     assert.match(id, /^\w[\w-]*$/);
     assert.ok(api.ITEM_INDEX.has(id), `${id} deve apontar para ITEM_INDEX`);
@@ -251,8 +259,8 @@ test('mapa de fotos contém exatamente as seis bebidas atuais, Coca 2L, sem foto
   assert.equal(api.ITEM_PHOTOS['bebidas-h2o-600ml'], undefined, 'H2OH! 500ml mantém ausência de foto');
   assert.equal(api.ITEM_PHOTOS['bebidas-fanta-2l'], undefined, 'Fanta 2L mantém ausência de foto');
   assert.equal(api.ITEM_PHOTOS['artesanais-artesanal-03'], undefined);
-  assert.equal(api.ITEM_PHOTOS['artesanais-artesanal-04'], undefined);
-  assert.equal(api.ITEM_PHOTOS['combos-combo-04'], undefined);
+  assert.deepEqual(plain(api.ITEM_PHOTO_SETS), { 'artesanais-artesanal-03': ['img/produtos/artesanal-03-1.webp', 'img/produtos/artesanal-03-2.webp'] });
+  for (const path of api.ITEM_PHOTO_SETS['artesanais-artesanal-03']) assert.ok(fs.statSync(new URL(`../public/${path}`, import.meta.url)).size > 0);
   assert.equal(api.ITEM_PHOTOS['combos-combo-07'], undefined);
   assert.equal(api.ITEM_PHOTOS['hamburgueres-x-duplo'], undefined);
   for (const id of ['linha-cheddar-x-cheddar-01', 'linha-cheddar-x-cheddar-02', 'linha-cheddar-x-cheddar-04']) assert.equal(api.ITEM_PHOTOS[id], undefined);

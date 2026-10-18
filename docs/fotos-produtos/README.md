@@ -1,23 +1,20 @@
-# Fotos autorizadas — somente bebidas
+# Fotos autorizadas — mapa Athena FINAL
 
-João esclareceu que **todas as 18 fotos do PDF eram testes e devem ser excluídas**. Nenhuma foto de alimento do PDF integra `public/`, `ITEM_PHOTOS` ou os novos commits desta branch. Os itens de comida usam as ilustrações herdadas da base pública. Artesanal 04 e Combo 04 também estão excluídos; não houve retoque ou reconstrução.
+O mapa Athena FINAL autoriza **10 fotos reais do PDF**, correspondentes a **9 IDs** (Artesanal 03 possui duas fotos para o mesmo ID). Os dez derivados estão em `public/img/produtos/` como WebP lossless RGBA, com fundo removido por máscaras determinísticas conservadoras. O RGB visível é preservado da fonte; não houve IA nem pixels inventados.
 
-A branch local `review/catalogo-limpo-7336733` reúne as mudanças aprovadas em um único commit filho direto de `733673319b162ffa1142d62a1bc07d1cf2d6eb63`, sem a cadeia local que continha fontes. O commit final é identificado no pacote externo de revisão. Não houve push, deploy, force ou alteração de main/remotos.
+## Fotos autorizadas
 
-## Sete fotos mantidas
+- Artesanal 02 → `artesanais-artesanal-02` (`artesanal-02.webp`)
+- Artesanal 03 foto 1 e foto 2 → `artesanais-artesanal-03` (`artesanal-03-1.webp`, `artesanal-03-2.webp`)
+- Artesanal 04 → `artesanais-artesanal-04` (`artesanal-04.webp`)
+- Cheddar 03 → `linha-cheddar-x-cheddar-03` (`cheddar-03.webp`)
+- Cheddar 05 → `linha-cheddar-x-cheddar-05` (`cheddar-05.webp`)
+- Combo 02, 03, 04 e 06 → `combos-combo-02`, `combos-combo-03`, `combos-combo-04`, `combos-combo-06`.
 
-Somente as fotos enviadas separadamente e confirmadas: Guaraná Antártica 350 ml, Fanta Laranja 350 ml, Fanta Uva 350 ml, Kuat 2 L, Coca 600 ml, Coca lata transparente e nova Coca PET 2 L transparente. Todas são byte a byte iguais ao snapshot aprovado reaplicado. Garrafa, tampa e rótulo da Coca PET 2 L foram preservados, sem retoque nesta rodada.
+As máscaras preservam lanche, embalagem e conjuntos quando presentes e removem mesa, chão, cena externa e mão somente onde a separação era segura. Os cortes são conservadores; bordas com transparência parcial são antialias da máscara, não conteúdo criado.
 
-O [mapa público](mapa-publico.md) lista os sete assets. O [manifesto](associacoes.json) conserva hashes de proveniência externos, com todos os registros do PDF explicitamente excluídos e sem asset/ID efetivo. Nomes de fontes são metadados, não arquivos publicados.
+## Pendências e bebidas
 
-H2OH! avulsa de 1,5 L fica fora: não representa o item 500 ml, cujo ID legado permanece `bebidas-h2o-600ml`. Fanta 2 L mantém ícone neutro; nenhum caso ambíguo ganhou foto.
+As outras 8 fotos do PDF ficam com `item_id` e `asset` nulos, `pending` explícito e **fora de `public/`**. H2OH! avulsa de 1,5 L também fica fora: não representa o item legado de 500 ml. As sete bebidas existentes permanecem intactas, com seus hashes de proveniência preservados no manifesto. Fanta 2 L continua sem foto própria.
 
-## Catálogo e limites
-
-Preços dos combos, Fanta 2 L a R$ 13 e Bimbo restrito aos cinco itens da Linha Cheddar permanecem como aprovados. IDs, volumes, ingredientes e composições foram preservados. API, administração, autenticação, configuração e demais assets herdados da base pública não foram modificados. Consulte [o resumo do catálogo](../bebidas-variantes-revisao.md).
-
-PDF, originais extraídos e fotos avulsas continuam intactos fora do repositório. Não há fonte original ou script de preparo dependente de caminho local na árvore. A antiga branch e os objetos/reflogs locais foram preservados, mas seus commits não são ancestrais da branch limpa. Não publicar branches antigas, `--all`, `--mirror` ou bundles do repositório compartilhado.
-
-## Verificação
-
-Sem instalar dependências: `npm test`, `npm run test:ui -- --workers=1`, `node --check public/script.js` e `git diff --check`. Os testes verificam ausência das 18 fotos do PDF, sete associações de bebidas, hashes/alpha, preços, variantes, IDs, carrinho e fluxos existentes. O pacote externo contém logs finais, SHA, patch, prévia e auditoria de ancestralidade para Cassandra; os testes não autorizam publicação.
+O [mapa público](mapa-publico.md) lista os dez derivados e as sete bebidas. O [manifesto](associacoes.json) registra dimensões, modo, hashes e status de cada fonte/asset. PDF, originais, máscaras e scripts continuam fora do repositório.

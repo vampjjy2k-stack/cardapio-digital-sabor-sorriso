@@ -1,15 +1,16 @@
 {
-  "base_commit": "733673319b162ffa1142d62a1bc07d1cf2d6eb63",
+  "base_commit": "4c8bc3d48f058d6daf49b64201cb82c7e7c3d56b",
   "pdf_original": "d437942685a785605b15fdeb_produtos_sabor_e_sorriso.pdf",
   "pdf_sha256": "c16dc40408497ae32f8821ea8190f6c3032db6125197c452c0b8b46cc3126db8",
-  "extraction": "pdfimages -j; fontes externas preservadas byte a byte; recorte com máscara guiada e GrabCut restrito à borda, WebP lossless RGBA.",
+  "extraction": "pdfimages -j; fontes externas preservadas byte a byte; derivados WebP lossless RGBA com máscaras determinísticas conservadoras (fundo removido, sem IA e sem pixels inventados).",
   "unchanged_existing_drinks": [
     "guarana-antarctica-350ml.png",
     "fanta-laranja-350ml.png",
     "fanta-uva-350ml.png",
     "kuat-2l.png",
     "coca-cola-600ml.png",
-    "coca-cola-lata.png"
+    "coca-cola-lata.png",
+    "coca-cola-2l.png"
   ],
   "existing_drink_provenance": [
     {
@@ -101,14 +102,14 @@
         866,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "artesanais-artesanal-02",
+      "asset": "public/img/produtos/artesanal-02.webp",
+      "asset_sha256": "a8c8ec482efa0d8fa49c675f3eb23a0770923fa9208ec19b766d4ab54264b758",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-000.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final"
     },
     {
       "page": 1,
@@ -119,13 +120,14 @@
         750,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "artesanais-artesanal-03",
+      "asset": "public/img/produtos/artesanal-03-1.webp",
+      "asset_sha256": "58a60994a16a1a0dd2f9368edde3752a4071d24115dc0434376bb291fbe115e6",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-001.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final",
+      "mode": "RGBA"
     },
     {
       "page": 1,
@@ -136,13 +138,14 @@
         562,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "artesanais-artesanal-03",
+      "asset": "public/img/produtos/artesanal-03-2.webp",
+      "asset_sha256": "d3be34273b3255f273dc831c44b9eec43a59d7165b66f50607dba08f06b6353a",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-002.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final",
+      "mode": "RGBA"
     },
     {
       "page": 1,
@@ -153,14 +156,19 @@
         800,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "artesanais-artesanal-04",
+      "asset": "public/img/produtos/artesanal-04.webp",
+      "asset_sha256": "39c72e1586b1de676db240c812cbbffd3edfc5a9d4c73b9ab6816ef71c539e19",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-003.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final",
+      "visual_limitations": [
+        "Duas unidades visíveis: uma inteira à esquerda e outra cortada à direita; não inferir duas unidades na porção vendida.",
+        "A fonte mostra luvas pretas em contato com os pães. No derivado, a maior parte das luvas ficou fora do recorte, mas permanece um pequeno resíduo escuro/cinza junto ao topo do pão da unidade cortada à direita, no ponto de contato da luva; não uma luva inteira sobre o pão."
+      ],
+      "review_note": "Associação mantida com ressalvas; imagem exatamente inalterada, sem retoque inventado. Pendente de revisão da Cassandra e posterior aprovação de SHA/escopo por João."
     },
     {
       "page": 1,
@@ -174,10 +182,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-004.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "page": 1,
@@ -188,14 +196,14 @@
         1000,
         563
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "linha-cheddar-x-cheddar-03",
+      "asset": "public/img/produtos/cheddar-03.webp",
+      "asset_sha256": "efb44040cc22c3711f87ea8d5632b062cce085cc6775a3cd4afe3df4708c2943",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-005.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final"
     },
     {
       "page": 2,
@@ -206,14 +214,14 @@
         562,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "linha-cheddar-x-cheddar-05",
+      "asset": "public/img/produtos/cheddar-05.webp",
+      "asset_sha256": "6a9de0c92e49884fe23841edf39988d871cd44707826158a7d48a130bfad94e7",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-006.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final"
     },
     {
       "page": 2,
@@ -227,10 +235,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-007.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "page": 2,
@@ -244,10 +252,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-008.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "page": 2,
@@ -261,10 +269,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-009.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "page": 2,
@@ -278,10 +286,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-010.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "page": 2,
@@ -292,14 +300,14 @@
         562,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "combos-combo-02",
+      "asset": "public/img/produtos/combo-02.webp",
+      "asset_sha256": "49cc0c03a9eaa58258d0b12a106d36adecb58b7f42bc82b10fd2c5ddc295acca",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-011.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final"
     },
     {
       "page": 3,
@@ -310,14 +318,14 @@
         750,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "combos-combo-03",
+      "asset": "public/img/produtos/combo-03.webp",
+      "asset_sha256": "360a96ad0e4cea46a14f6857e4cec4cd1b40a7b4d8946c493d9d27fd6208adfd",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-012.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final"
     },
     {
       "page": 3,
@@ -328,14 +336,18 @@
         752,
         1000
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "combos-combo-04",
+      "asset": "public/img/produtos/combo-04.webp",
+      "asset_sha256": "6275ab8ecd7596d5bfeb09af607ba6d51ee183cfc28d16bdbcd7ade279a73cad",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-013.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final",
+      "visual_limitations": [
+        "Marca d’água da câmera parcialmente visível no rodapé, incluindo o trecho moto g31; não removida."
+      ],
+      "review_note": "Associação mantida pela legenda direta Combo 04 no PDF, com ressalva visual; imagem exatamente inalterada. Pendente de revisão da Cassandra e posterior aprovação de SHA/escopo por João."
     },
     {
       "page": 3,
@@ -346,14 +358,14 @@
         1000,
         939
       ],
-      "item_id": null,
-      "asset": null,
-      "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "item_id": "combos-combo-06",
+      "asset": "public/img/produtos/combo-06.webp",
+      "asset_sha256": "ab91059290d7fd63d9ee861b1e47a4c5a6a44bece928f5efc24f9445793dc55c",
+      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "pending": null,
       "external_source": "foto-014.jpg",
       "mode": "RGBA",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "autorizada_athena_final"
     },
     {
       "page": 3,
@@ -367,10 +379,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-015.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "page": 3,
@@ -384,10 +396,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-016.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "page": 3,
@@ -401,10 +413,10 @@
       "item_id": null,
       "asset": null,
       "asset_sha256": null,
-      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
-      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "background": "Fonte externa não publicada; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Pendente: foto real não autorizada no mapa Athena FINAL; manter fora de public.",
       "external_source": "foto-017.jpg",
-      "review_status": "excluida_por_joao_foto_de_teste"
+      "review_status": "pendente_fora_do_mapa_athena_final"
     },
     {
       "caption": "Coca-Cola PET 2 L",
@@ -433,6 +445,17 @@
   ],
   "source_storage": "Fontes fora do repositório; nomes em external_source são relativos ao diretório externo de originais. Nenhum original é publicado.",
   "reapplied_snapshot": "c28ac3de05eba021c616074d16972a1bb5bbabe8",
-  "provenance_note": "unchanged_from_base e unchanged_existing_drinks referem-se ao preparo das imagens anterior ao snapshot reaplicado, não à presença de arquivos na base pública. Fontes são metadados externos; não integram esta árvore ou a nova cadeia local.",
-  "owner_decision": "Excluir todas as 18 fotos do PDF; manter somente as sete fotos de bebidas enviadas separadamente e confirmadas. H2OH! 1,5 L permanece sem associação ao item 500 ml."
+  "provenance_note": "As sete fotos próprias de bebidas são avulsas e permanecem byte a byte idênticas à main 4c8bc3d. source_preparation_base_commit e reapplied_snapshot são metadados históricos do preparo anterior; não indicam novos commits ou inclusão de fontes. As fotos de alimentos vêm somente dos dez pareamentos confirmados do PDF; nenhum original integra a árvore ou o novo commit.",
+  "owner_decision": "Mapa Athena FINAL: 10 fotos reais autorizadas (9 IDs; Artesanal 03 tem duas fotos no mesmo ID); 8 fotos do PDF permanecem pendentes fora de public. H2OH! 1,5 L permanece sem associação ao item 500 ml.",
+  "active_pdf_photos": 10,
+  "active_pdf_item_ids": 9,
+  "pending_pdf_photos": 8,
+  "ITEM_PHOTO_SETS": {
+    "artesanais-artesanal-03": [
+      "public/img/produtos/artesanal-03-1.webp",
+      "public/img/produtos/artesanal-03-2.webp"
+    ]
+  },
+  "photo_set_policy": "Artesanal 03: as duas fotos são equivalentes, sem principal/preferida; manter ambas na galeria com o mesmo tamanho.",
+  "source_preparation_base_commit": "733673319b162ffa1142d62a1bc07d1cf2d6eb63"
 }

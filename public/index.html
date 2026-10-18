@@ -260,6 +260,32 @@
     </div>
   </div>
 
+  <dialog class="product-dialog" id="product-dialog" aria-labelledby="product-title" aria-describedby="product-help">
+    <div class="product-dialog__layout">
+      <header class="product-dialog__header">
+        <div><p class="product-dialog__eyebrow">Monte seu pedido</p><h2 id="product-title"></h2></div>
+        <button type="button" class="icon-btn" id="product-close" aria-label="Fechar opções" autofocus>✕</button>
+      </header>
+      <div class="product-dialog__body">
+        <div class="product-photo" id="product-photo"></div>
+        <fieldset class="product-choices">
+          <legend>Personalize seu pedido</legend>
+          <p id="product-help">Selecione uma opção em cada grupo.</p>
+          <div id="product-options"></div>
+        </fieldset>
+      </div>
+      <p id="product-feedback" role="status" hidden></p>
+      <footer class="product-dialog__footer">
+        <div class="product-quantity" role="group" aria-label="Quantidade">
+          <button type="button" id="product-minus" aria-label="Diminuir quantidade" disabled>−</button>
+          <output id="product-quantity" aria-live="polite" aria-label="Quantidade">1</output>
+          <button type="button" id="product-plus" aria-label="Aumentar quantidade">+</button>
+        </div>
+        <button type="button" class="btn" id="product-add" disabled>Escolha uma opção</button>
+      </footer>
+    </div>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>

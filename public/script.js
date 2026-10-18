@@ -52,7 +52,8 @@ const IMG = {
   sucoDetox: 'img/icones/suco-detox.webp'
 };
 
-// Fotos próprias pareadas por legenda do PDF ou confirmação explícita de volume.
+// Bebidas: sete fotos avulsas confirmadas por embalagem; não vieram do PDF.
+// Alimentos: somente os pareamentos reais confirmados no mapa revisado do PDF.
 // Proveniência e pendências: docs/fotos-produtos/associacoes.json.
 const ITEM_PHOTOS = {
   'bebidas-guarana-antartica-lata': 'img/guarana-antarctica-350ml.png',
@@ -61,7 +62,19 @@ const ITEM_PHOTOS = {
   'bebidas-kuat-2l': 'img/kuat-2l.png',
   'bebidas-coca-cola-600ml': 'img/coca-cola-600ml.png',
   'bebidas-coca-cola-lata': 'img/coca-cola-lata.png',
-  'bebidas-coca-cola-2l': 'img/coca-cola-2l.png'
+  'bebidas-coca-cola-2l': 'img/coca-cola-2l.png',
+  'artesanais-artesanal-02': 'img/produtos/artesanal-02.webp',
+  'artesanais-artesanal-04': 'img/produtos/artesanal-04.webp',
+  'linha-cheddar-x-cheddar-03': 'img/produtos/cheddar-03.webp',
+  'linha-cheddar-x-cheddar-05': 'img/produtos/cheddar-05.webp',
+  'combos-combo-02': 'img/produtos/combo-02.webp',
+  'combos-combo-03': 'img/produtos/combo-03.webp',
+  'combos-combo-04': 'img/produtos/combo-04.webp',
+  'combos-combo-06': 'img/produtos/combo-06.webp'
+};
+// Duas fotos de mesma importância; nenhuma foi eleita como principal.
+const ITEM_PHOTO_SETS = {
+  'artesanais-artesanal-03': ['img/produtos/artesanal-03-1.webp', 'img/produtos/artesanal-03-2.webp']
 };
 
 const DRINK_ICON = { '2L': 'garrafa2l', '600ML': 'garrafa600', 'Lata': 'lata' };
@@ -247,7 +260,7 @@ const FANTA_2L_ID = 'bebidas-fanta-2l';
 const FANTA_FLAVORS = ['Uva', 'Laranja'];
 const BEVERAGE_GROUPS = [
   { key: 'coca-cola', title: 'Coca-Cola', section: 'bebidas', variants: [
-    { id: 'bebidas-coca-cola-lata', opt: null, flavor: '', pack: 'Lata (volume a confirmar)' },
+    { id: 'bebidas-coca-cola-lata', opt: null, flavor: '', pack: 'Lata 350 ml' },
     { id: 'bebidas-coca-cola-600ml', opt: null, flavor: '', pack: 'PET 600 ml' },
     { id: 'bebidas-coca-cola-2l', opt: null, flavor: '', pack: 'PET 2 L' }
   ] },
@@ -266,74 +279,42 @@ const BEVERAGE_GROUPS = [
   })
 ];
 
-function variantLine(variant) {
-  return { id: variant.id, opt: variant.opt,
-    ...(variant.id === FANTA_2L_ID ? { flavor: variant.flavor } : {}) };
+function variantLine(variant) { return { id: variant.id, opt: variant.opt, ...(variant.id === FANTA_2L_ID ? { flavor: variant.flavor } : {}) }; }
+function beverageLabel(variant) { return [variant.flavor, variant.pack].filter(Boolean).join(' · '); }
+function beverageThumbHTML(variant, section) { const ref=ITEM_INDEX.get(variant.id); if(!ref) return `<span class="thumb-emoji" aria-hidden="true">${section.icon}</span>`; const {item}=ref; if(ITEM_PHOTOS[item.id]) return `<img src="${ITEM_PHOTOS[item.id]}" alt="${esc('Foto de '+item.name+' — '+variant.pack)}" width="80" height="80" loading="lazy" decoding="async" data-fallback="${section.icon}">`; if(section.id==='bebidas') return `<span class="thumb-emoji" role="img" aria-label="Ícone ilustrativo; foto desta embalagem pendente">🥤</span>`; const key=section.id==='vitaminas'?null:item.img; return key&&IMG[key]?`<img src="${IMG[key]}" alt="Ícone ilustrativo; foto desta opção pendente" width="80" height="80" data-fallback="${section.icon}">`:`<span class="thumb-emoji" aria-hidden="true">${section.icon}</span>`; }
+function groupDimensions(group){ return {flavors:[...new Set(group.variants.map(v=>v.flavor).filter(Boolean))],packs:[...new Set(group.variants.map(v=>v.pack).filter(Boolean))]}; }
+function groupVariant(group,flavor,pack){ return group.variants.find(v=>(!flavor||v.flavor===flavor)&&(!pack||v.pack===pack))||null; }
+function groupHTML(group,section){ const d=groupDimensions(group), v=group.variants[0], prices=group.variants.map(x=>describeLine(variantLine(x)).price).filter(Number.isFinite), summary=[d.flavors.length?`${d.flavors.length} sabores`:'',d.packs.join(' · ')].filter(Boolean).join(' · '), search=group.variants.map(x=>searchText(ITEM_INDEX.get(x.id).item,section)+' '+norm(beverageLabel(x))).join(' '); return `<li class="card card--compact card--beverage" data-card data-group="${group.key}" data-search="${esc(search)}"><button type="button" class="beverage-open" data-open-beverage="${group.key}" aria-haspopup="dialog" aria-controls="product-dialog" aria-label="Escolher opções de ${esc(group.title)}"><span class="card__body"><span class="card__name" role="heading" aria-level="3">${esc(group.title)}</span><span class="beverage-summary" data-beverage-summary>${esc(summary||'Escolher')}</span><span class="card__price" data-price>${prices.length&&prices.every(p=>p===prices[0])?money(prices[0]):`<small>A partir de </small>${money(Math.min(...prices))}`}</span><span class="beverage-open__hint">Escolher <span aria-hidden="true">›</span></span></span><span class="card__thumb" data-beverage-thumb>${beverageThumbHTML(v,section)}</span></button></li>`; }
+let productGroup=null, productVariant=null, productQuantity=1, productOpener=null, productEditingKey=null;
+function productDimensionsHTML(group){ const {flavors,packs}=groupDimensions(group); const make=(dim,vals,label)=>vals.length>1?`<fieldset class="product-dimension"><legend>${label} <span>Obrigatório · escolha 1</span></legend><div class="product-dimension__options">${vals.map(value=>`<label class="product-option"><input type="radio" name="product-${dim}" data-dimension="${dim}" value="${esc(value)}"><span class="product-option__label">${esc(value)}</span><strong data-option-price="${esc(value)}">A partir de</strong></label>`).join('')}</div></fieldset>`:vals.length===1?`<p class="product-fixed" data-dimension="${dim}">${label}: <strong>${esc(vals[0])}</strong></p>`:''; return make('flavor',flavors,'Sabor')+make('pack',packs,'Tamanho / embalagem'); }
+function updateProductPhoto() {
+  const photo = $('#product-photo');
+  if (!photo) return;
+  photo.innerHTML = productVariant
+    ? beverageThumbHTML(productVariant, MENU.find(section => section.id === productGroup.section))
+    : '<span class="thumb-emoji" role="img" aria-label="Escolha a opção para ver a embalagem confirmada">🥤</span>';
 }
-
-function beverageLabel(variant) {
-  return [variant.flavor, variant.pack].filter(Boolean).join(' · ');
-}
-
-function beverageNote(variant) {
-  return variant.id === FANTA_2L_ID
-    ? 'Uva e Laranja: R$ 13,00 cada.' : '';
-}
-
-function beverageThumbHTML(variant, section) {
-  const { item } = ITEM_INDEX.get(variant.id);
-  if (ITEM_PHOTOS[item.id]) {
-    return `<img src="${ITEM_PHOTOS[item.id]}" alt="${esc('Foto de ' + item.name + ' — ' + variant.pack)}" width="80" height="80" loading="lazy" decoding="async" data-fallback="${section.icon}">`;
-  }
-  // Sem foto exata autorizada: ícone neutro; nunca reaproveitar outro sabor/volume.
-  const key = section.id === 'vitaminas' ? null : item.img;
-  return key && IMG[key]
-    ? `<img src="${IMG[key]}" alt="Ícone ilustrativo; foto desta opção pendente" width="80" height="80" data-fallback="${section.icon}">`
-    : `<span class="thumb-emoji" aria-hidden="true">${section.icon}</span>`;
-}
-
-function groupHTML(group, section) {
-  const variant = group.variants[0];
-  const field = (dimension, title) => {
-    const values = [...new Set(group.variants.map(v => v[dimension]))].filter(Boolean);
-    if (values.length < 2) return '';
-    return `<fieldset class="options beverage-options"><legend>${title}</legend>${values.map((value, i) => `
-      <label class="option"><input type="radio" name="group-${group.key}-${dimension}" data-dimension="${dimension}" value="${esc(value)}" ${i === 0 ? 'checked' : ''}><span>${esc(value)}</span></label>`).join('')}</fieldset>`;
-  };
-  const search = group.variants.map(v => searchText(ITEM_INDEX.get(v.id).item, section) + ' ' + norm(beverageLabel(v))).join(' ');
-  return `<li class="card card--compact card--beverage" data-card data-group="${group.key}" data-variant="0" data-search="${esc(search)}">
-    <div class="card__thumb" data-beverage-thumb>${beverageThumbHTML(variant, section)}</div>
-    <div class="card__body"><h3 class="card__name">${esc(group.title)}</h3>
-      <span class="card__meta" data-selected-label>${esc(beverageLabel(variant))}</span>
-      <p class="card__price" data-price aria-live="polite">${money(describeLine(variantLine(variant)).price)}</p>
-    </div>
-    ${field('flavor', 'Sabor')}${field('pack', 'Embalagem / tamanho')}
-    <p class="beverage-note" data-beverage-note ${beverageNote(variant) ? '' : 'hidden'}>${esc(beverageNote(variant))}</p>
-    <div class="card__full"><button type="button" class="btn btn--add" data-add="${variant.id}" aria-label="Adicionar ${esc(group.title + ' ' + beverageLabel(variant))} ao carrinho">Adicionar</button></div>
-  </li>`;
-}
-
-function updateBeverageGroup(card, input) {
-  const group = BEVERAGE_GROUPS.find(g => g.key === card.dataset.group);
-  const previous = group.variants[Number(card.dataset.variant)];
-  const other = input.dataset.dimension === 'flavor' ? 'pack' : 'flavor';
-  const variant = group.variants.find(v => v[input.dataset.dimension] === input.value && v[other] === previous[other])
-    || group.variants.find(v => v[input.dataset.dimension] === input.value);
-  if (!variant) return;
-  card.dataset.variant = String(group.variants.indexOf(variant));
-  card.querySelectorAll('[data-dimension]').forEach(radio => {
-    radio.checked = radio.value === variant[radio.dataset.dimension];
+function resolveProductVariant(){ if(!productGroup)return null; const {flavors,packs}=groupDimensions(productGroup), flavor=flavors.length>1?$('#product-options input[name="product-flavor"]:checked')?.value:flavors[0]||'', pack=packs.length>1?$('#product-options input[name="product-pack"]:checked')?.value:packs[0]||''; if(flavors.length>1&&!flavor||packs.length>1&&!pack)return null; return groupVariant(productGroup,flavor,pack); }
+function refreshDimensionPrices() {
+  if (!productGroup) return;
+  const flavor = $('#product-options input[name="product-flavor"]:checked')?.value || '';
+  const pack = $('#product-options input[name="product-pack"]:checked')?.value || '';
+  $$('[data-option-price]', $('#product-options')).forEach(element => {
+    const value = element.dataset.optionPrice;
+    const dimension = element.closest('label').querySelector('input').dataset.dimension;
+    const candidates = productGroup.variants.filter(variant => dimension === 'flavor'
+      ? variant.flavor === value && (!pack || variant.pack === pack)
+      : variant.pack === value && (!flavor || variant.flavor === flavor));
+    const prices = candidates.map(variant => describeLine(variantLine(variant)).price).filter(Number.isFinite);
+    const samePrice = prices.every(price => price === prices[0]);
+    element.textContent = prices.length
+      ? `${samePrice ? '' : 'A partir de '}${money(Math.min(...prices))}` : 'Indisponível';
   });
-  card.querySelector('[data-selected-label]').textContent = beverageLabel(variant);
-  card.querySelector('[data-price]').textContent = money(describeLine(variantLine(variant)).price);
-  card.querySelector('[data-beverage-thumb]').innerHTML = beverageThumbHTML(variant, ITEM_INDEX.get(variant.id).section);
-  const note = card.querySelector('[data-beverage-note]');
-  note.textContent = beverageNote(variant);
-  note.hidden = !note.textContent;
-  const button = card.querySelector('[data-add]');
-  button.dataset.add = variant.id;
-  button.setAttribute('aria-label', `Adicionar ${group.title} ${beverageLabel(variant)} ao carrinho`);
 }
+function updateGroupCard(group,variant){ const card=document.querySelector(`[data-group="${CSS.escape(group.key)}"]`); if(!card)return; const info=describeLine(variantLine(variant)), sum=card.querySelector('[data-beverage-summary]'), price=card.querySelector('[data-price]'), thumb=card.querySelector('[data-beverage-thumb]'); if(sum)sum.textContent=beverageLabel(variant)||'Escolher'; if(price&&info)price.textContent=money(info.price); if(thumb)thumb.innerHTML=beverageThumbHTML(variant,MENU.find(s=>s.id===group.section)); }
+function openProduct(button,editLine=null){ productGroup=BEVERAGE_GROUPS.find(g=>g.key===button.dataset.openBeverage||g.key===button.dataset.editGroup); if(!productGroup)return; productOpener=button; productEditingKey=editLine?lineKey(editLine):null; productQuantity=editLine?editLine.qty:1; $('#product-title').textContent=productGroup.title; $('#product-options').innerHTML=productDimensionsHTML(productGroup); $('#product-photo').innerHTML=beverageThumbHTML(productGroup.variants[0],MENU.find(s=>s.id===productGroup.section)); if(editLine){ const selected=productGroup.variants.find(v=>lineKey(variantLine(v))===lineKey(editLine)); if(selected)$$('input[data-dimension]',$('#product-options')).forEach(input=>{if(input.value===selected[input.dataset.dimension])input.checked=true;}); } productVariant=resolveProductVariant(); refreshDimensionPrices(); updateProductTotal(); $('#product-dialog').showModal(); document.body.classList.add('product-open'); }
+function updateProductTotal(){ $('#product-feedback').hidden=true; $('#product-quantity').textContent=String(productQuantity); $('#product-minus').disabled=productQuantity<=1; $('#product-plus').disabled=productQuantity>=MAX_QTY; const button=$('#product-add'); button.disabled=!productVariant; button.textContent=productVariant?`${productEditingKey?'Salvar':'Adicionar'} · ${money(describeLine(variantLine(productVariant)).price*productQuantity)}`:'Escolha uma opção'; updateProductPhoto(); }
+function initProductDialog(){ const dialog=$('#product-dialog'); $('#product-close').addEventListener('click',()=>dialog.close()); dialog.addEventListener('keydown',event=>{if(event.key!=='Tab')return;const f=$$('button:not(:disabled), input:not(:disabled)',dialog).filter(el=>el.getClientRects().length>0),first=f[0],last=f[f.length-1];if(event.shiftKey&&(document.activeElement===first||!dialog.contains(document.activeElement))){event.preventDefault();last?.focus();}else if(!event.shiftKey&&(document.activeElement===last||!dialog.contains(document.activeElement))){event.preventDefault();first?.focus();}}); dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}}); dialog.addEventListener('close',()=>{document.body.classList.remove('product-open');const fallback=productEditingKey?els.list.querySelector(`[data-action="edit"][data-key="${CSS.escape(productEditingKey)}"]`):null;const opener=productOpener?.isConnected&&typeof productOpener.focus==='function'?productOpener:null;(fallback||opener||els.closeBtn)?.focus({preventScroll:true});productGroup=null;productVariant=null;productEditingKey=null;}); $('#product-options').addEventListener('change',event=>{if(!event.target.matches('input[data-dimension]')||!productGroup)return;productVariant=resolveProductVariant();refreshDimensionPrices();updateProductTotal();}); $('#product-minus').addEventListener('click',()=>{productQuantity=Math.max(1,productQuantity-1);updateProductTotal();}); $('#product-plus').addEventListener('click',()=>{productQuantity=Math.min(MAX_QTY,productQuantity+1);updateProductTotal();}); $('#product-add').addEventListener('click',()=>{if(!productVariant)return;const line=variantLine(productVariant),ok=productEditingKey?editCartLine(productEditingKey,line,productQuantity):addToCart(line.id,line.opt,line.flavor,productQuantity);if(ok){updateGroupCard(productGroup,productVariant);dialog.close();}else{$('#product-feedback').textContent=`Limite de ${MAX_QTY} unidades desta opção no carrinho. Reduza a quantidade para adicionar.`;$('#product-feedback').hidden=false;}}); }
 
 function sectionCardsHTML(section) {
   const groups = BEVERAGE_GROUPS.filter(g => g.section === section.id);
@@ -398,6 +379,9 @@ const els = {
 
 function thumbHTML(item, section, size = 104) {
   const icon = item.icon || section.icon;
+  if (ITEM_PHOTO_SETS[item.id]) {
+    return `<span class="photo-pair" role="group" aria-label="Duas fotos de ${esc(item.name)}, sem principal">${ITEM_PHOTO_SETS[item.id].map((src, index) => `<img src="${src}" alt="${esc('Foto de ' + item.name + ' — imagem ' + (index + 1))}" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`).join('')}</span>`;
+  }
   const key = section.id === 'bebidas' && item.img === 'antarctica'
     ? 'lata' : item.img || (item.icon ? null : section.img);
   const src = (item.id && ITEM_PHOTOS[item.id]) || (key && IMG[key]);
@@ -732,7 +716,7 @@ function describeLine(line) {
   }
   const flavorLabel = line.id === FANTA_2L_ID ? ` - ${line.flavor || 'sabor a confirmar'}` : '';
   const beverageMeta = {
-    'bebidas-coca-cola-lata': 'Lata (volume a confirmar)',
+    'bebidas-coca-cola-lata': 'Lata 350 ml',
     'bebidas-fanta-uva-lata': 'Lata 350 ml',
     'bebidas-fanta-laranja-lata': 'Lata 350 ml',
     'bebidas-guarana-antartica-lata': 'Lata 350 ml',
@@ -743,7 +727,7 @@ function describeLine(line) {
     'bebidas-h2o-600ml': '500 ml'
   };
   const meta = beverageMeta[item.id] || item.meta;
-  const name = (section.prefix || '') + (item.id === 'bebidas-h2o-600ml' ? 'H2OH!' : item.name)
+  const name = (section.prefix || '') + (item.id.startsWith('bebidas-coca-cola-') ? 'Coca-Cola' : item.name)
     + (meta ? ` - ${meta}` : '')
     + (label ? ` - ${label}` : '')
     + flavorLabel
@@ -776,7 +760,7 @@ function saveCart() {
 
 let cart = loadCart();
 
-function addToCart(id, opt, flavor) {
+function addToCart(id, opt, flavor, quantity = 1) {
   const ref = ITEM_INDEX.get(id);
   if (!ref) return false;
   if (ref.item.options && opt == null) opt = 0;
@@ -785,12 +769,12 @@ function addToCart(id, opt, flavor) {
   const line = { id, opt, ...(flavor != null ? { flavor } : {}) };
   if (!describeLine(line)) return false;
   const existing = cart.find(l => lineKey(l) === lineKey(line));
-  if (existing && existing.qty >= MAX_QTY) {
+  if (!Number.isInteger(quantity) || quantity < 1 || (existing?.qty || 0) + quantity > MAX_QTY) {
     showToast(`Limite de ${MAX_QTY} unidades deste item.`);
     return false;
   }
-  if (existing) existing.qty = Math.min(MAX_QTY, existing.qty + 1);
-  else cart.push({ ...line, qty: 1 });
+  if (existing) existing.qty += quantity;
+  else cart.push({ ...line, qty: quantity });
 
   saveCart();
   renderCart();
@@ -799,6 +783,16 @@ function addToCart(id, opt, flavor) {
   return true;
 }
 
+function groupForLine(line) { return BEVERAGE_GROUPS.find(g => g.variants.some(v => lineKey(variantLine(v)) === lineKey(line))) || null; }
+function editCartLine(oldKey, nextLine, quantity) {
+  const index = cart.findIndex(l => lineKey(l) === oldKey); if (index < 0) return false;
+  const qty = Number(quantity); if (!Number.isInteger(qty) || qty < 1 || qty > MAX_QTY || !describeLine(nextLine)) return false;
+  const target = cart.findIndex((l,i) => i !== index && lineKey(l) === lineKey(nextLine));
+  if (target >= 0 && cart[target].qty + qty > MAX_QTY) return false;
+  const replacement = { ...nextLine, qty };
+  if (target >= 0) { cart[target].qty += qty; cart.splice(index, 1); } else cart[index] = replacement;
+  saveCart(); renderCart(); return true;
+}
 function changeQty(key, delta) {
   const index = cart.findIndex(l => lineKey(l) === key);
   if (index === -1) return;
@@ -1131,6 +1125,7 @@ function renderCart() {
           <span class="qty__value" aria-live="polite">${line.qty}</span>
           <button type="button" class="qty__btn" data-action="inc" data-key="${key}" aria-label="Aumentar quantidade de ${name}">+</button>
         </div>
+        ${groupForLine(line) ? `<button type="button" class="remove-btn" data-action="edit" data-key="${key}" aria-label="Editar ${name}">Editar</button>` : ''}
         <button type="button" class="remove-btn" data-action="remove" data-key="${key}" aria-label="Remover ${name} do carrinho">Remover</button>
       </div>
     </li>`;
@@ -1434,14 +1429,16 @@ document.addEventListener('error', event => {
 
 document.addEventListener('click', event => {
   const target = event.target;
-
+  const productButton = target.closest('[data-open-beverage]');
+  if (productButton) {
+    openProduct(productButton);
+    return;
+  }
   const addBtn = target.closest('[data-add]');
   if (addBtn) {
     const card = addBtn.closest('[data-card]');
-    const group = card && BEVERAGE_GROUPS.find(g => g.key === card.dataset.group);
-    const variant = group && group.variants[Number(card.dataset.variant)];
     const checked = card && card.querySelector('input[type="radio"]:checked');
-    const line = variant ? variantLine(variant) : { id: addBtn.dataset.add, opt: checked ? Number(checked.value) : null };
+    const line = { id: addBtn.dataset.add, opt: checked ? Number(checked.value) : null };
     if (addToCart(line.id, line.opt, line.flavor)) {
       flashAdded(addBtn);
     }
@@ -1469,6 +1466,11 @@ document.addEventListener('click', event => {
     return;
   }
 
+  if (action === 'edit') {
+    const line = cart.find(l => lineKey(l) === key); const group = line && groupForLine(line);
+    if (line && group) openProduct({ dataset: { editGroup: group.key } }, line);
+    return;
+  }
   if (action === 'inc' || action === 'dec') {
     changeQty(key, action === 'inc' ? 1 : -1);
     const same = els.list.querySelector(`[data-action="${action}"][data-key="${CSS.escape(key)}"]`);
@@ -1482,11 +1484,6 @@ document.addEventListener('click', event => {
 document.addEventListener('change', event => {
   const input = event.target;
   if (!(input instanceof HTMLInputElement)) return;
-
-  if (input.type === 'radio' && input.dataset.dimension) {
-    updateBeverageGroup(input.closest('[data-group]'), input);
-  }
-
   if (input.type === 'radio' && input.name.startsWith('opt-')) {
     const card = input.closest('[data-card]');
     const priceEl = card && card.querySelector('[data-price]');
@@ -1522,7 +1519,7 @@ els.clear.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', event => {
-  if (!isCartOpen()) return;
+  if (!isCartOpen() || $('#product-dialog').open) return;
   if (event.key === 'Escape') {
     event.preventDefault();
     closeCart();
@@ -1565,6 +1562,7 @@ window.addEventListener('resize', debounce(measureClamps, 200));
 
 applyTheme(currentTheme(), false);
 renderMenu();
+initProductDialog();
 $('#address-neighborhood').innerHTML = '<option value="" disabled selected>Selecione seu bairro</option>' + DELIVERY_FEES.map(entry =>
   `<option value="${esc(entry.neighborhood)}">${esc(entry.neighborhood)} — ${money(entry.fee)}</option>`).join('');
 neighborhoodPicker.init();

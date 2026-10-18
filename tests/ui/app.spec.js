@@ -71,15 +71,20 @@ test.describe('cardápio responsivo e pesquisa', () => {
     await expect(page.locator('#category-nav-list > li:visible')).toHaveCount(12);
   });
 
-  test('categorias navegam e opções de vitamina entram no pedido com preço correto', async ({ page }) => {
+  test('categorias navegam e vitaminas selecionam sabor e volume com preço correto', async ({ page }) => {
     await openApp(page);
     await page.locator('[data-scroll="vitaminas"]').click();
     await expect(page.locator('#vitaminas')).toBeInViewport();
     const vit = page.locator("[data-group='vitaminas']");
-    await expect(vit.locator('[data-price]')).toHaveText('R$ 10,00');
-    await vit.getByLabel(/Copo 500ML/).check();
-    await expect(vit.locator('[data-price]')).toHaveText('R$ 13,00');
-    await vit.getByRole('button', { name: /Adicionar/ }).click();
+    await expect(vit.locator('[data-price]')).toHaveText('A partir de R$ 10,00');
+    await vit.locator('[data-open-beverage="vitaminas"]').click();
+    const product = page.locator('#product-dialog');
+    await expect(product).toBeVisible();
+    await product.locator('input[name="product-flavor"][value="Morango ao Leite"]').check();
+    await expect(product.locator('#product-add')).toBeDisabled();
+    await product.locator('input[name="product-pack"][value="Copo 500ML"]').check();
+    await expect(product.locator('#product-add')).toContainText(/R\$ 13,00/);
+    await product.locator('#product-add').click();
     await openCart(page);
     await expect(page.locator('.cart-line')).toContainText('Copo 500ML');
     await expect(page.locator('#cart-total')).toHaveText('R$ 13,00');
