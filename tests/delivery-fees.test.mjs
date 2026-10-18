@@ -24,6 +24,7 @@ class MockElement {
     this.textContent = '';
     this.innerHTML = '';
     this.hidden = false;
+    this.disabled = false;
     this.checked = false;
     this.required = false;
     this.type = 'text';
@@ -43,7 +44,10 @@ class MockElement {
   setAttribute(name, value) { this[name] = String(value); }
   removeAttribute(name) { delete this[name]; }
   querySelector() { return null; }
-  querySelectorAll() { return []; }
+  querySelectorAll(selector) {
+    if (selector === '[role="option"]') return this.options || [];
+    return [];
+  }
   closest() { return null; }
   focus() {}
 }
@@ -57,9 +61,12 @@ function makeRuntime() {
     'cart-empty', 'checkout-fields', 'address-fields', 'cart-subtotal', 'fee-row',
     'cart-fee', 'delivery-fee-row', 'cart-delivery-fee', 'cart-summary', 'cart-total', 'cart-total-label', 'checkout-hint',
     'cart-note', 'order-notes', 'checkout-btn', 'clear-btn', 'toast', 'address-street',
-    'address-number', 'address-neighborhood', 'address-reference', 'theme-toggle'
+    'address-number', 'address-neighborhood', 'address-reference', 'theme-toggle',
+    'neighborhood-picker', 'neighborhood-trigger', 'neighborhood-panel',
+    'neighborhood-options', 'neighborhood-name', 'neighborhood-fee'
   ];
   const elements = Object.fromEntries(ids.map(id => [id, new MockElement(id)]));
+  elements['neighborhood-options'].options = [];
   elements.search.closest = () => ({ scrollIntoView() {} });
   elements['order-notes'].value = '';
   elements['cart-toggle'].setAttribute = MockElement.prototype.setAttribute;

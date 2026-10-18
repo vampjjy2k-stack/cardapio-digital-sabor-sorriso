@@ -800,3 +800,143 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cart-line.is-updated { animation: none; }
 }
+
+/* ---------- Checkout acolhedor: somente o carrinho ---------- */
+.drawer { border-left: 0; }
+.drawer__header {
+  flex: 0 0 auto; gap: 12px; padding: 16px;
+  background: var(--tag-bg); color: var(--card-ink);
+  border-bottom: 1px solid var(--surface-line); box-shadow: none;
+}
+.drawer__eyebrow {
+  margin-bottom: 2px; color: var(--price);
+  font-size: .6875rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+}
+.drawer__title { font-size: 1.5rem; letter-spacing: -.035em; line-height: 1.2; }
+.drawer__header .icon-btn {
+  flex: 0 0 48px; border: 1px solid var(--field-border);
+  color: var(--card-ink); background: var(--surface); border-radius: 50%; font-size: 1rem;
+}
+.drawer__body { min-height: 0; padding: 0 16px 20px; scroll-padding-block: 12px; }
+.drawer .cart-line { padding-block: 20px; gap: 10px; }
+.drawer .cart-line__head { min-width: 0; }
+.drawer .cart-line__name { min-width: 0; overflow-wrap: anywhere; }
+.drawer .cart-line__unit { font-size: .8125rem; }
+.drawer .qty { gap: 0; padding: 2px; border: 1px solid var(--surface-line); border-radius: 16px; }
+.drawer .qty__btn { border: 0; background: var(--tag-bg); border-radius: 12px; }
+.drawer .qty__value { min-width: 32px; font-size: 1rem; }
+.drawer .remove-btn { padding-inline: 8px; font-size: .8125rem; }
+.drawer .checkout-fields { gap: 22px; margin-top: 22px; padding-top: 0; border-top: 0; }
+.drawer .fieldset__legend, .drawer .checkout-notes > .field-label {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  font-size: .9375rem; font-weight: 700; line-height: 1.5;
+}
+.checkout-step {
+  display: inline-grid; flex: 0 0 28px; place-items: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--tag-bg); color: var(--price);
+  font-size: .6875rem; font-weight: 800; letter-spacing: .02em;
+}
+.drawer .radio-group { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.drawer .fieldset:has(input[name="payment-method"]) .radio-group { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.drawer .radio-option span {
+  min-height: 74px; gap: 5px; padding: 10px 4px;
+  border: 1px solid var(--field-border); border-radius: 16px;
+  background: var(--field-bg); font-size: .875rem; font-weight: 600; line-height: 1.35;
+}
+.drawer .radio-option span::before {
+  content: ""; width: 12px; height: 12px; border-radius: 50%;
+  border: 1.5px solid currentColor; background: transparent;
+}
+.drawer .radio-option input:checked + span {
+  background: var(--tag-bg); color: var(--card-ink); border: 2px solid var(--price);
+  padding: 9px 3px;
+}
+.drawer .radio-option input:checked + span::before { background: var(--price); border-color: var(--price); }
+.drawer .radio-option small { font-size: .6875rem; font-weight: 600; }
+.drawer .address-fields {
+  padding: 14px 12px; gap: 8px; border-radius: 18px;
+  background: color-mix(in srgb, var(--tag-bg) 40%, var(--surface));
+}
+.drawer .address-fields > .field-label:not(:first-child) { margin-top: 8px; }
+.drawer .field-label { font-size: .8125rem; font-weight: 600; }
+.drawer .field {
+  min-width: 0; min-height: 50px; border-width: 1px; border-radius: 12px;
+  padding: 12px; font-size: 1rem; line-height: 1.45;
+}
+.drawer .field::placeholder { color: var(--card-muted); opacity: 1; }
+.drawer .checkout-notes > .field-label { flex-wrap: wrap; gap: 8px; }
+.drawer .checkout-notes small { color: var(--card-muted); font-size: .75rem; font-weight: 400; }
+.drawer .checkout-notes textarea { display: block; min-height: 100px; }
+.drawer #clear-btn { justify-self: center; width: auto; padding-inline: 16px; font-size: .8125rem; }
+.drawer .cart-note {
+  padding: 10px 12px; border-radius: 12px;
+  font-size: .8125rem; line-height: 1.55;
+}
+.drawer #delivery-neighborhood-hint { padding: 0; margin-block: 2px 6px; background: none; font-size: .75rem; }
+.checkout-review {
+  display: grid; gap: 12px; margin-top: 20px; padding: 18px 14px;
+  border: 1px solid var(--surface-line); border-radius: 18px; background: var(--tag-bg);
+}
+.drawer__body:has(#checkout-fields[hidden]) .checkout-review { display: none; }
+.checkout-review__title { font-size: 1rem; font-weight: 700; letter-spacing: -.02em; }
+.drawer .cart-summary { font-size: .8125rem; line-height: 1.5; padding-bottom: 10px; border-bottom: 1px dashed var(--field-border); }
+.drawer .totals { gap: 8px; }
+.drawer .totals__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline;
+  gap: 12px; font-size: .875rem; line-height: 1.5;
+}
+.drawer .totals__row > :last-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.drawer .totals__row--total { margin-top: 4px; padding-top: 14px; border-top: 1px dashed var(--field-border); font-size: 1rem; }
+.drawer .totals__row--total strong { font-size: 1.5rem; letter-spacing: -.035em; }
+.drawer .checkout-review .cart-note { padding: 0; background: none; }
+.drawer__footer {
+  flex: 0 0 auto; gap: 8px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  box-shadow: 0 -5px 18px rgba(0, 0, 0, .06);
+}
+.drawer .checkout-hint { padding: 0; background: none; font-size: .75rem; line-height: 1.5; }
+.drawer .btn--whatsapp { min-height: 56px; padding: 12px; border-radius: 16px; font-size: .9375rem; line-height: 1.35; }
+.drawer .checkout-caption { font-size: .6875rem; }
+
+/* Lista própria: nomes e taxas separados, sem elipse nem seletor nativo. */
+.neighborhood-picker { min-width: 0; margin-top: 8px; }
+.neighborhood-picker > .field-label { display: block; margin-bottom: 8px; }
+.neighborhood-picker__trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; min-height: 76px; padding: 12px;
+  border: 1px solid var(--field-border); border-radius: 12px;
+  background: var(--field-bg); color: var(--card-ink); text-align: left; cursor: pointer;
+}
+.neighborhood-picker__value { display: grid; gap: 4px; min-width: 0; }
+#neighborhood-name { font-size: 1rem; font-weight: 600; line-height: 1.45; overflow-wrap: anywhere; }
+#neighborhood-fee { color: var(--card-muted); font-size: .75rem; line-height: 1.5; }
+.neighborhood-picker__chevron { flex: 0 0 20px; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+.neighborhood-picker__trigger[aria-expanded="true"] { border-color: var(--price); }
+.neighborhood-picker__trigger[aria-expanded="true"] .neighborhood-picker__chevron { transform: rotate(180deg); }
+.neighborhood-picker__trigger:disabled { opacity: .6; cursor: not-allowed; }
+.neighborhood-picker__panel { margin-top: 8px; padding: 8px; background: var(--surface); border: 1px solid var(--field-border); border-radius: 14px; }
+.neighborhood-picker__caption {
+  display: grid; gap: 2px; padding: 4px 6px 10px; color: var(--card-ink); font-size: .8125rem; font-weight: 700;
+}
+.neighborhood-picker__caption span { color: var(--card-muted); font-size: .6875rem; font-weight: 400; }
+.neighborhood-picker__options {
+  display: grid; gap: 4px; max-height: 280px; max-height: min(280px, 40dvh);
+  overflow-y: auto; overscroll-behavior: contain; padding: 4px;
+  scroll-padding: 4px; border-radius: 10px;
+}
+.neighborhood-picker__option {
+  display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 3px 8px;
+  min-height: 70px; padding: 10px; border: 1px solid transparent; border-radius: 10px;
+  color: var(--card-ink); cursor: pointer; scroll-margin-block: 4px;
+}
+.neighborhood-picker__name { font-size: 1rem; line-height: 1.45; overflow-wrap: anywhere; }
+.neighborhood-picker__fee { grid-column: 1; color: var(--card-muted); font-size: .8125rem; font-weight: 600; line-height: 1.5; }
+.neighborhood-picker__check { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--price); visibility: hidden; }
+.neighborhood-picker__option[aria-selected="true"] { background: var(--tag-bg); border-color: var(--price); }
+.neighborhood-picker__option[aria-selected="true"] .neighborhood-picker__check { visibility: visible; }
+.neighborhood-picker__option:hover { background: var(--tag-bg); }
+.neighborhood-picker__option:focus { outline: 2px solid var(--focus); outline-offset: 0; background: var(--tag-bg); }
+@media (max-width: 360px) {
+  .drawer__header { padding-inline: 12px; }
+  .drawer__body, .drawer__footer { padding-inline: 12px; }
+}

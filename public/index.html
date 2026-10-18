@@ -139,7 +139,10 @@
 
   <div class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" inert>
     <div class="drawer__header">
-      <h2 class="drawer__title" id="cart-title">Seu Pedido</h2>
+      <div>
+        <p class="drawer__eyebrow">Sabor &amp; Sorriso</p>
+        <h2 class="drawer__title" id="cart-title">Seu Pedido</h2>
+      </div>
       <button type="button" class="icon-btn" id="cart-close" aria-label="Fechar carrinho">✕</button>
     </div>
 
@@ -156,7 +159,7 @@
       <!-- Checkout expandido -->
       <div class="checkout-fields" id="checkout-fields" hidden>
         <fieldset class="fieldset">
-          <legend class="fieldset__legend">Tipo de entrega</legend>
+          <legend class="fieldset__legend"><span class="checkout-step" aria-hidden="true">01</span> Tipo de entrega</legend>
           <div class="radio-group">
             <label class="radio-option">
               <input type="radio" name="delivery-type" value="delivery">
@@ -172,16 +175,28 @@
         <div class="address-fields" id="address-fields" hidden>
           <label class="field-label" for="address-street">Rua / Avenida</label>
           <input class="field" id="address-street" type="text" placeholder="Ex: Rua das Flores" autocomplete="address-line1">
-          <div class="field-row">
-            <div>
-              <label class="field-label" for="address-number">Número</label>
-              <input class="field" id="address-number" type="text" placeholder="123" autocomplete="off">
-            </div>
-            <div>
-              <label class="field-label" for="address-neighborhood">Bairro</label>
-              <select class="field" id="address-neighborhood" autocomplete="address-level3" aria-describedby="delivery-neighborhood-hint" disabled>
-                <option value="" disabled selected>Selecione seu bairro</option>
-              </select>
+          <label class="field-label" for="address-number">Número</label>
+          <input class="field" id="address-number" type="text" placeholder="123" autocomplete="off">
+          <div class="neighborhood-picker" id="neighborhood-picker">
+            <label class="field-label" id="neighborhood-label" for="neighborhood-trigger">Bairro</label>
+            <!-- Estado do checkout preservado; a seleção visível não usa o picker do sistema. -->
+            <select id="address-neighborhood" autocomplete="address-level3" hidden tabindex="-1" aria-hidden="true" disabled>
+              <option value="" disabled selected>Selecione seu bairro</option>
+            </select>
+            <button type="button" class="neighborhood-picker__trigger" id="neighborhood-trigger"
+                    aria-haspopup="listbox" aria-expanded="false" aria-controls="neighborhood-options"
+                    aria-labelledby="neighborhood-label neighborhood-name neighborhood-fee"
+                    aria-describedby="delivery-neighborhood-hint" disabled>
+              <span class="neighborhood-picker__value">
+                <span id="neighborhood-name">Selecione seu bairro</span>
+                <span id="neighborhood-fee">Veja a taxa de entrega</span>
+              </span>
+              <svg class="neighborhood-picker__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="neighborhood-picker__panel" id="neighborhood-panel" hidden>
+              <p class="neighborhood-picker__caption" aria-hidden="true">Bairros atendidos <span>Taxa de entrega</span></p>
+              <ul class="neighborhood-picker__options" id="neighborhood-options" role="listbox"
+                  aria-labelledby="neighborhood-label" aria-describedby="delivery-neighborhood-hint" aria-required="true"></ul>
             </div>
           </div>
           <p class="cart-note" id="delivery-neighborhood-hint">Entregamos somente nos 12 bairros da lista. Selecione seu bairro para incluir a taxa no total.</p>
@@ -190,7 +205,7 @@
         </div>
 
         <fieldset class="fieldset">
-          <legend class="fieldset__legend">Forma de pagamento</legend>
+          <legend class="fieldset__legend"><span class="checkout-step" aria-hidden="true">02</span> Forma de pagamento</legend>
           <div class="radio-group">
             <label class="radio-option">
               <input type="radio" name="payment-method" value="cash">
@@ -207,26 +222,28 @@
           </div>
         </fieldset>
 
-        <div>
-          <label class="field-label" for="order-notes">Observações (opcional)</label>
+        <div class="checkout-notes">
+          <label class="field-label" for="order-notes"><span class="checkout-step" aria-hidden="true">03</span> Observações <small>(opcional)</small></label>
           <textarea class="field" id="order-notes" rows="2" maxlength="300"
                     placeholder="Ex: sem cebola, troco para R$ 50..."></textarea>
         </div>
 
         <button type="button" class="btn-link" id="clear-btn">Limpar carrinho</button>
       </div>
+      <section class="checkout-review" id="checkout-review" aria-labelledby="checkout-review-title">
+        <h3 class="checkout-review__title" id="checkout-review-title">Resumo do pedido</h3>
+        <p class="cart-summary" id="cart-summary" hidden></p>
+        <div class="totals">
+          <div class="totals__row"><span>Subtotal</span><span id="cart-subtotal">R$ 0,00</span></div>
+          <div class="totals__row" id="fee-row" hidden><span>Taxa do cartão</span><span id="cart-fee">+ R$ 2,00</span></div>
+          <div class="totals__row" id="delivery-fee-row" hidden><span>Taxa de entrega</span><span id="cart-delivery-fee"></span></div>
+          <div class="totals__row totals__row--total"><span id="cart-total-label">Total</span><strong id="cart-total">R$ 0,00</strong></div>
+        </div>
+        <p class="cart-note" id="cart-note" hidden></p>
+      </section>
     </div>
 
     <div class="drawer__footer">
-      <p class="cart-summary" id="cart-summary" hidden></p>
-      <div class="totals">
-        <div class="totals__row"><span>Subtotal</span><span id="cart-subtotal">R$ 0,00</span></div>
-        <div class="totals__row" id="fee-row" hidden><span>Taxa do cartão</span><span id="cart-fee">+ R$ 2,00</span></div>
-        <div class="totals__row" id="delivery-fee-row" hidden><span>Taxa de entrega</span><span id="cart-delivery-fee"></span></div>
-        <div class="totals__row totals__row--total"><span id="cart-total-label">Total</span><strong id="cart-total">R$ 0,00</strong></div>
-      </div>
-      <p class="cart-note" id="cart-note" hidden></p>
-
       <p class="checkout-hint" id="checkout-hint" role="status" hidden></p>
 
       <button type="button" class="btn btn--whatsapp" id="checkout-btn" disabled>

@@ -35,6 +35,13 @@ async function openCart(page) {
   await expect(page.locator('#cart-drawer')).toHaveAttribute('aria-hidden', 'false');
 }
 
+async function chooseNeighborhood(page, name) {
+  const trigger = page.locator('#neighborhood-trigger');
+  await trigger.click();
+  await page.getByRole('option', { name: new RegExp(`^${name}\\s+R\\$`) }).click();
+  await expect(trigger.locator('#neighborhood-name')).toHaveText(name);
+}
+
 test.describe('cardápio responsivo e pesquisa', () => {
   for (const width of [320, 390, 1440]) {
     test(`renderiza os dois temas sem overflow horizontal em ${width}px`, async ({ page }) => {
@@ -139,7 +146,7 @@ test.describe('carrinho e checkout', () => {
     await expect(page.locator('#checkout-btn')).toBeDisabled();
     await page.locator('#address-street').fill('Rua das Flores');
     await page.locator('#address-number').fill('123');
-    await page.locator('#address-neighborhood').selectOption('Capivari');
+    await chooseNeighborhood(page, 'Capivari');
     await expect(page.locator('#delivery-fee-row')).toBeVisible();
     await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 9,00');
     await expect(page.locator('#cart-total')).toHaveText('R$ 26,00');
@@ -178,6 +185,9 @@ test.describe('carrinho e checkout', () => {
     const options = page.locator('#address-neighborhood option');
     await expect(options).toHaveCount(13);
     await expect(page.locator('select#address-neighborhood')).toHaveCount(1);
+    await expect(page.locator('select#address-neighborhood')).toHaveAttribute('tabindex', '-1');
+    await expect(page.locator('select#address-neighborhood')).toHaveAttribute('aria-hidden', 'true');
+    await expect(page.locator('#neighborhood-panel')).toBeHidden();
     await expect(options.nth(0)).toHaveText('Selecione seu bairro');
     await expect(options.nth(0)).toBeDisabled();
     await expect(options.nth(0)).toHaveAttribute('value', '');
@@ -186,7 +196,16 @@ test.describe('carrinho e checkout', () => {
       await expect(options.nth(i + 1)).toHaveAttribute('value', expected[i][0]);
     }
     await page.getByLabel('Entrega', { exact: true }).check();
-    await page.locator('#address-neighborhood').selectOption('Ruas da 1 a porta de aço');
+    await page.locator('#neighborhood-trigger').click();
+    await expect(page.locator('#neighborhood-options > li')).toHaveCount(12);
+    for (let i = 0; i < expected.length; i++) {
+      const option = page.locator('#neighborhood-options > li').nth(i);
+      await expect(option).toHaveAttribute('data-neighborhood', expected[i][0]);
+      await expect(option.locator('.neighborhood-picker__name')).toHaveText(expected[i][0]);
+      await expect(option.locator('.neighborhood-picker__fee')).toHaveText(expected[i][1]);
+    }
+    await page.keyboard.press('Escape');
+    await chooseNeighborhood(page, 'Ruas da 1 a porta de aço');
     expect(await page.locator('.drawer__body').evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
   });
 
@@ -199,11 +218,11 @@ test.describe('carrinho e checkout', () => {
     await page.locator('#address-number').fill('123');
     await expect(page.locator('#address-neighborhood')).toHaveJSProperty('required', true);
     await expect(page.locator('#checkout-btn')).toBeDisabled();
-    await page.locator('#address-neighborhood').selectOption('Capivari');
+    await chooseNeighborhood(page, 'Capivari');
     await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 9,00');
     await expect(page.locator('#cart-total')).toHaveText('R$ 24,00');
     await expect(page.locator('#cart-bar-total')).toHaveText('R$ 24,00');
-    await page.locator('#address-neighborhood').selectOption('Primavera');
+    await chooseNeighborhood(page, 'Primavera');
     await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 15,00');
     await expect(page.locator('#cart-total')).toHaveText('R$ 30,00');
     await expect(page.locator('#cart-bar-total')).toHaveText('R$ 30,00');
@@ -225,7 +244,7 @@ test.describe('carrinho e checkout', () => {
     await page.getByLabel('Cartão').check();
     await page.locator('#address-street').fill('Rua das Flores');
     await page.locator('#address-number').fill('123');
-    await page.locator('#address-neighborhood').selectOption('Capivari');
+    await chooseNeighborhood(page, 'Capivari');
     await expect(page.locator('#cart-total')).toHaveText('R$ 26,00');
     await expect(page.locator('#fee-row')).toBeVisible();
     await expect(page.locator('#fee-row')).toContainText('Taxa do cartão');
@@ -264,6 +283,8 @@ test.describe('carrinho e checkout', () => {
     await page.reload();
     await openCart(page);
     await expect(page.locator('#address-neighborhood')).toHaveValue('Capivari');
+    await expect(page.locator('#neighborhood-name')).toHaveText('Capivari');
+    await expect(page.locator('#neighborhood-fee')).toHaveText('Taxa de entrega: R$ 9,00');
     await expect(page.locator('#cart-delivery-fee')).toHaveText('+ R$ 9,00');
     await page.evaluate(() => localStorage.setItem('saborsorriso:entrega-dados', JSON.stringify({
       deliveryType: 'delivery', paymentMethod: 'pix',
@@ -272,6 +293,8 @@ test.describe('carrinho e checkout', () => {
     await page.reload();
     await openCart(page);
     await expect(page.locator('#address-neighborhood')).toHaveValue('');
+    await expect(page.locator('#neighborhood-name')).toHaveText('Selecione seu bairro');
+    await expect(page.locator('#neighborhood-trigger')).toBeEnabled();
     await expect(page.locator('#address-neighborhood')).toBeEnabled();
     await expect(page.locator('#address-neighborhood')).toHaveJSProperty('required', true);
     await expect(page.locator('#checkout-btn')).toBeDisabled();

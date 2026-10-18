@@ -649,6 +649,129 @@ function totals() {
    CHECKOUT
    ========================================================= */
 
+// O select oculto continua sendo a fonte de estado do checkout. Este componente
+// só apresenta as mesmas opções e emite o mesmo change ao confirmar uma escolha.
+const neighborhoodPicker = (() => {
+  const root = $('#neighborhood-picker');
+  const select = $('#address-neighborhood');
+  const trigger = $('#neighborhood-trigger');
+  const panel = $('#neighborhood-panel');
+  const list = $('#neighborhood-options');
+  let search = '';
+  let lastKeyTime = 0;
+
+  const options = () => $$('[role="option"]', list);
+  const isOpen = () => !panel.hidden;
+
+  function close(restoreFocus = false) {
+    panel.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+    search = '';
+    if (restoreFocus && !trigger.disabled) trigger.focus({ preventScroll: true });
+  }
+
+  function focusOption(index) {
+    const option = options()[index];
+    option?.focus({ preventScroll: true });
+    option?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+  }
+
+  function open(edge) {
+    if (trigger.disabled) return;
+    panel.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    const selectedIndex = options().findIndex(option => option.dataset.neighborhood === select.value);
+    focusOption(selectedIndex >= 0 ? selectedIndex : edge === 'last' ? options().length - 1 : 0);
+  }
+
+  function sync() {
+    const selected = DELIVERY_FEES.find(entry => entry.neighborhood === select.value);
+    trigger.disabled = select.disabled;
+    $('#neighborhood-name').textContent = selected ? selected.neighborhood : 'Selecione seu bairro';
+    $('#neighborhood-fee').textContent = selected ? `Taxa de entrega: ${money(selected.fee)}` : 'Veja a taxa de entrega';
+    options().forEach(option => {
+      option.setAttribute('aria-selected', String(option.dataset.neighborhood === select.value));
+    });
+    if (select.disabled || cart.length === 0) close();
+  }
+
+  function choose(option) {
+    if (select.disabled) return;
+    select.value = option.dataset.neighborhood;
+    close(true);
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function init() {
+    list.innerHTML = DELIVERY_FEES.map(entry => `
+      <li class="neighborhood-picker__option" role="option" tabindex="-1" aria-selected="false" data-neighborhood="${esc(entry.neighborhood)}">
+        <span class="neighborhood-picker__name">${esc(entry.neighborhood)}</span>
+        <span class="neighborhood-picker__fee">${money(entry.fee)}</span>
+        <span class="neighborhood-picker__check" aria-hidden="true">✓</span>
+      </li>`).join('');
+
+    trigger.addEventListener('click', () => isOpen() ? close() : open());
+    trigger.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        open(event.key === 'ArrowUp' ? 'last' : 'first');
+      }
+    });
+    list.addEventListener('click', event => {
+      const option = event.target.closest('[role="option"]');
+      if (option) choose(option);
+    });
+    list.addEventListener('keydown', event => {
+      const items = options();
+      const current = items.indexOf(document.activeElement);
+      let next;
+      if (event.key === 'ArrowDown') next = Math.min(current + 1, items.length - 1);
+      if (event.key === 'ArrowUp') next = Math.max(current - 1, 0);
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = items.length - 1;
+      if (next !== undefined) {
+        event.preventDefault();
+        focusOption(next);
+      } else if (event.key === 'Enter' || (event.key === ' ' && (!search || Date.now() - lastKeyTime > 700))) {
+        event.preventDefault();
+        if (items[current]) choose(items[current]);
+      } else if (event.key.length === 1 && !event.ctrlKey && !event.altKey && !event.metaKey) {
+        const now = Date.now();
+        search = now - lastKeyTime > 700 ? event.key : search + event.key;
+        lastKeyTime = now;
+        const term = norm(search);
+        const repeated = [...term].every(char => char === term[0]);
+        const prefix = repeated ? term[0] : term;
+        const start = repeated ? current + 1 : current;
+        const match = items.findIndex((_, offset) => norm(items[(start + offset + items.length) % items.length].dataset.neighborhood).startsWith(prefix));
+        if (match >= 0) focusOption((start + match + items.length) % items.length);
+        event.preventDefault();
+      }
+    });
+    root.addEventListener('keydown', event => {
+      if (isOpen() && event.key === 'Escape') {
+        event.preventDefault();
+        event.stopPropagation(); // Primeiro fecha a lista, não o carrinho.
+        close(true);
+      }
+      if (isOpen() && event.key === 'Tab') {
+        event.preventDefault();
+        close();
+        // A lista não acrescenta etapas à ordem dos campos do endereço.
+        (event.shiftKey ? trigger : $('#address-reference')).focus();
+      }
+    });
+    root.addEventListener('focusout', event => {
+      if (!root.contains(event.relatedTarget)) close();
+    });
+    document.addEventListener('click', event => {
+      if (!root.contains(event.target)) close();
+    });
+  }
+
+  return { init, sync, close };
+})();
+
 function loadDeliveryData() {
   try {
     const data = JSON.parse(localStorage.getItem(DELIVERY_KEY));
@@ -702,6 +825,7 @@ function updateCheckoutState() {
     $(sel).required = deliveryType === 'delivery';
   });
   $('#address-neighborhood').disabled = deliveryType !== 'delivery';
+  neighborhoodPicker.sync();
   const deliveryLabels = { delivery: 'Entrega', pickup: 'Retirada no local' };
   const paymentLabels = { cash: 'Dinheiro', card: 'Cartão', pix: 'Pix' };
   const count = totals().count;
@@ -878,6 +1002,7 @@ function openCart() {
 }
 
 function closeCart() {
+  neighborhoodPicker.close();
   els.drawer.classList.remove('is-open');
   els.overlay.classList.remove('is-open');
   els.drawer.setAttribute('aria-hidden', 'true');
@@ -1232,6 +1357,7 @@ applyTheme(currentTheme(), false);
 renderMenu();
 $('#address-neighborhood').innerHTML = '<option value="" disabled selected>Selecione seu bairro</option>' + DELIVERY_FEES.map(entry =>
   `<option value="${esc(entry.neighborhood)}">${esc(entry.neighborhood)} — ${money(entry.fee)}</option>`).join('');
+neighborhoodPicker.init();
 loadDeliveryData();   // antes de renderCart(): renderCart salva os campos e apagaria os dados guardados
 renderCart();
 loadStoreStatus();
