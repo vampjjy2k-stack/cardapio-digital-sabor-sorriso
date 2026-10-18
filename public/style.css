@@ -814,6 +814,18 @@ body {
   .cart-line.is-updated { animation: none; }
 }
 
+/* Variantes: mesmas cores e cards; controles quebram linha em telas estreitas. */
+.card.card--beverage { grid-template-columns: 80px minmax(0, 1fr); }
+.card--beverage .card__thumb { width: 80px; height: 92px; }
+.card--beverage .card__meta { white-space: normal; }
+.beverage-options { flex-wrap: wrap; gap: 8px; }
+.beverage-options legend { font-size: .875rem; font-weight: 700; padding: 0 0 6px; color: var(--card-muted); }
+.beverage-options .option { flex: 1 1 105px; min-width: 0; }
+.beverage-options .option span { min-height: 44px; font-size: .875rem; overflow-wrap: anywhere; }
+.beverage-note { grid-column: 1 / -1; font-size: .8125rem; line-height: 1.45; color: var(--card-muted); }
+.card--beverage .card__full .btn { width: 100%; }
+.card--beverage .card__full .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
 /* ---------- Checkout acolhedor: somente o carrinho ---------- */
 .drawer { border-left: 0; }
 .drawer__header {

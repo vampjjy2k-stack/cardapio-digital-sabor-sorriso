@@ -1,0 +1,438 @@
+{
+  "base_commit": "733673319b162ffa1142d62a1bc07d1cf2d6eb63",
+  "pdf_original": "d437942685a785605b15fdeb_produtos_sabor_e_sorriso.pdf",
+  "pdf_sha256": "c16dc40408497ae32f8821ea8190f6c3032db6125197c452c0b8b46cc3126db8",
+  "extraction": "pdfimages -j; fontes externas preservadas byte a byte; recorte com máscara guiada e GrabCut restrito à borda, WebP lossless RGBA.",
+  "unchanged_existing_drinks": [
+    "guarana-antarctica-350ml.png",
+    "fanta-laranja-350ml.png",
+    "fanta-uva-350ml.png",
+    "kuat-2l.png",
+    "coca-cola-600ml.png",
+    "coca-cola-lata.png"
+  ],
+  "existing_drink_provenance": [
+    {
+      "asset": "public/img/guarana-antarctica-350ml.png",
+      "asset_sha256": "e27a8a722db357625c37e732d7c58ef40303513d528da9cd8cbbb6b07291181d",
+      "original_filename": "1000023732.jpg",
+      "original_source": "f022afd9964b2ca1ab4ad1dd_1000023732.jpg",
+      "original_sha256": "57124db41117f8d9925f0a422573143fedfce013c6d7180cc7655414ed26ff39",
+      "dimensions": [
+        539,
+        960
+      ],
+      "mode": "RGBA",
+      "unchanged_from_base": true
+    },
+    {
+      "asset": "public/img/fanta-laranja-350ml.png",
+      "asset_sha256": "b3907986dbdc758834fc8450875408e59e8ec547619d53eefe79d3f92501f310",
+      "original_filename": "1000023731.jpg",
+      "original_source": "dfedca88e7d9dcfb1ef96813_1000023731.jpg",
+      "original_sha256": "239e7b969f7f86d4b2a4e8e6022e18d5e96e9d6c24fd485362750cd98f474ca0",
+      "dimensions": [
+        736,
+        736
+      ],
+      "mode": "RGBA",
+      "unchanged_from_base": true
+    },
+    {
+      "asset": "public/img/fanta-uva-350ml.png",
+      "asset_sha256": "73487550d9eb4ca64e60908fe65f80d67a3139a27aa1f5600ff13b1b735bbc6e",
+      "original_filename": "1000023729.jpg",
+      "original_source": "dc84422d9416c61a58578275_1000023729.jpg",
+      "original_sha256": "267e550d22b8005e9accdb384631d9ce9c10590221d18137baf3ce5c91ade431",
+      "dimensions": [
+        500,
+        500
+      ],
+      "mode": "RGBA",
+      "unchanged_from_base": true
+    },
+    {
+      "asset": "public/img/kuat-2l.png",
+      "asset_sha256": "e7e2a217a97dba701faf44ef09e9a4a7145b51ff66963bfbda7346df6ebc4893",
+      "original_filename": "1000023727.jpg",
+      "original_source": "c5215c7da2aca19e1f916c6f_1000023727.jpg",
+      "original_sha256": "0dae16ee58cec3e7a5fc9751ac443de209f24b37fbb0ad7f8cca7eb86b21c2a1",
+      "dimensions": [
+        736,
+        736
+      ],
+      "mode": "RGBA",
+      "unchanged_from_base": true
+    },
+    {
+      "asset": "public/img/coca-cola-600ml.png",
+      "asset_sha256": "f7b6fe44799461ab8ea37e2daf9f3e9dd4c1de33385a8081617da723f8e9a53f",
+      "original_filename": "1000023730.jpg",
+      "original_source": "46819210592d991da26def60_1000023730.jpg",
+      "original_sha256": "16cf7e45302601361f3a4a1a706aa8ab0706187d4c3f8033a032801cddc9489e",
+      "dimensions": [
+        736,
+        736
+      ],
+      "mode": "RGBA",
+      "unchanged_from_base": true
+    },
+    {
+      "asset": "public/img/coca-cola-lata.png",
+      "asset_sha256": "8b0c20d80b00f5620119f37c74a2f96c131666dcd947a948af72fa6f0b6eabb3",
+      "original_filename": "1000023745.jpg",
+      "original_source": "8f90a500ec2fca52a3eaf418_1000023745.jpg",
+      "original_sha256": "a38af2fe771ab7f1fc6882d48ce59f3951b3316ffa7ce54d84a3458c3b0dba40",
+      "dimensions": [
+        388,
+        675
+      ],
+      "mode": "RGBA",
+      "unchanged_from_base": true
+    }
+  ],
+  "records": [
+    {
+      "page": 1,
+      "position": 1,
+      "caption": "Artesanal 02",
+      "source_sha256": "66bd36d13b7c89f1ad17809ee66cfc1b1e9d0e32112a9bdc4f49417725996216",
+      "dimensions": [
+        866,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-000.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 1,
+      "position": 2,
+      "caption": "Artesanal 03 (foto 1)",
+      "source_sha256": "c1337f9ce49a90610e20d4a95ef0d9b54a9182b7a856900c7e80b11aa104543c",
+      "dimensions": [
+        750,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-001.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 1,
+      "position": 3,
+      "caption": "Artesanal 03 (foto 2)",
+      "source_sha256": "40649c8d665a51242372ac68a2d19a37d83f6b2e2b24dac135a0767e8d443302",
+      "dimensions": [
+        562,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-002.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 1,
+      "position": 4,
+      "caption": "Artesanal 04",
+      "source_sha256": "886256bf5b3ef18ced11f0e0a9e201497a16eef7758f481ebd1a57f8e43d1ace",
+      "dimensions": [
+        800,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-003.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 1,
+      "position": 5,
+      "caption": "Cheddar",
+      "source_sha256": "8be774a09d37edb8cfb2a40c24772e0b77c1351d9fba5727180a5d06808caeb3",
+      "dimensions": [
+        752,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-004.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 1,
+      "position": 6,
+      "caption": "Cheddar 03",
+      "source_sha256": "4a2a74eb90a6b9df6affd964e59efe9d2f9856018c2334b96041fafef1647388",
+      "dimensions": [
+        1000,
+        563
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-005.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 2,
+      "position": 1,
+      "caption": "Cheddar 05",
+      "source_sha256": "02124588d4d414406d75068358edd90fad1e9ddbfa4619e4698fc9dd6e996a03",
+      "dimensions": [
+        562,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-006.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 2,
+      "position": 2,
+      "caption": "X duplo padrão",
+      "source_sha256": "5c2496159281cd965edbc03ca7d712a9ea756c8a4943e2c8fcecad50f91915e3",
+      "dimensions": [
+        540,
+        454
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-007.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 2,
+      "position": 3,
+      "caption": "Picanha 03",
+      "source_sha256": "7be671740a7349d1b611ee4ffabd1314f4ec1d0bf1f5630bf7de6eac1cc4a882",
+      "dimensions": [
+        540,
+        960
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-008.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 2,
+      "position": 4,
+      "caption": "Frango",
+      "source_sha256": "50b475d9d417aae13f3f3b0336f222948877c4c35e177f3de3bdd57808d7d76d",
+      "dimensions": [
+        750,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-009.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 2,
+      "position": 5,
+      "caption": "Cb 07",
+      "source_sha256": "8aaacce63adba1608b8d7767694b325df5ab2e7dd1d106aa7ad70d84fcdb580d",
+      "dimensions": [
+        1000,
+        799
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-010.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 2,
+      "position": 6,
+      "caption": "Combo 02",
+      "source_sha256": "caf28010a8eb3785cbd4dc9bce3a97234f587bfadcc478e7c30af4bd9982d325",
+      "dimensions": [
+        562,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-011.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 3,
+      "position": 1,
+      "caption": "Combo 03",
+      "source_sha256": "83599dd183ebe7c3cc84c5ccf65be87eb2dda3ed5866fe6827de17a63297f5e1",
+      "dimensions": [
+        750,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-012.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 3,
+      "position": 2,
+      "caption": "Combo 04",
+      "source_sha256": "3f060634721c30024e629f48bc2eb75c688bc3bf35139416b90709c63fe9b8e7",
+      "dimensions": [
+        752,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-013.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 3,
+      "position": 3,
+      "caption": "Combo 06",
+      "source_sha256": "9bd5ea1120f8388f0550f186ea2fbd80bb19ec0c540b92dea62d4beaa87fac7f",
+      "dimensions": [
+        1000,
+        939
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-014.jpg",
+      "mode": "RGBA",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 3,
+      "position": 4,
+      "caption": "Batata com creme cheddar e bacon",
+      "source_sha256": "535c2f8fa6625a06c6fc5d51c657f9d0c158afcdf7fa8d013eae6e342c11acdb",
+      "dimensions": [
+        750,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-015.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 3,
+      "position": 5,
+      "caption": "Batata maluca",
+      "source_sha256": "46373239a7e534e14d61dbb0dce857a0c1ac917d8b4d26fc422349d1e93427e5",
+      "dimensions": [
+        750,
+        1000
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-016.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "page": 3,
+      "position": 6,
+      "caption": "Dogão quente",
+      "source_sha256": "0154483f12cadcbc91298d9df20836aa1191d5a74b9e939cd49d6c4139cd1a30",
+      "dimensions": [
+        1000,
+        750
+      ],
+      "item_id": null,
+      "asset": null,
+      "asset_sha256": null,
+      "background": "Fonte externa excluída por decisão do proprietário; não integra public/ ou ITEM_PHOTOS.",
+      "pending": "Não associar: João excluiu todas as fotos antigas do PDF, pois eram somente de testes.",
+      "external_source": "foto-017.jpg",
+      "review_status": "excluida_por_joao_foto_de_teste"
+    },
+    {
+      "caption": "Coca-Cola PET 2 L",
+      "source_sha256": "5e3e4823f1bba9283c8ccc0f54b7b1d6728261cf2f93c8e3e0b49b37e36723b0",
+      "dimensions": [
+        736,
+        736
+      ],
+      "item_id": "bebidas-coca-cola-2l",
+      "asset": "public/img/coca-cola-2l.png",
+      "asset_sha256": "0933f6528f5bf66d80c4be99441f42d6c262cd99968e67ccd0e5ee50680e28cf",
+      "confirmation": "João confirmou explicitamente 2 L; a antiga 1000023730.jpg continua 600 ml.",
+      "background": "Preservado byte a byte da base: Coca PET 2 L já transparente.",
+      "pending": null,
+      "external_source": "1000023807.jpg"
+    },
+    {
+      "caption": "H2OH! 1,5 L",
+      "source_sha256": "6f3bf969004d06d1d0f6ea172c853fa837c603171238c8adb5df07429f3c0682",
+      "item_id": null,
+      "asset": null,
+      "pending": "Foto avulsa de 1,5 L não corresponde ao item de 500 ml; PDF não contém H2OH!.",
+      "external_source": "1000023808.jpg",
+      "background": "Fonte externa não publicada e não associada."
+    }
+  ],
+  "source_storage": "Fontes fora do repositório; nomes em external_source são relativos ao diretório externo de originais. Nenhum original é publicado.",
+  "reapplied_snapshot": "c28ac3de05eba021c616074d16972a1bb5bbabe8",
+  "provenance_note": "unchanged_from_base e unchanged_existing_drinks referem-se ao preparo das imagens anterior ao snapshot reaplicado, não à presença de arquivos na base pública. Fontes são metadados externos; não integram esta árvore ou a nova cadeia local.",
+  "owner_decision": "Excluir todas as 18 fotos do PDF; manter somente as sete fotos de bebidas enviadas separadamente e confirmadas. H2OH! 1,5 L permanece sem associação ao item 500 ml."
+}

@@ -1,0 +1,573 @@
+[
+  {
+    "id": "hamburgueres",
+    "title": "Hambúrgueres",
+    "icon": "🍔",
+    "img": "cheeseburger",
+    "items": [
+      {
+        "name": "X Tudo",
+        "price": 16,
+        "desc": "Pão bimbu + carne + queijo + presunto + tomate + alface + maionese + ketchup",
+        "id": "hamburgueres-x-tudo"
+      },
+      {
+        "name": "X Burguer",
+        "price": 11,
+        "desc": "Pão bimbu + carne + queijo + tomate + alface + maionese + ketchup",
+        "id": "hamburgueres-x-burguer"
+      },
+      {
+        "name": "Hambúrguer",
+        "price": 10,
+        "desc": "Pão bimbu + carne + queijo + maionese + ketchup",
+        "id": "hamburgueres-hamburguer"
+      },
+      {
+        "name": "X Bacon",
+        "price": 15,
+        "desc": "Pão bimbu + carne + queijo + bacon + tomate + alface + maionese + ketchup",
+        "id": "hamburgueres-x-bacon"
+      },
+      {
+        "name": "X Calabresa",
+        "price": 14,
+        "desc": "Pão bimbu + carne + queijo + calabresa + tomate + alface + maionese + ketchup",
+        "id": "hamburgueres-x-calabresa"
+      },
+      {
+        "name": "X Salada",
+        "price": 14,
+        "desc": "Pão bimbu + carne + queijo + ovo + tomate + alface + maionese + ketchup",
+        "id": "hamburgueres-x-salada"
+      },
+      {
+        "name": "X Duplo",
+        "price": 26,
+        "desc": "Pão bimbu + 2 carnes + 2 queijos + presunto + tomate + alface + maionese + ketchup",
+        "id": "hamburgueres-x-duplo"
+      }
+    ]
+  },
+  {
+    "id": "linha-cheddar",
+    "title": "Linha Cheddar",
+    "icon": "🧀",
+    "img": "cheeseburger",
+    "items": [
+      {
+        "name": "X Cheddar 01",
+        "price": 13,
+        "desc": "pão bimbu + carne + queijo + cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup",
+        "id": "linha-cheddar-x-cheddar-01"
+      },
+      {
+        "name": "X Cheddar 02",
+        "price": 17,
+        "desc": "pão bimbu + 2 carnes + dobro de cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup",
+        "id": "linha-cheddar-x-cheddar-02"
+      },
+      {
+        "name": "X Cheddar 03",
+        "price": 17,
+        "desc": "pão bimbu + carne + cheddar + presunto + ovo + bacon + calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup",
+        "id": "linha-cheddar-x-cheddar-03"
+      },
+      {
+        "name": "X Cheddar 04",
+        "price": 16,
+        "desc": "pão bimbu + carne + queijo + cheddar + presunto + bacon + tomate + alface + maionese temperada + molho Billy Jack + ketchup",
+        "id": "linha-cheddar-x-cheddar-04"
+      },
+      {
+        "name": "X Cheddar 05",
+        "price": 27,
+        "desc": "pão bimbu + carnes, dois queijos + cheddar + o dobro de presunto + 2 ovos + o dobro de bacon + o dobro de calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup",
+        "id": "linha-cheddar-x-cheddar-05"
+      }
+    ]
+  },
+  {
+    "id": "artesanais",
+    "title": "Artesanais",
+    "icon": "🥩",
+    "img": "burgerCamadas",
+    "items": [
+      {
+        "name": "Artesanal 01",
+        "price": 21,
+        "desc": "pão brioche + carne artesanal + queijo cheddar + bacon + tomate + alface + todos os molhos + alho torradinho + cebola",
+        "id": "artesanais-artesanal-01"
+      },
+      {
+        "name": "Artesanal 02",
+        "price": 25,
+        "desc": "pão brioche + carne artesanal + queijo cheddar + bacon + presunto + calabresa + ovo + tomate + alface + todos os molhos + alho torradinho + cebola",
+        "id": "artesanais-artesanal-02"
+      },
+      {
+        "name": "Artesanal 03",
+        "price": 35,
+        "desc": "pão brioche + 2 carnes artesanais + dobro de queijo cheddar + dobro de bacon + dobro de presunto + dobro de calabresa + dobro de ovo + tomate + alface + todos os molhos + alho torradinho + cebola",
+        "id": "artesanais-artesanal-03"
+      },
+      {
+        "name": "Artesanal 04",
+        "price": 30,
+        "desc": "pão brioche + 2 carnes artesanais + 2 queijos cheddar + 2 presuntos + bacon + calabresa + cebola + tomate + alface + todos os molhos + alho torradinho",
+        "id": "artesanais-artesanal-04"
+      },
+      {
+        "name": "Artesanal 05",
+        "price": 23,
+        "desc": "pão brioche + carne artesanal + creme de cheddar + bacon + anéis de cebola",
+        "id": "artesanais-artesanal-05"
+      },
+      {
+        "name": "Artesanal 06",
+        "price": 22,
+        "desc": "pão brioche + carne artesanal + creme de cheddar + cebola caramelizada",
+        "id": "artesanais-artesanal-06"
+      }
+    ]
+  },
+  {
+    "id": "combos",
+    "title": "Combos",
+    "icon": "🎁",
+    "img": "combo",
+    "items": [
+      {
+        "name": "Combo 01",
+        "price": 22,
+        "desc": "X-tudo + batata + guaraná natural",
+        "id": "combos-combo-01"
+      },
+      {
+        "name": "Combo 02",
+        "price": 44,
+        "desc": "2 x-bacon + batata maluca + 2 anéis de cebola + 2 nuggets + 2 guaraná natural",
+        "id": "combos-combo-02"
+      },
+      {
+        "name": "Combo 03",
+        "price": 60,
+        "desc": "3 x-burguer + batata + 6 anéis de cebola + 6 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros",
+        "id": "combos-combo-03"
+      },
+      {
+        "name": "Combo 04",
+        "price": 70,
+        "desc": "3 x-tudos padrão + batata palha + ovos de codorna + 6 anéis de cebola",
+        "id": "combos-combo-04"
+      },
+      {
+        "name": "Combo 05",
+        "price": 75,
+        "desc": "4 x-calabresa + batata maluca + 1 refrigerante pakera ou kuat guaraná de 2 litros",
+        "id": "combos-combo-05"
+      },
+      {
+        "name": "Combo 06",
+        "price": 110,
+        "desc": "6 x-tudo + batata + 6 anéis de cebola + 6 nuggets + 1 refrigerante pakera ou kuat guaraná de 2 litros",
+        "id": "combos-combo-06"
+      },
+      {
+        "name": "Combo 07",
+        "price": 125,
+        "desc": "5 x-tudos padrão + batata maluca + 5 anéis de cebola + 5 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros",
+        "id": "combos-combo-07"
+      },
+      {
+        "name": "Combo 08",
+        "price": 95,
+        "desc": "4 cachorro-quente (2 de linguiça, 2 de salsicha) + batata + 8 nuggets + 8 anéis de cebola + 1 refrigerante pakera ou kuat guaraná de 2 litros",
+        "img": "hotdog",
+        "id": "combos-combo-08"
+      },
+      {
+        "name": "Mini 01",
+        "price": 29,
+        "desc": "1 artesanal pão brioche, carne, queijo cheddar, molho especial, batata frita e coca-cola lata",
+        "img": "cheeseburger",
+        "id": "combos-mini-01"
+      },
+      {
+        "name": "Dupla Perfeita 02",
+        "price": 57,
+        "desc": "2 artesanal pão brioche + carne + queijo cheddar + molho especial + batata + nuggets + 2 coca-cola lata",
+        "img": "burgerCamadas",
+        "id": "combos-dupla-perfeita-02"
+      },
+      {
+        "name": "Bomba de Sabor 03",
+        "price": 100,
+        "desc": "3 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + salada + batata frita com cheddar + nuggets + anel de cebola + 1 coca-cola 2 litros",
+        "img": "burgerCamadas",
+        "id": "combos-bomba-de-sabor-03"
+      },
+      {
+        "name": "Explosão de Sabor 04",
+        "price": 135,
+        "desc": "4 artesanal pão brioche + carne + queijo cheddar + molho especial + cebola caramelizada + batata com cheddar e farofa de bacon + 1 coca-cola 2 litros",
+        "img": "burgerCamadas",
+        "id": "combos-explosao-de-sabor-04"
+      },
+      {
+        "name": "Brutal 05",
+        "price": 149,
+        "desc": "5 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + batata frita com cheddar + farofa de bacon + 5 anéis de cebola + 5 nuggets + 1 coca-cola 2 litros",
+        "img": "burgerCamadas",
+        "id": "combos-brutal-05"
+      }
+    ]
+  },
+  {
+    "id": "hot-dogs",
+    "title": "Hot Dogs",
+    "icon": "🌭",
+    "img": "hotdog",
+    "items": [
+      {
+        "name": "Cachorro Quente Salsicha",
+        "price": 15,
+        "desc": "Salsicha, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.",
+        "id": "hot-dogs-cachorro-quente-salsicha"
+      },
+      {
+        "name": "Cachorro Quente Linguiça",
+        "price": 16,
+        "desc": "Linguiça, milho, ervilha, cenoura, uva passas, azeitona, ovos de codorna, queijo ralado, maionese temperada, ketchup e batata palha.",
+        "id": "hot-dogs-cachorro-quente-linguica"
+      },
+      {
+        "name": "Dogão Quente Salsicha",
+        "price": 22,
+        "desc": "Salsicha, milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.",
+        "id": "hot-dogs-dogao-quente-salsicha"
+      },
+      {
+        "name": "Dogão Quente Linguiça",
+        "price": 23,
+        "desc": "Linguiça, milho, ervilha, cenoura, uva passas, ovos de codorna, azeitonas, maionese temperada, ketchup, billy jack, queijo ralado, batata palha.",
+        "id": "hot-dogs-dogao-quente-linguica"
+      }
+    ]
+  },
+  {
+    "id": "porcoes",
+    "title": "Porções",
+    "icon": "🍟",
+    "items": [
+      {
+        "name": "Baguetão Mineiro",
+        "price": 24,
+        "desc": "Pão baguete + linguiça mineira gourmet + molho especial + geleia de pimenta + queijo mussarela + bacon + creme cheddar + salada",
+        "icon": "🥖",
+        "id": "porcoes-baguetao-mineiro"
+      },
+      {
+        "name": "Batata Maluca P",
+        "price": 16,
+        "desc": "Porção de batata frita com molho especial",
+        "icon": "🍟",
+        "id": "porcoes-batata-maluca-p"
+      },
+      {
+        "name": "Batata Maluca G",
+        "price": 27,
+        "desc": "Porção grande de batata frita com molho especial",
+        "icon": "🍟",
+        "id": "porcoes-batata-maluca-g"
+      },
+      {
+        "name": "Batata Maluca P com Cheddar e Bacon",
+        "price": 18,
+        "desc": "Batata frita com creme cheddar e farofa de bacon",
+        "icon": "🍟",
+        "id": "porcoes-batata-maluca-p-com-cheddar-e-bacon"
+      },
+      {
+        "name": "Batata Maluca G com Cheddar e Bacon",
+        "price": 32,
+        "desc": "Porção grande de batata frita com creme cheddar e farofa de bacon",
+        "icon": "🍟",
+        "id": "porcoes-batata-maluca-g-com-cheddar-e-bacon"
+      }
+    ]
+  },
+  {
+    "id": "pasteis",
+    "compact": true,
+    "title": "Pastéis",
+    "icon": "🥟",
+    "img": "pastel",
+    "prefix": "Pastel de ",
+    "items": [
+      {
+        "name": "Carne",
+        "price": 10,
+        "desc": "",
+        "id": "pasteis-carne"
+      },
+      {
+        "name": "Queijo e Presunto",
+        "price": 10,
+        "desc": "",
+        "id": "pasteis-queijo-e-presunto"
+      },
+      {
+        "name": "Pizza",
+        "price": 10,
+        "desc": "",
+        "id": "pasteis-pizza"
+      },
+      {
+        "name": "Queijo Mussarela",
+        "price": 10,
+        "desc": "",
+        "id": "pasteis-queijo-mussarela"
+      },
+      {
+        "name": "Carne com Cheddar",
+        "price": 10,
+        "desc": "",
+        "id": "pasteis-carne-com-cheddar"
+      }
+    ]
+  },
+  {
+    "id": "acai",
+    "compact": true,
+    "title": "Açaí",
+    "icon": "🍇",
+    "img": "acai",
+    "prefix": "Açaí ",
+    "items": [
+      {
+        "name": "200 ML",
+        "price": 8,
+        "desc": "",
+        "id": "acai-200-ml"
+      },
+      {
+        "name": "250 ML",
+        "price": 9,
+        "desc": "",
+        "id": "acai-250-ml"
+      },
+      {
+        "name": "300 ML",
+        "price": 11,
+        "desc": "",
+        "id": "acai-300-ml"
+      },
+      {
+        "name": "400 ML",
+        "price": 14,
+        "desc": "",
+        "id": "acai-400-ml"
+      },
+      {
+        "name": "500 ML",
+        "price": 16,
+        "desc": "",
+        "id": "acai-500-ml"
+      },
+      {
+        "name": "790 ML",
+        "price": 20,
+        "desc": "",
+        "id": "acai-790-ml"
+      }
+    ]
+  },
+  {
+    "id": "vitaminas",
+    "compact": true,
+    "title": "Vitaminas",
+    "icon": "🥛",
+    "img": "milkshake",
+    "prefix": "Vitamina de ",
+    "items": [
+      {
+        "name": "Morango ao Leite",
+        "price": null,
+        "desc": "",
+        "options": [
+          {
+            "label": "Copo 300ML",
+            "price": 10
+          },
+          {
+            "label": "Copo 500ML",
+            "price": 13
+          }
+        ],
+        "id": "vitaminas-morango-ao-leite"
+      },
+      {
+        "name": "Cupuaçu ao Leite",
+        "price": null,
+        "desc": "",
+        "options": [
+          {
+            "label": "Copo 300ML",
+            "price": 10
+          },
+          {
+            "label": "Copo 500ML",
+            "price": 13
+          }
+        ],
+        "id": "vitaminas-cupuacu-ao-leite"
+      },
+      {
+        "name": "Maracujá ao Leite",
+        "price": null,
+        "desc": "",
+        "options": [
+          {
+            "label": "Copo 300ML",
+            "price": 12
+          },
+          {
+            "label": "Copo 500ML",
+            "price": 15
+          }
+        ],
+        "id": "vitaminas-maracuja-ao-leite"
+      },
+      {
+        "name": "Graviola ao Leite",
+        "price": null,
+        "desc": "",
+        "options": [
+          {
+            "label": "Copo 300ML",
+            "price": 10
+          },
+          {
+            "label": "Copo 500ML",
+            "price": 13
+          }
+        ],
+        "id": "vitaminas-graviola-ao-leite"
+      }
+    ]
+  },
+  {
+    "id": "sucos",
+    "compact": true,
+    "title": "Sucos Naturais",
+    "icon": "🍹",
+    "prefix": "Suco de ",
+    "items": [
+      {
+        "name": "Maracujá",
+        "price": 9,
+        "desc": "",
+        "meta": "Copo 500ML",
+        "img": "sucoMaracuja",
+        "id": "sucos-maracuja-copo-500ml"
+      },
+      {
+        "name": "Acerola",
+        "price": 9,
+        "desc": "",
+        "meta": "Copo 500ML",
+        "img": "sucoAcerola",
+        "id": "sucos-acerola-copo-500ml"
+      }
+    ]
+  },
+  {
+    "id": "bebidas",
+    "compact": true,
+    "title": "Bebidas",
+    "icon": "🥤",
+    "items": [
+      {
+        "name": "Coca Cola",
+        "price": 7,
+        "desc": "",
+        "meta": "Lata",
+        "img": "lata",
+        "id": "bebidas-coca-cola-lata"
+      },
+      {
+        "name": "Fanta Uva",
+        "price": 7,
+        "desc": "",
+        "meta": "Lata",
+        "img": "lata",
+        "id": "bebidas-fanta-uva-lata"
+      },
+      {
+        "name": "Fanta Laranja",
+        "price": 7,
+        "desc": "",
+        "meta": "Lata",
+        "img": "lata",
+        "id": "bebidas-fanta-laranja-lata"
+      },
+      {
+        "name": "Guaraná Antártica",
+        "price": 7,
+        "desc": "",
+        "meta": "Lata",
+        "img": "antarctica",
+        "id": "bebidas-guarana-antartica-lata"
+      },
+      {
+        "name": "Coca Cola",
+        "price": 15,
+        "desc": "",
+        "meta": "2L",
+        "img": "garrafa2l",
+        "id": "bebidas-coca-cola-2l"
+      },
+      {
+        "name": "Kuat",
+        "price": 8,
+        "desc": "",
+        "meta": "2L",
+        "img": "garrafa2l",
+        "id": "bebidas-kuat-2l"
+      },
+      {
+        "name": "Fanta",
+        "price": 13,
+        "desc": "",
+        "meta": "2L",
+        "img": "garrafa2l",
+        "id": "bebidas-fanta-2l"
+      },
+      {
+        "name": "Coca Cola",
+        "price": 8,
+        "desc": "",
+        "meta": "600ML",
+        "img": "garrafa600",
+        "id": "bebidas-coca-cola-600ml"
+      },
+      {
+        "name": "H2O",
+        "price": 7,
+        "desc": "",
+        "meta": "600ML",
+        "img": "garrafa600",
+        "id": "bebidas-h2o-600ml"
+      }
+    ]
+  },
+  {
+    "id": "sobremesas",
+    "title": "Sobremesas",
+    "icon": "🍨",
+    "img": "sobremesas",
+    "info": "Temos sim! Consulte as opções disponíveis no momento.",
+    "items": []
+  }
+]

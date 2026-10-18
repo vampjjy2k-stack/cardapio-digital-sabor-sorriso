@@ -52,7 +52,17 @@ const IMG = {
   sucoDetox: 'img/icones/suco-detox.webp'
 };
 
-const ITEM_PHOTOS = {};
+// Fotos próprias pareadas por legenda do PDF ou confirmação explícita de volume.
+// Proveniência e pendências: docs/fotos-produtos/associacoes.json.
+const ITEM_PHOTOS = {
+  'bebidas-guarana-antartica-lata': 'img/guarana-antarctica-350ml.png',
+  'bebidas-fanta-laranja-lata': 'img/fanta-laranja-350ml.png',
+  'bebidas-fanta-uva-lata': 'img/fanta-uva-350ml.png',
+  'bebidas-kuat-2l': 'img/kuat-2l.png',
+  'bebidas-coca-cola-600ml': 'img/coca-cola-600ml.png',
+  'bebidas-coca-cola-lata': 'img/coca-cola-lata.png',
+  'bebidas-coca-cola-2l': 'img/coca-cola-2l.png'
+};
 
 const DRINK_ICON = { '2L': 'garrafa2l', '600ML': 'garrafa600', 'Lata': 'lata' };
 
@@ -78,11 +88,11 @@ const MENU = [
   {
     id: 'linha-cheddar', title: 'Linha Cheddar', icon: '🧀', img: 'cheeseburger',
     items: [
-      p('X Cheddar 01', 13, 'pão bimbu + carne + queijo + cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 02', 17, 'pão bimbu + 2 carnes + dobro de cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 03', 17, 'pão bimbu + carne + cheddar + presunto + ovo + bacon + calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 04', 16, 'pão bimbu + carne + queijo + cheddar + presunto + bacon + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 05', 27, 'pão bimbu + carnes, dois queijos + cheddar + o dobro de presunto + 2 ovos + o dobro de bacon + o dobro de calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup')
+      p('X Cheddar 01', 13, 'pão Bimbo + carne + queijo + cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 02', 17, 'pão Bimbo + 2 carnes + dobro de cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 03', 17, 'pão Bimbo + carne + cheddar + presunto + ovo + bacon + calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 04', 16, 'pão Bimbo + carne + queijo + cheddar + presunto + bacon + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 05', 27, 'pão Bimbo + carnes, dois queijos + cheddar + o dobro de presunto + 2 ovos + o dobro de bacon + o dobro de calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup')
     ]
   },
   {
@@ -99,19 +109,19 @@ const MENU = [
   {
     id: 'combos', title: 'Combos', icon: '🎁', img: 'combo',
     items: [
-      p('Combo 01', 22, 'X-tudo + batata + guaraná natural'),
-      p('Combo 02', 44, '2 x-bacon + batata maluca + 2 anéis de cebola + 2 nuggets + 2 guaraná natural'),
-      p('Combo 03', 60, '3 x-burguer + batata + 6 anéis de cebola + 6 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
-      p('Combo 04', 70, '3 x-tudos padrão + batata palha + ovos de codorna + 6 anéis de cebola'),
-      p('Combo 05', 75, '4 x-calabresa + batata maluca + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
-      p('Combo 06', 110, '6 x-tudo + batata + 6 anéis de cebola + 6 nuggets + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
-      p('Combo 07', 125, '5 x-tudos padrão + batata maluca + 5 anéis de cebola + 5 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
-      p('Combo 08', 95, '4 cachorro-quente (2 de linguiça, 2 de salsicha) + batata + 8 nuggets + 8 anéis de cebola + 1 refrigerante pakera ou kuat guaraná de 2 litros', { img: 'hotdog' }),
-      p('Mini 01', 29, '1 artesanal pão brioche, carne, queijo cheddar, molho especial, batata frita e coca-cola lata', { img: 'cheeseburger' }),
-      p('Dupla Perfeita 02', 57, '2 artesanal pão brioche + carne + queijo cheddar + molho especial + batata + nuggets + 2 coca-cola lata', { img: 'burgerCamadas' }),
-      p('Bomba de Sabor 03', 100, '3 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + salada + batata frita com cheddar + nuggets + anel de cebola + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
-      p('Explosão de Sabor 04', 135, '4 artesanal pão brioche + carne + queijo cheddar + molho especial + cebola caramelizada + batata com cheddar e farofa de bacon + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
-      p('Brutal 05', 149, '5 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + batata frita com cheddar + farofa de bacon + 5 anéis de cebola + 5 nuggets + 1 coca-cola 2 litros', { img: 'burgerCamadas' })
+      p('Combo 01', 25, 'X-tudo + batata + guaraná natural'),
+      p('Combo 02', 48, '2 x-bacon + batata maluca + 2 anéis de cebola + 2 nuggets + 2 guaraná natural'),
+      p('Combo 03', 65, '3 x-burguer + batata + 6 anéis de cebola + 6 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
+      p('Combo 04', 73, '3 x-tudos padrão + batata palha + ovos de codorna + 6 anéis de cebola'),
+      p('Combo 05', 78, '4 x-calabresa + batata maluca + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
+      p('Combo 06', 113, '6 x-tudo + batata + 6 anéis de cebola + 6 nuggets + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
+      p('Combo 07', 128, '5 x-tudos padrão + batata maluca + 5 anéis de cebola + 5 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
+      p('Combo 08', 98, '4 cachorro-quente (2 de linguiça, 2 de salsicha) + batata + 8 nuggets + 8 anéis de cebola + 1 refrigerante pakera ou kuat guaraná de 2 litros', { img: 'hotdog' }),
+      p('Mini 01', 32, '1 artesanal pão brioche, carne, queijo cheddar, molho especial, batata frita e coca-cola lata', { img: 'cheeseburger' }),
+      p('Dupla Perfeita 02', 60, '2 artesanal pão brioche + carne + queijo cheddar + molho especial + batata + nuggets + 2 coca-cola lata', { img: 'burgerCamadas' }),
+      p('Bomba de Sabor 03', 103, '3 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + salada + batata frita com cheddar + nuggets + anel de cebola + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
+      p('Explosão de Sabor 04', 138, '4 artesanal pão brioche + carne + queijo cheddar + molho especial + cebola caramelizada + batata com cheddar e farofa de bacon + 1 coca-cola 2 litros', { img: 'burgerCamadas' }),
+      p('Brutal 05', 152, '5 artesanal pão brioche + carne + queijo cheddar + bacon + molho especial + batata frita com cheddar + farofa de bacon + 5 anéis de cebola + 5 nuggets + 1 coca-cola 2 litros', { img: 'burgerCamadas' })
     ]
   },
   {
@@ -184,7 +194,7 @@ const MENU = [
       p('Fanta', 13, '', { meta: '2L', img: 'garrafa2l' }),
       // 600ml
       p('Coca Cola', 8, '', { meta: '600ML', img: 'garrafa600' }),
-      p('H2O', 7, '', { meta: '600ML', img: 'garrafa600' })
+      p('H2OH!', 7, '', { id: 'bebidas-h2o-600ml', meta: '500ML', img: 'garrafa600' })
     ]
   },
   {
@@ -226,10 +236,116 @@ const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)'
 const ITEM_INDEX = new Map();
 MENU.forEach(section => {
   section.items.forEach(item => {
-    item.id = `${section.id}-${slug(item.name + (item.meta ? ' ' + item.meta : ''))}`;
+    item.id = item.id || `${section.id}-${slug(item.name + (item.meta ? ' ' + item.meta : ''))}`;
     ITEM_INDEX.set(item.id, { section, item });
   });
 });
+
+/* Agrupamento de apresentação: nenhum registro ou ID de produto é criado.
+   flavor é metadado de linha somente no registro agregado Fanta 2 L. */
+const FANTA_2L_ID = 'bebidas-fanta-2l';
+const FANTA_FLAVORS = ['Uva', 'Laranja'];
+const BEVERAGE_GROUPS = [
+  { key: 'coca-cola', title: 'Coca-Cola', section: 'bebidas', variants: [
+    { id: 'bebidas-coca-cola-lata', opt: null, flavor: '', pack: 'Lata (volume a confirmar)' },
+    { id: 'bebidas-coca-cola-600ml', opt: null, flavor: '', pack: 'PET 600 ml' },
+    { id: 'bebidas-coca-cola-2l', opt: null, flavor: '', pack: 'PET 2 L' }
+  ] },
+  { key: 'fanta', title: 'Fanta', section: 'bebidas', variants: [
+    { id: 'bebidas-fanta-uva-lata', opt: null, flavor: 'Uva', pack: 'Lata 350 ml' },
+    { id: 'bebidas-fanta-laranja-lata', opt: null, flavor: 'Laranja', pack: 'Lata 350 ml' },
+    { id: FANTA_2L_ID, opt: null, flavor: 'Uva', pack: 'PET 2 L' },
+    { id: FANTA_2L_ID, opt: null, flavor: 'Laranja', pack: 'PET 2 L' }
+  ] },
+  ...['vitaminas', 'sucos'].map(sectionId => {
+    const section = MENU.find(s => s.id === sectionId);
+    return { key: sectionId, title: sectionId === 'vitaminas' ? 'Vitaminas ao leite' : 'Sucos naturais', section: sectionId,
+      variants: section.items.flatMap(item => (item.options || [{ label: item.meta }]).map((option, opt) => ({
+        id: item.id, opt: item.options ? opt : null, flavor: item.name, pack: option.label
+      }))) };
+  })
+];
+
+function variantLine(variant) {
+  return { id: variant.id, opt: variant.opt,
+    ...(variant.id === FANTA_2L_ID ? { flavor: variant.flavor } : {}) };
+}
+
+function beverageLabel(variant) {
+  return [variant.flavor, variant.pack].filter(Boolean).join(' · ');
+}
+
+function beverageNote(variant) {
+  return variant.id === FANTA_2L_ID
+    ? 'Uva e Laranja: R$ 13,00 cada.' : '';
+}
+
+function beverageThumbHTML(variant, section) {
+  const { item } = ITEM_INDEX.get(variant.id);
+  if (ITEM_PHOTOS[item.id]) {
+    return `<img src="${ITEM_PHOTOS[item.id]}" alt="${esc('Foto de ' + item.name + ' — ' + variant.pack)}" width="80" height="80" loading="lazy" decoding="async" data-fallback="${section.icon}">`;
+  }
+  // Sem foto exata autorizada: ícone neutro; nunca reaproveitar outro sabor/volume.
+  const key = section.id === 'vitaminas' ? null : item.img;
+  return key && IMG[key]
+    ? `<img src="${IMG[key]}" alt="Ícone ilustrativo; foto desta opção pendente" width="80" height="80" data-fallback="${section.icon}">`
+    : `<span class="thumb-emoji" aria-hidden="true">${section.icon}</span>`;
+}
+
+function groupHTML(group, section) {
+  const variant = group.variants[0];
+  const field = (dimension, title) => {
+    const values = [...new Set(group.variants.map(v => v[dimension]))].filter(Boolean);
+    if (values.length < 2) return '';
+    return `<fieldset class="options beverage-options"><legend>${title}</legend>${values.map((value, i) => `
+      <label class="option"><input type="radio" name="group-${group.key}-${dimension}" data-dimension="${dimension}" value="${esc(value)}" ${i === 0 ? 'checked' : ''}><span>${esc(value)}</span></label>`).join('')}</fieldset>`;
+  };
+  const search = group.variants.map(v => searchText(ITEM_INDEX.get(v.id).item, section) + ' ' + norm(beverageLabel(v))).join(' ');
+  return `<li class="card card--compact card--beverage" data-card data-group="${group.key}" data-variant="0" data-search="${esc(search)}">
+    <div class="card__thumb" data-beverage-thumb>${beverageThumbHTML(variant, section)}</div>
+    <div class="card__body"><h3 class="card__name">${esc(group.title)}</h3>
+      <span class="card__meta" data-selected-label>${esc(beverageLabel(variant))}</span>
+      <p class="card__price" data-price aria-live="polite">${money(describeLine(variantLine(variant)).price)}</p>
+    </div>
+    ${field('flavor', 'Sabor')}${field('pack', 'Embalagem / tamanho')}
+    <p class="beverage-note" data-beverage-note ${beverageNote(variant) ? '' : 'hidden'}>${esc(beverageNote(variant))}</p>
+    <div class="card__full"><button type="button" class="btn btn--add" data-add="${variant.id}" aria-label="Adicionar ${esc(group.title + ' ' + beverageLabel(variant))} ao carrinho">Adicionar</button></div>
+  </li>`;
+}
+
+function updateBeverageGroup(card, input) {
+  const group = BEVERAGE_GROUPS.find(g => g.key === card.dataset.group);
+  const previous = group.variants[Number(card.dataset.variant)];
+  const other = input.dataset.dimension === 'flavor' ? 'pack' : 'flavor';
+  const variant = group.variants.find(v => v[input.dataset.dimension] === input.value && v[other] === previous[other])
+    || group.variants.find(v => v[input.dataset.dimension] === input.value);
+  if (!variant) return;
+  card.dataset.variant = String(group.variants.indexOf(variant));
+  card.querySelectorAll('[data-dimension]').forEach(radio => {
+    radio.checked = radio.value === variant[radio.dataset.dimension];
+  });
+  card.querySelector('[data-selected-label]').textContent = beverageLabel(variant);
+  card.querySelector('[data-price]').textContent = money(describeLine(variantLine(variant)).price);
+  card.querySelector('[data-beverage-thumb]').innerHTML = beverageThumbHTML(variant, ITEM_INDEX.get(variant.id).section);
+  const note = card.querySelector('[data-beverage-note]');
+  note.textContent = beverageNote(variant);
+  note.hidden = !note.textContent;
+  const button = card.querySelector('[data-add]');
+  button.dataset.add = variant.id;
+  button.setAttribute('aria-label', `Adicionar ${group.title} ${beverageLabel(variant)} ao carrinho`);
+}
+
+function sectionCardsHTML(section) {
+  const groups = BEVERAGE_GROUPS.filter(g => g.section === section.id);
+  const emitted = new Set();
+  return section.items.map(item => {
+    const group = groups.find(g => g.variants.some(v => v.id === item.id));
+    if (!group) return cardHTML(item, section);
+    if (emitted.has(group.key)) return '';
+    emitted.add(group.key);
+    return groupHTML(group, section);
+  }).join('');
+}
 
 /* Referências do DOM */
 const els = {
@@ -282,10 +398,14 @@ const els = {
 
 function thumbHTML(item, section, size = 104) {
   const icon = item.icon || section.icon;
-  const key = item.img || (item.icon ? null : section.img);
+  const key = section.id === 'bebidas' && item.img === 'antarctica'
+    ? 'lata' : item.img || (item.icon ? null : section.img);
   const src = (item.id && ITEM_PHOTOS[item.id]) || (key && IMG[key]);
   if (src) {
-    return `<img src="${src}" alt="" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`;
+    const photo = item.id && ITEM_PHOTOS[item.id];
+    const alt = section.id === 'bebidas' ? (photo ? 'Foto de ' : 'Ícone ilustrativo de ') + item.name
+      + (item.id === 'bebidas-h2o-600ml' ? ' — 500 ml; sabor a confirmar' : item.id === 'bebidas-guarana-antartica-lata' ? ' — lata 350 ml' : ' — ' + (item.meta || '')) : photo ? 'Foto de ' + item.name : '';
+    return `<img src="${src}" alt="${esc(alt)}" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`;
   }
   return `<span class="thumb-emoji" aria-hidden="true">${icon}</span>`;
 }
@@ -329,7 +449,7 @@ function cardHTML(item, section) {
     <div class="card__thumb">${thumbHTML(item, section, 56)}</div>
     <div class="card__body">
       <h3 class="card__name">${esc(item.name)}</h3>
-      ${item.meta ? `<span class="card__meta">${esc(item.meta)}</span>` : ''}
+      ${item.meta ? `<span class="card__meta">${esc(item.id === 'bebidas-h2o-600ml' ? '500 ml · sabor a confirmar' : item.id === 'bebidas-guarana-antartica-lata' ? 'Lata 350 ml' : item.meta)}</span>` : ''}
       ${priceHTML(item)}
     </div>
     ${item.options ? '' : plusButtonHTML(item)}
@@ -342,7 +462,7 @@ function cardHTML(item, section) {
   <li class="card" data-card data-search="${search}">
     <div class="card__body">
       <h3 class="card__name">${esc(item.name)}</h3>
-      ${item.meta ? `<span class="card__meta">${esc(item.meta)}</span>` : ''}
+      ${item.meta ? `<span class="card__meta">${esc(item.id === 'bebidas-h2o-600ml' ? '500 ml · sabor a confirmar' : item.id === 'bebidas-guarana-antartica-lata' ? 'Lata 350 ml' : item.meta)}</span>` : ''}
       ${item.desc ? `<p class="card__desc" id="desc-${item.id}">${esc(item.desc)}</p>
       <button type="button" class="more-btn" data-more aria-controls="desc-${item.id}" aria-label="Ver mais ingredientes de ${esc(item.name)}" aria-expanded="false" hidden>Ver mais</button>` : ''}
       ${priceHTML(item)}
@@ -370,7 +490,7 @@ function infoCardHTML(section) {
 function sectionHTML(section) {
   const cards = section.info
     ? infoCardHTML(section)
-    : section.items.map(item => cardHTML(item, section)).join('');
+    : sectionCardsHTML(section);
   return `
   <section class="menu-section" id="${section.id}" aria-labelledby="${section.id}-title" tabindex="-1">
     <h2 class="section-title" id="${section.id}-title"><span aria-hidden="true">${section.icon}</span> ${esc(section.title)}</h2>
@@ -601,6 +721,7 @@ function describeLine(line) {
   const ref = ITEM_INDEX.get(line.id);
   if (!ref) return null;
   const { section, item } = ref;
+  if (line.flavor != null && (line.id !== FANTA_2L_ID || !FANTA_FLAVORS.includes(line.flavor))) return null;
   let price = item.price;
   let label = '';
   if (item.options) {
@@ -609,13 +730,28 @@ function describeLine(line) {
     price = option.price;
     label = option.label;
   }
-  const name = (section.prefix || '') + item.name
-    + (item.meta ? ` - ${item.meta}` : '')
-    + (label ? ` - ${label}` : '');
+  const flavorLabel = line.id === FANTA_2L_ID ? ` - ${line.flavor || 'sabor a confirmar'}` : '';
+  const beverageMeta = {
+    'bebidas-coca-cola-lata': 'Lata (volume a confirmar)',
+    'bebidas-fanta-uva-lata': 'Lata 350 ml',
+    'bebidas-fanta-laranja-lata': 'Lata 350 ml',
+    'bebidas-guarana-antartica-lata': 'Lata 350 ml',
+    'bebidas-coca-cola-600ml': 'PET 600 ml',
+    'bebidas-coca-cola-2l': 'PET 2 L',
+    'bebidas-fanta-2l': 'PET 2 L',
+    'bebidas-kuat-2l': 'PET 2 L',
+    'bebidas-h2o-600ml': '500 ml'
+  };
+  const meta = beverageMeta[item.id] || item.meta;
+  const name = (section.prefix || '') + (item.id === 'bebidas-h2o-600ml' ? 'H2OH!' : item.name)
+    + (meta ? ` - ${meta}` : '')
+    + (label ? ` - ${label}` : '')
+    + flavorLabel
+    + (line.id === 'bebidas-h2o-600ml' ? ' - sabor a confirmar' : '');
   return { name, price: price == null ? null : price };
 }
 
-const lineKey = line => `${line.id}|${line.opt == null ? '' : line.opt}`;
+const lineKey = line => `${line.id}|${line.opt == null ? '' : line.opt}${line.flavor ? '|' + line.flavor : ''}`;
 
 function loadCart() {
   try {
@@ -625,6 +761,7 @@ function loadCart() {
       .map(l => ({
         id: String(l.id),
         opt: Number.isInteger(l.opt) ? l.opt : null,
+        ...(l.flavor != null ? { flavor: l.flavor } : {}),
         qty: Math.min(MAX_QTY, Math.max(1, parseInt(l.qty, 10) || 1))
       }))
       .filter(l => describeLine(l));
@@ -639,24 +776,26 @@ function saveCart() {
 
 let cart = loadCart();
 
-function addToCart(id, opt) {
+function addToCart(id, opt, flavor) {
   const ref = ITEM_INDEX.get(id);
   if (!ref) return false;
   if (ref.item.options && opt == null) opt = 0;
   if (!ref.item.options) opt = null;
 
-  const existing = cart.find(l => l.id === id && l.opt === opt);
+  const line = { id, opt, ...(flavor != null ? { flavor } : {}) };
+  if (!describeLine(line)) return false;
+  const existing = cart.find(l => lineKey(l) === lineKey(line));
   if (existing && existing.qty >= MAX_QTY) {
     showToast(`Limite de ${MAX_QTY} unidades deste item.`);
     return false;
   }
   if (existing) existing.qty = Math.min(MAX_QTY, existing.qty + 1);
-  else cart.push({ id, opt, qty: 1 });
+  else cart.push({ ...line, qty: 1 });
 
   saveCart();
   renderCart();
   bumpCounter();
-  showToast(`${describeLine({ id, opt }).name} adicionado ao carrinho`);
+  showToast(`${describeLine(line).name} adicionado ao carrinho`);
   return true;
 }
 
@@ -1299,8 +1438,11 @@ document.addEventListener('click', event => {
   const addBtn = target.closest('[data-add]');
   if (addBtn) {
     const card = addBtn.closest('[data-card]');
+    const group = card && BEVERAGE_GROUPS.find(g => g.key === card.dataset.group);
+    const variant = group && group.variants[Number(card.dataset.variant)];
     const checked = card && card.querySelector('input[type="radio"]:checked');
-    if (addToCart(addBtn.dataset.add, checked ? Number(checked.value) : null)) {
+    const line = variant ? variantLine(variant) : { id: addBtn.dataset.add, opt: checked ? Number(checked.value) : null };
+    if (addToCart(line.id, line.opt, line.flavor)) {
       flashAdded(addBtn);
     }
     return;
@@ -1340,6 +1482,10 @@ document.addEventListener('click', event => {
 document.addEventListener('change', event => {
   const input = event.target;
   if (!(input instanceof HTMLInputElement)) return;
+
+  if (input.type === 'radio' && input.dataset.dimension) {
+    updateBeverageGroup(input.closest('[data-group]'), input);
+  }
 
   if (input.type === 'radio' && input.name.startsWith('opt-')) {
     const card = input.closest('[data-card]');
