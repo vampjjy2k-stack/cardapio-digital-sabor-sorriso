@@ -28,7 +28,7 @@ A aprovação informada de Cassandra é exclusiva ao escopo de UI. O contexto ta
 
 Os testes de UI foram executados em Chromium local, com status simulado, fontes externas substituídas e abertura do WhatsApp interceptada. Não houve envio de pedido, processamento de pagamento, integração com Cloudflare real, teste em aparelho físico, Safari/Firefox ou auditoria completa de acessibilidade. A mensagem de erro de KV no log é esperada no teste de indisponibilidade, que passou.
 
-Os 10 testes de API aprovados não eliminam o bloqueio de login nem os riscos já registrados de limitação de tentativas, revogação de sessão e status assumir loja aberta em falhas. As ressalvas completas permanecem em `../REVISAO-CASSANDRA.md`.
+Os 10 testes de API aprovados não eliminam o bloqueio de login nem os riscos já registrados de limitação de tentativas, revogação de sessão e status assumir loja aberta em falhas. As ressalvas completas permanecem em `../docs/ops/REVISAO-CASSANDRA.md`.
 
 ## Pacote final
 

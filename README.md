@@ -1,6 +1,6 @@
 # Cardápio Digital — Sabor & Sorriso (v4)
 
-> **Revisão P0 de login, sem publicação:** leia [LOGIN-P0.md](LOGIN-P0.md). O login agora exige senha de 12+ caracteres e o binding `ADMIN_LOGIN_LIMITER` de um Worker Durable Object separado. A receita histórica de publicação abaixo não basta sem esse serviço; placeholders são rejeitados.
+> **Revisão P0 de login, sem publicação:** leia [LOGIN-P0.md](docs/ops/LOGIN-P0.md). O login agora exige senha de 12+ caracteres e o binding `ADMIN_LOGIN_LIMITER` de um Worker Durable Object separado. A receita histórica de publicação abaixo não basta sem esse serviço; placeholders são rejeitados.
 
 Cardápio estático + **status Aberto/Fechado centralizado** (Cloudflare Pages + Functions + KV).
 A dona da loja abre/fecha em `/admin` com senha; o status vale para todos os clientes ao mesmo tempo.
