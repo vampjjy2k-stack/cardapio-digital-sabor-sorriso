@@ -15,6 +15,20 @@ const NOTES_KEY = 'saborsorriso:observacoes:v1';
 const DELIVERY_KEY = 'saborsorriso:entrega-dados';
 const MAX_QTY = 99;
 const CARD_FEE = 2.00; // Taxa para pagamento em cartão
+const DELIVERY_FEES = [
+  { neighborhood: 'Capivari', fee: 9 },
+  { neighborhood: 'São Lourenço', fee: 4 },
+  { neighborhood: 'Favela', fee: 5 },
+  { neighborhood: 'Rua 12', fee: 5 },
+  { neighborhood: 'Parque Eldorado', fee: 7 },
+  { neighborhood: 'Ruas da 1 a porta de aço', fee: 6 },
+  { neighborhood: 'Figueira', fee: 5 },
+  { neighborhood: 'Loteamento', fee: 5 },
+  { neighborhood: 'Santa Cruz', fee: 12 },
+  { neighborhood: 'Cangulo', fee: 25 },
+  { neighborhood: 'Primavera', fee: 15 },
+  { neighborhood: 'Berra boi', fee: 8 }
+];
 
 const IMG = {
   logo: 'img/logo.webp',
@@ -249,6 +263,9 @@ const els = {
   subtotal: $('#cart-subtotal'),
   feeRow: $('#fee-row'),
   fee: $('#cart-fee'),
+  deliveryFeeRow: $('#delivery-fee-row'),
+  deliveryFee: $('#cart-delivery-fee'),
+  totalLabel: $('#cart-total-label'),
   summary: $('#cart-summary'),
   total: $('#cart-total'),
   checkoutHint: $('#checkout-hint'),
@@ -734,11 +751,23 @@ function paymentFee() {
   return method === 'card' && cart.length > 0 ? CARD_FEE : 0;
 }
 
+// null/ausência de correspondência não significa entrega grátis.
+function deliveryCharge() {
+  const type = document.querySelector('input[name="delivery-type"]:checked')?.value;
+  if (cart.length === 0 || type !== 'delivery') return { fee: 0, pending: false };
+  const normalizeNeighborhood = value => norm(value).trim().replace(/\s+/g, ' ');
+  const neighborhood = normalizeNeighborhood($('#address-neighborhood').value);
+  const match = DELIVERY_FEES.find(entry => normalizeNeighborhood(entry.neighborhood) === neighborhood);
+  return match ? { fee: match.fee, pending: false } : { fee: 0, pending: true };
+}
+
 function renderCart() {
   const { total, pending, count } = totals();
   const fee = paymentFee();
+  const delivery = deliveryCharge();
   const countText = `${count} ${count === 1 ? 'item' : 'itens'}`;
-  const totalText = pending && total === 0 ? 'A confirmar' : money(total + fee);
+  const totalText = pending && total === 0 ? 'A confirmar' : money(total + fee + delivery.fee);
+  const barTotalText = delivery.pending ? `${totalText} + entrega` : totalText;
 
   els.cartCount.textContent = count;
   els.cartCount.hidden = count === 0;
@@ -747,8 +776,8 @@ function renderCart() {
   els.cartBar.hidden = count === 0;
   document.body.classList.toggle('has-bar', count > 0);
   els.cartBarCount.textContent = count;
-  els.cartBarTotal.textContent = totalText;
-  els.cartBarBtn.setAttribute('aria-label', `Ver carrinho, ${countText}, total ${totalText}`);
+  els.cartBarTotal.textContent = barTotalText;
+  els.cartBarBtn.setAttribute('aria-label', `Ver carrinho, ${countText}, ${delivery.pending ? 'parcial sem entrega' : 'total'} ${barTotalText}`);
 
   els.list.innerHTML = cart.map(line => {
     const info = describeLine(line);
@@ -782,17 +811,20 @@ function renderCart() {
   els.subtotal.textContent = money(total);
   els.feeRow.hidden = fee === 0;
   els.fee.textContent = `+ ${money(fee)}`;
+  els.deliveryFeeRow.hidden = isEmpty || document.querySelector('input[name="delivery-type"]:checked')?.value !== 'delivery';
+  els.deliveryFee.textContent = delivery.pending ? 'A confirmar no WhatsApp' : `+ ${money(delivery.fee)}`;
+  els.totalLabel.textContent = delivery.pending ? 'Parcial (sem entrega)' : 'Total';
   els.total.textContent = totalText;
 
+  const notices = [];
   if (pending > 0) {
-    els.note.hidden = false;
-    els.note.textContent = pending === 1
+    notices.push(pending === 1
       ? '1 item está sem preço definido. O valor será confirmado no WhatsApp.'
-      : `${pending} itens estão sem preço definido. Os valores serão confirmados no WhatsApp.`;
-  } else {
-    els.note.hidden = true;
-    els.note.textContent = '';
+      : `${pending} itens estão sem preço definido. Os valores serão confirmados no WhatsApp.`);
   }
+  if (delivery.pending) notices.push('A taxa de entrega será confirmada no WhatsApp. O valor parcial não inclui a entrega; o total final ainda será confirmado.');
+  els.note.hidden = notices.length === 0;
+  els.note.textContent = notices.join(' ');
 
   updateCheckoutState();
   saveDeliveryData();
@@ -897,8 +929,20 @@ function buildOrderMessage() {
     }
   });
 
-  const finalTotal = total + paymentFee();
-  lines.push('', `*Total: ${money(finalTotal)}*${pending ? ' (+ itens com preço a confirmar)' : ''}`);
+  const fee = paymentFee();
+  const delivery = deliveryCharge();
+  const finalTotal = total + fee + delivery.fee;
+  lines.push('', `*Subtotal:* ${money(total)}`);
+  if (fee) lines.push(`*Taxa do cartão:* ${money(fee)}`);
+  if (deliveryType === 'delivery') {
+    lines.push(`*Taxa de entrega:* ${delivery.pending ? 'a confirmar no WhatsApp' : money(delivery.fee)}`);
+  }
+  if (delivery.pending) {
+    lines.push(`*Parcial (sem entrega): ${money(finalTotal)}*${pending ? ' (+ itens com preço a confirmar)' : ''}`);
+    lines.push('*Total final: a confirmar no WhatsApp.*');
+  } else {
+    lines.push(`*Total: ${money(finalTotal)}*${pending ? ' (+ itens com preço a confirmar)' : ''}`);
+  }
 
   const notes = els.notes.value.trim();
   if (notes) lines.push('', `📝 *Observações:* ${notes}`);
@@ -1116,7 +1160,10 @@ document.addEventListener('change', event => {
 
 ['#address-street', '#address-number', '#address-neighborhood'].forEach(sel => {
   const el = document.querySelector(sel);
-  if (el) el.addEventListener('input', () => { saveDeliveryData(); updateCheckoutState(); });
+  if (el) el.addEventListener('input', () => {
+    if (sel === '#address-neighborhood') renderCart();
+    else { saveDeliveryData(); updateCheckoutState(); }
+  });
 });
 
 els.cartToggle.addEventListener('click', openCart);
@@ -1176,6 +1223,8 @@ window.addEventListener('resize', debounce(measureClamps, 200));
 
 applyTheme(currentTheme(), false);
 renderMenu();
+$('#delivery-neighborhoods').innerHTML = DELIVERY_FEES.map(entry =>
+  `<option value="${esc(entry.neighborhood)}">${money(entry.fee)}</option>`).join('');
 loadDeliveryData();   // antes de renderCart(): renderCart salva os campos e apagaria os dados guardados
 renderCart();
 loadStoreStatus();
