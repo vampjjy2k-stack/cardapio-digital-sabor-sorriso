@@ -247,6 +247,7 @@ test.describe('carrinho e checkout', () => {
     await openCart(page);
     await page.getByLabel('Entrega', { exact: true }).check();
     await page.getByLabel('Cartão').check();
+    await expect(page.locator('label.radio-option').filter({ has: page.locator('input[name="payment-method"][value="card"]') })).toHaveText('Cartão');
     await page.locator('#address-street').fill('Rua das Flores');
     await page.locator('#address-number').fill('123');
     await chooseNeighborhood(page, 'Capivari');
