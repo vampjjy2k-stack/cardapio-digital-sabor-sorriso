@@ -231,6 +231,8 @@ test('buildOrderMessage inclui subtotal, entrega e cartão; desconhecido não fi
   choose(runtime, 'delivery', 'card');
   runtime.neighborhood.value = 'Santa Cruz';
   const known = runtime.buildOrderMessage();
+  assert.match(known, /\*Pagamento:\* Cartão/);
+  assert.doesNotMatch(known, /Cartão \(\+ R\$ 2,00\)/);
   assert.match(known, /Subtotal.*R\$ 22,00/i);
   assert.match(known, /Taxa de entrega.*R\$ 12,00/i);
   assert.match(known, /taxa.*cart[aã]o.*R\$ 2,00/i);

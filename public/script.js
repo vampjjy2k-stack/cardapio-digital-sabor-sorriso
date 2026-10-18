@@ -915,7 +915,7 @@ function buildOrderMessage() {
     lines.push('*Tipo:* Retirada no local');
   }
 
-  const paymentLabels = { cash: 'Dinheiro', card: 'Cartão (+ R$ 2,00)', pix: 'Pix' };
+  const paymentLabels = { cash: 'Dinheiro', card: 'Cartão', pix: 'Pix' };
   if (paymentMethod) lines.push(`💳 *Pagamento:* ${paymentLabels[paymentMethod]}`);
 
   lines.push('', '*Itens:*');
