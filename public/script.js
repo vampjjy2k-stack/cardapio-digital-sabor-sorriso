@@ -428,6 +428,70 @@ function toggleMore(btn) {
    Quem muda o status é a dona da loja, em /admin.
    ========================================================= */
 
+// Apenas navegação: autenticação e alteração de status continuam em /admin.
+function initAdminShortcut() {
+  const button = els.storeStatus;
+  if (!button) return;
+  let timer = null;
+  let pointerId = null;
+
+  function cancelHold() {
+    clearTimeout(timer);
+    timer = null;
+    const previousPointer = pointerId;
+    pointerId = null;
+    button.classList.remove('is-holding');
+    if (previousPointer !== null && button.hasPointerCapture(previousPointer)) {
+      button.releasePointerCapture(previousPointer);
+    }
+  }
+
+  function openAdmin() {
+    cancelHold();
+    window.location.assign('/admin');
+  }
+
+  button.addEventListener('pointerdown', event => {
+    if (!event.isPrimary || event.button !== 0 || pointerId !== null) {
+      cancelHold();
+      return;
+    }
+    pointerId = event.pointerId;
+    button.setPointerCapture(pointerId);
+    button.classList.add('is-holding');
+    timer = setTimeout(() => {
+      if (pointerId !== null && button.hasPointerCapture(pointerId)) openAdmin();
+      else cancelHold();
+    }, 1500);
+  });
+  button.addEventListener('pointermove', event => {
+    if (event.pointerId !== pointerId) return;
+    const rect = button.getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right ||
+        event.clientY < rect.top || event.clientY > rect.bottom) cancelHold();
+  });
+  for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) {
+    button.addEventListener(type, event => {
+      if (event.pointerId === pointerId) cancelHold();
+    });
+  }
+  button.addEventListener('contextmenu', event => event.preventDefault());
+  // Cliques físicos têm detail > 0: tap/clique curto nunca abre o painel.
+  // O botão nativo emite detail = 0 para teclado e ativação por leitor de tela.
+  button.addEventListener('click', event => {
+    if (event.detail === 0) openAdmin();
+  });
+  button.addEventListener('blur', cancelHold);
+  window.addEventListener('blur', cancelHold);
+  window.addEventListener('pagehide', cancelHold);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelHold();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') cancelHold();
+  });
+}
+
 const STATUS_URL = '/api/status';
 const STATUS_POLL_MS = 60 * 1000;   // reconfere a cada 1 minuto (só com a aba visível)
 
@@ -1360,9 +1424,9 @@ $('#address-neighborhood').innerHTML = '<option value="" disabled selected>Selec
 neighborhoodPicker.init();
 loadDeliveryData();   // antes de renderCart(): renderCart salva os campos e apagaria os dados guardados
 renderCart();
+initAdminShortcut();
 loadStoreStatus();
 startStatusPolling();
-
 chips = $$('.chip', els.navList);
 chipItems = chips.map(chip => chip.parentElement);
 sectionEls = $$('.menu-section', els.menu);

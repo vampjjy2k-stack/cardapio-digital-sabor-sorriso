@@ -586,11 +586,24 @@ body.no-scroll .toast { bottom: auto; top: 84px; }
 }
 
 /* ---------- Status da loja e checkout expandido ---------- */
+.store-admin-shortcut { position: relative; }
 .store-status {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 32px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
   padding: 0 10px; border: 1px solid var(--chip-border); border-radius: 999px;
   color: var(--chip-ink); font-size: .8125rem; font-weight: 700; white-space: nowrap;
+  background: transparent; font-family: inherit; cursor: pointer;
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+  touch-action: pan-y;
 }
+.store-status:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.store-status.is-holding { box-shadow: 0 0 0 3px var(--focus); }
+.store-admin-hint {
+  display: none; position: absolute; top: calc(100% + 8px); right: 0;
+  width: 180px; padding: 8px 10px; border-radius: 10px;
+  background: var(--card-bg); color: var(--card-ink); border: 1px solid var(--chip-border);
+  font-size: .75rem; line-height: 1.4; text-align: center; pointer-events: none;
+}
+.store-status.is-holding ~ .store-admin-hint { display: block; }
 .store-status__dot { width: 9px; height: 9px; border-radius: 50%; background: #8a8170; box-shadow: 0 0 0 3px rgba(138,129,112,.18); }
 .store-status.is-open .store-status__dot { background: #17803A; box-shadow: 0 0 0 3px rgba(23,128,58,.18); }
 .store-status.is-closed .store-status__dot { background: #D32F2F; box-shadow: 0 0 0 3px rgba(211,47,47,.18); }

@@ -49,10 +49,17 @@
     </a>
 
     <div class="site-header__actions">
-      <span class="store-status" id="store-status" role="status" aria-live="polite">
-        <span class="store-status__dot"></span>
-        <span class="store-status__text">Verificando...</span>
-      </span>
+      <div class="store-admin-shortcut">
+        <button type="button" class="store-status" id="store-status"
+                aria-labelledby="store-status-text store-admin-label"
+                aria-describedby="store-admin-help" title="Segure por 1,5 s para acessar o login administrativo">
+          <span class="store-status__dot" aria-hidden="true"></span>
+          <span class="store-status__text" id="store-status-text" role="status" aria-live="polite">Verificando...</span>
+          <span class="sr-only" id="store-admin-label"> — acessar login administrativo</span>
+        </button>
+        <span class="sr-only" id="store-admin-help">Para acessar o login administrativo, segure por 1,5 segundo ou use Enter ou Espaço. Isso não altera o status da loja.</span>
+        <span class="store-admin-hint" aria-hidden="true">Continue segurando para abrir o login…</span>
+      </div>
       <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Mudar para tema claro">
         <span class="theme-toggle__sun" aria-hidden="true">☀️</span>
         <span class="theme-toggle__moon" aria-hidden="true">🌙</span>
