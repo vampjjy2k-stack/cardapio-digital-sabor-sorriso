@@ -59,3 +59,15 @@ test('sete fotos próprias de bebidas mantêm hashes; H2OH 1,5 L e oito fotos am
     assert.equal(record.item_id, null);
   }
 });
+
+test('retoque autorizado de câmera tem proveniência localizada; Artesanal 04 permanece intacto', () => {
+  const combo = manifest.records.find(record => record.item_id === 'combos-combo-04');
+  assert.equal(combo.edit_provenance.before_asset_sha256, '6275ab8ecd7596d5bfeb09af607ba6d51ee183cfc28d16bdbcd7ade279a73cad');
+  assert.deepEqual(combo.edit_provenance.region_xyxy, [104, 942, 238, 963]);
+  assert.equal(combo.edit_provenance.alpha_preserved, true);
+  assert.equal(combo.edit_provenance.outside_region_pixels_preserved, true);
+  assert.equal(hash(combo.asset), '8291ad055f5416b3183865b3afd5f58c1dba7329149d59a603d7f590edc9b649');
+  const artesanal = manifest.records.find(record => record.item_id === 'artesanais-artesanal-04');
+  assert.equal(hash(artesanal.asset), '39c72e1586b1de676db240c812cbbffd3edfc5a9d4c73b9ab6816ef71c539e19');
+  assert.match(combo.review_note, /aprovação explícita do SHA final/);
+});

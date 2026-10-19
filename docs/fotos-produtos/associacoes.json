@@ -2,7 +2,7 @@
   "base_commit": "4c8bc3d48f058d6daf49b64201cb82c7e7c3d56b",
   "pdf_original": "d437942685a785605b15fdeb_produtos_sabor_e_sorriso.pdf",
   "pdf_sha256": "c16dc40408497ae32f8821ea8190f6c3032db6125197c452c0b8b46cc3126db8",
-  "extraction": "pdfimages -j; fontes externas preservadas byte a byte; derivados WebP lossless RGBA com máscaras determinísticas conservadoras (fundo removido, sem IA e sem pixels inventados).",
+  "extraction": "pdfimages -j; fontes externas preservadas byte a byte; derivados WebP lossless RGBA com máscaras conservadoras. Exceção autorizada pelo dono: remoção localizada da marca de câmera do Combo 04; alpha e pixels fora da região registrada preservados.",
   "unchanged_existing_drinks": [
     "guarana-antarctica-350ml.png",
     "fanta-laranja-350ml.png",
@@ -168,7 +168,7 @@
         "Duas unidades visíveis: uma inteira à esquerda e outra cortada à direita; não inferir duas unidades na porção vendida.",
         "A fonte mostra luvas pretas em contato com os pães. No derivado, a maior parte das luvas ficou fora do recorte, mas permanece um pequeno resíduo escuro/cinza junto ao topo do pão da unidade cortada à direita, no ponto de contato da luva; não uma luva inteira sobre o pão."
       ],
-      "review_note": "Associação mantida com ressalvas; imagem exatamente inalterada, sem retoque inventado. Pendente de revisão da Cassandra e posterior aprovação de SHA/escopo por João."
+      "review_note": "Dono autorizou incluir no candidato; derivado preservado byte a byte, sem reconstrução do pão ou mudança do produto. Revisão da Cassandra e aprovação explícita do SHA final continuam pendentes; sem push ou deploy."
     },
     {
       "page": 1,
@@ -338,16 +338,29 @@
       ],
       "item_id": "combos-combo-04",
       "asset": "public/img/produtos/combo-04.webp",
-      "asset_sha256": "6275ab8ecd7596d5bfeb09af607ba6d51ee183cfc28d16bdbcd7ade279a73cad",
-      "background": "Fundo removido por máscara determinística conservadora; RGB visível preservado da fonte.",
+      "asset_sha256": "8291ad055f5416b3183865b3afd5f58c1dba7329149d59a603d7f590edc9b649",
+      "background": "Fundo removido por máscara conservadora; alpha preservado. RGB preservado fora do retoque autorizado da marca de câmera na borda inferior da bandeja.",
       "pending": null,
       "external_source": "foto-013.jpg",
       "mode": "RGBA",
       "review_status": "autorizada_athena_final",
       "visual_limitations": [
-        "Marca d’água da câmera parcialmente visível no rodapé, incluindo o trecho moto g31; não removida."
+        "Retoque restrito à inscrição da câmera na borda inferior da bandeja; sem alteração dos alimentos ou composição comercial."
       ],
-      "review_note": "Associação mantida pela legenda direta Combo 04 no PDF, com ressalva visual; imagem exatamente inalterada. Pendente de revisão da Cassandra e posterior aprovação de SHA/escopo por João."
+      "review_note": "Dono autorizou remover somente a marca de câmera moto g31 e incluir a foto no candidato. Revisão da Cassandra e aprovação explícita do SHA final pelo dono continuam pendentes; sem push ou deploy.",
+      "edit_provenance": {
+        "type": "remoção localizada de marca de câmera com IA; composição limitada à região autorizada",
+        "model": "gpt-image-2.5",
+        "before_asset_sha256": "6275ab8ecd7596d5bfeb09af607ba6d51ee183cfc28d16bdbcd7ade279a73cad",
+        "region_xyxy": [
+          104,
+          942,
+          238,
+          963
+        ],
+        "alpha_preserved": true,
+        "outside_region_pixels_preserved": true
+      }
     },
     {
       "page": 3,

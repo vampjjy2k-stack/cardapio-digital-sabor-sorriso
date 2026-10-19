@@ -1,6 +1,6 @@
 # Fotos autorizadas — mapa Athena FINAL
 
-O mapa Athena FINAL autoriza **10 fotos reais do PDF**, correspondentes a **9 IDs** (Artesanal 03 possui duas fotos para o mesmo ID). Os dez derivados estão em `public/img/produtos/` como WebP lossless RGBA, com fundo removido por máscaras determinísticas conservadoras. O RGB visível é preservado da fonte; não houve IA nem pixels inventados.
+O mapa Athena FINAL autoriza **10 fotos reais do PDF**, correspondentes a **9 IDs** (Artesanal 03 possui duas fotos para o mesmo ID). Os dez derivados estão em `public/img/produtos/` como WebP lossless RGBA, com fundo removido por máscaras determinísticas conservadoras. O RGB visível é preservado da fonte, exceto no retoque localizado e autorizado da marca de câmera do Combo 04, descrito abaixo.
 
 ## Fotos autorizadas
 
@@ -18,3 +18,9 @@ As máscaras preservam lanche, embalagem e conjuntos quando presentes e removem 
 As outras 8 fotos do PDF ficam com `item_id` e `asset` nulos, `pending` explícito e **fora de `public/`**. H2OH! avulsa de 1,5 L também fica fora: não representa o item legado de 500 ml. As sete bebidas existentes permanecem intactas, com seus hashes de proveniência preservados no manifesto. Fanta 2 L continua sem foto própria.
 
 O [mapa público](mapa-publico.md) lista os dez derivados e as sete bebidas. O [manifesto](associacoes.json) registra dimensões, modo, hashes e status de cada fonte/asset. PDF, originais, máscaras e scripts continuam fora do repositório.
+
+## Autorização do dono — Artesanal 04 e Combo 04
+
+As duas fotos já estão vinculadas individualmente no candidato. Artesanal 04 permanece byte a byte inalterado, inclusive a oclusão preexistente junto ao pão. No Combo 04, o dono autorizou retirar somente a marca de câmera “moto g31”: o retoque com IA foi aplicado exclusivamente ao retângulo `[104, 942, 238, 963)` (x0, y0, x1, y1) da borda inferior da bandeja, em imagem de 752 × 1000 px. O alpha inteiro e todos os pixels fora dessa região foram preservados exatamente. Originais e intermediários continuam fora de `public/` e do Git; não houve mudança de alimentos, ingredientes, quantidades ou preços.
+
+O manifesto registra o hash anterior, o hash final e a exceção de edição. A autorização permite preparar o candidato, não publicá-lo: Cassandra deve revisar o novo SHA e a prévia; o dono ainda precisa aprovar explicitamente esse SHA final. Não fazer push nem deploy.
