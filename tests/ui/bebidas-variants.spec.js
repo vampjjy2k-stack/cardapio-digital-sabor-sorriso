@@ -97,8 +97,10 @@ async function openCart(page) { await page.locator('#cart-toggle').click(); awai
   test('troca seleção, foto e total; cancelar não altera; confirmar atualiza card', async ({ page }) => {
     await openApp(page); await openProduct(page, 'coca-cola'); await choose(page, 0);
     await expect(dialog(page).locator('input[name="product-pack"][value="Lata 350 ml"]')).toBeChecked();
-    await expect(page.locator('#product-photo img')).toHaveAttribute('src', 'img/coca-cola-lata.png');
-    await choose(page, 2); await expect(page.locator('#product-photo img')).toHaveAttribute('src', 'img/coca-cola-2l.png');
+    await expect(page.locator('#product-photo img')).toHaveCount(0);
+    await expect(page.locator('#product-photo .thumb-emoji')).toHaveAttribute('aria-label', 'Ilustração genérica de Bebidas');
+    await choose(page, 2); await expect(page.locator('#product-photo img')).toHaveCount(0);
+    await expect(page.locator('#product-photo .thumb-emoji')).toHaveAttribute('aria-label', 'Ilustração genérica de Bebidas');
     await page.locator('#product-plus').click(); await expect(page.locator('#product-add')).toContainText(/total|R\$/);
     await page.locator('#product-close').click();
     await expect(group(page, 'coca-cola')).toContainText(/Escolher/);

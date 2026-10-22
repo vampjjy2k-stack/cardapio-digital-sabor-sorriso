@@ -202,7 +202,7 @@ h1, h2, h3, p { margin: 0; }
   display: flex; align-items: center; justify-content: center;
   padding: 32px 20px 36px;
   text-align: center; color: #fff;   /* o hero é escuro nos dois temas */
-  background: #1a140e url("img/cheeseburger.webp") no-repeat center bottom / auto 80%;
+  background: #1a140e;
 }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1;

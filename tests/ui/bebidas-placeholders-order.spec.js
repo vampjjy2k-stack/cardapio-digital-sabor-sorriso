@@ -19,39 +19,37 @@ async function choose(page, key, flavor, pack) {
   if (flavor) await root.locator(`input[name="product-flavor"][value="${flavor}"]`).check();
   if (pack) await root.locator(`input[name="product-pack"][value="${pack}"]`).check();
 }
-async function photo(root, src, alt = /^Foto de /) {
-  const image = root.locator('#product-photo img');
-  await expect(image).toHaveAttribute('src', src); await expect(image).toHaveAttribute('alt', alt);
-  await image.evaluate(image => image.decode()); expect(await image.evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
+async function placeholder(root) {
+  await expect(root.locator('#product-photo img')).toHaveCount(0);
+  await expect(root.locator('#product-photo .thumb-emoji')).toHaveAttribute('aria-label', 'Ilustração genérica de Bebidas');
 }
 
-test('fotos são atualizadas por seleção confirmada e placeholders não inventam associação', async ({ page }) => {
+test('placeholders genéricos persistem antes e depois de selecionar qualquer embalagem', async ({ page }) => {
   await openApp(page);
-  for (const image of await page.locator('#sucos img, #vitaminas img').all()) await expect(image).toHaveAttribute('src', /^img\/icones\//);
+  await expect(page.locator('#sucos img, #vitaminas img')).toHaveCount(0);
   const coca = await product(page, 'coca-cola');
-  for (const [pack, src] of [['Lata 350 ml', 'img/coca-cola-lata.png'], ['PET 600 ml', 'img/coca-cola-600ml.png'], ['PET 2 L', 'img/coca-cola-2l.png']]) {
-    await choose(page, 'coca-cola', null, pack); await photo(coca, src); await coca.locator('#product-close').click(); await product(page, 'coca-cola');
+  await placeholder(coca);
+  for (const pack of ['Lata 350 ml', 'PET 600 ml', 'PET 2 L']) {
+    await choose(page, 'coca-cola', null, pack); await placeholder(coca);
+    await coca.locator('#product-close').click(); await product(page, 'coca-cola');
   }
   await page.locator('#product-close').click();
   const fanta = await product(page, 'fanta');
-  await choose(page, 'fanta', 'Uva', 'Lata 350 ml'); await photo(fanta, 'img/fanta-uva-350ml.png', 'Foto de Fanta Uva — Lata 350 ml');
-  await choose(page, 'fanta', 'Laranja', 'Lata 350 ml'); await photo(fanta, 'img/fanta-laranja-350ml.png', 'Foto de Fanta Laranja — Lata 350 ml');
-  await choose(page, 'fanta', 'Uva', 'PET 2 L');
-  await expect(fanta.locator('#product-photo img')).toHaveCount(0);
-  await expect(fanta.locator('#product-photo [role="img"]')).toHaveAttribute('aria-label', /foto desta embalagem pendente/);
+  for (const [flavor, pack] of [['Uva', 'Lata 350 ml'], ['Laranja', 'Lata 350 ml'], ['Uva', 'PET 2 L']]) {
+    await choose(page, 'fanta', flavor, pack); await placeholder(fanta);
+  }
   await page.locator('#product-close').click();
   await expect(group(page, 'coca-cola')).toContainText(/Escolher|Coca-Cola/);
 });
 
 function group(page, key) { return page.locator(`[data-group="${key}"]`); }
 
-test('sete fotos próprias exatas, card reflete variante confirmada e WhatsApp usa produto+sabor+volume', async ({ page }) => {
+test('sem fotos, card reflete variante confirmada e WhatsApp usa produto+sabor+volume', async ({ page }) => {
   await openApp(page);
-  for (const [key, src] of [['coca-cola', 'img/coca-cola-lata.png'], ['fanta', 'img/fanta-uva-350ml.png']]) {
-    await expect(group(page, key).locator('img')).toHaveAttribute('src', src);
+  await expect(page.locator('#bebidas img')).toHaveCount(0);
+  for (const card of await page.locator('#bebidas [data-card]').all()) {
+    await expect(card.locator('.thumb-emoji')).toHaveAttribute('aria-label', 'Ilustração genérica de Bebidas');
   }
-  for (const [name, src] of [['Guaraná Antártica', 'img/guarana-antarctica-350ml.png'], ['Kuat', 'img/kuat-2l.png']]) await expect(page.locator('#bebidas [data-card]').filter({ hasText: name }).locator('img')).toHaveAttribute('src', src);
-  await expect(page.locator('#bebidas [data-card]').filter({ hasText: 'H2OH!' }).locator('img')).toHaveAttribute('src', 'img/icones/garrafa-600.webp');
   const fanta = await product(page, 'fanta'); await choose(page, 'fanta', 'Uva', 'PET 2 L'); await fanta.locator('#product-plus').click(); await fanta.locator('#product-add').click();
   await expect(group(page, 'fanta')).toContainText('Uva'); await expect(group(page, 'fanta')).toContainText('PET 2 L');
   await product(page, 'fanta'); await choose(page, 'fanta', 'Laranja', 'Lata 350 ml'); await page.locator('#product-add').click();

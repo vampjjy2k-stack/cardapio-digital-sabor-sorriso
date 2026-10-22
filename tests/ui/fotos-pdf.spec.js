@@ -11,40 +11,29 @@ const photos = {
   'combos-combo-06': 'combo-06.webp',
 };
 
-test('dez fotos confirmadas em nove alimentos, sem eleger foto principal do Artesanal 03', async ({ page }) => {
+test('catálogo e destaques usam placeholders sem carregar fotos; assets preservados', async ({ page }) => {
+  const imageRequests = [];
+  page.on('request', request => { if (request.resourceType() === 'image') imageRequests.push(new URL(request.url()).pathname); });
   await page.route('**/api/status', route => route.fulfill({ json: { status: 'open' } }));
   await page.route('https://fonts.googleapis.com/**', route => route.fulfill({ contentType: 'text/css', body: '' }));
   await page.goto('/index.html');
-  await expect(page.locator('.menu-section img[src^="img/produtos/"]')).toHaveCount(10);
-  for (const [id, asset] of Object.entries(photos)) {
-    const card = page.locator(`.menu-section [data-card]:has([data-add="${id}"])`);
-    await expect(card).toHaveCount(1);
-    const image = card.locator('img');
-    await expect(image).toHaveAttribute('src', `img/produtos/${asset}`);
-    await expect(image).toHaveAttribute('alt', /^Foto de /);
-    await image.scrollIntoViewIfNeeded();
-    await image.evaluate(image => image.decode());
-    expect(await image.evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
-    await expect(image).toHaveCSS('object-fit', 'contain');
-    expect((await page.request.get(`/img/produtos/${asset}`)).status()).toBe(200);
+  await expect(page.locator('.menu-section img, #featured-grid img')).toHaveCount(0);
+  for (const card of await page.locator('.menu-section [data-card], #featured-grid > li').all()) {
+    await expect(card.locator('.thumb-emoji')).toHaveCount(1);
+    await expect(card.locator('.thumb-emoji')).toHaveAttribute('aria-label', /^Ilustração genérica de /);
   }
-  await expect(page.locator('#featured-grid img[src="img/produtos/combo-06.webp"]')).toHaveCount(1);
-  const pair = page.locator('.menu-section [data-card]:has([data-add="artesanais-artesanal-03"]) .photo-pair');
-  await expect(pair).toHaveAttribute('aria-label', /sem principal/);
-  await expect(pair.locator('img')).toHaveCount(2);
-  for (const [index, asset] of ['artesanal-03-1.webp', 'artesanal-03-2.webp'].entries()) {
-    await expect(pair.locator('img').nth(index)).toHaveAttribute('src', `img/produtos/${asset}`);
-    await pair.locator('img').nth(index).evaluate(image => image.decode());
-    expect((await page.request.get(`/img/produtos/${asset}`)).status()).toBe(200);
-  }
-  const sizes = await pair.locator('img').evaluateAll(images => images.map(image => image.getBoundingClientRect().width));
-  expect(Math.abs(sizes[0] - sizes[1])).toBeLessThan(1);
-  for (const id of ['hamburgueres-x-duplo', 'combos-combo-07', 'linha-cheddar-x-cheddar-01']) {
-    const image = page.locator(`.menu-section [data-card]:has([data-add="${id}"]) img`);
-    await expect(image).not.toHaveAttribute('src', /img\/produtos\//);
-  }
-  for (const width of [320, 390, 1440]) {
+  await expect(page.locator('.hero')).toHaveCSS('background-image', 'none');
+  await expect(page.locator('.brand img')).toHaveAttribute('src', 'img/logo.webp');
+  for (const width of [320, 360, 390, 1440]) {
     await page.setViewportSize({ width, height: 844 });
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 600) window.scrollTo(0, y);
+      await new Promise(resolve => requestAnimationFrame(resolve));
+    });
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
+  }
+  expect(imageRequests).toEqual(['/img/logo.webp']);
+  for (const asset of [...Object.values(photos), 'artesanal-03-1.webp', 'artesanal-03-2.webp']) {
+    expect((await page.request.get(`/img/produtos/${asset}`)).status()).toBe(200);
   }
 });

@@ -281,7 +281,11 @@ const BEVERAGE_GROUPS = [
 
 function variantLine(variant) { return { id: variant.id, opt: variant.opt, ...(variant.id === FANTA_2L_ID ? { flavor: variant.flavor } : {}) }; }
 function beverageLabel(variant) { return [variant.flavor, variant.pack].filter(Boolean).join(' · '); }
-function beverageThumbHTML(variant, section) { const ref=ITEM_INDEX.get(variant.id); if(!ref) return `<span class="thumb-emoji" aria-hidden="true">${section.icon}</span>`; const {item}=ref; if(ITEM_PHOTOS[item.id]) return `<img src="${ITEM_PHOTOS[item.id]}" alt="${esc('Foto de '+item.name+' — '+variant.pack)}" width="80" height="80" loading="lazy" decoding="async" data-fallback="${section.icon}">`; if(section.id==='bebidas') return `<span class="thumb-emoji" role="img" aria-label="Ícone ilustrativo; foto desta embalagem pendente">🥤</span>`; const key=section.id==='vitaminas'?null:item.img; return key&&IMG[key]?`<img src="${IMG[key]}" alt="Ícone ilustrativo; foto desta opção pendente" width="80" height="80" data-fallback="${section.icon}">`:`<span class="thumb-emoji" aria-hidden="true">${section.icon}</span>`; }
+// Pausa visual das fotos: assets e associações originais ficam preservados.
+function placeholderHTML(section) {
+  return `<span class="thumb-emoji" role="img" aria-label="Ilustração genérica de ${esc(section.title)}">${section.icon}</span>`;
+}
+function beverageThumbHTML(variant, section) { return placeholderHTML(section); }
 function groupDimensions(group){ return {flavors:[...new Set(group.variants.map(v=>v.flavor).filter(Boolean))],packs:[...new Set(group.variants.map(v=>v.pack).filter(Boolean))]}; }
 function groupVariant(group,flavor,pack){ return group.variants.find(v=>(!flavor||v.flavor===flavor)&&(!pack||v.pack===pack))||null; }
 function groupHTML(group,section){ const d=groupDimensions(group), v=group.variants[0], prices=group.variants.map(x=>describeLine(variantLine(x)).price).filter(Number.isFinite), summary=[d.flavors.length?`${d.flavors.length} sabores`:'',d.packs.join(' · ')].filter(Boolean).join(' · '), search=group.variants.map(x=>searchText(ITEM_INDEX.get(x.id).item,section)+' '+norm(beverageLabel(x))).join(' '); return `<li class="card card--compact card--beverage" data-card data-group="${group.key}" data-search="${esc(search)}"><button type="button" class="beverage-open" data-open-beverage="${group.key}" aria-haspopup="dialog" aria-controls="product-dialog" aria-label="Escolher opções de ${esc(group.title)}"><span class="card__body"><span class="card__name" role="heading" aria-level="3">${esc(group.title)}</span><span class="beverage-summary" data-beverage-summary>${esc(summary||'Escolher')}</span><span class="card__price" data-price>${prices.length&&prices.every(p=>p===prices[0])?money(prices[0]):`<small>A partir de </small>${money(Math.min(...prices))}`}</span><span class="beverage-open__hint">Escolher <span aria-hidden="true">›</span></span></span><span class="card__thumb" data-beverage-thumb>${beverageThumbHTML(v,section)}</span></button></li>`; }
@@ -290,9 +294,7 @@ function productDimensionsHTML(group){ const {flavors,packs}=groupDimensions(gro
 function updateProductPhoto() {
   const photo = $('#product-photo');
   if (!photo) return;
-  photo.innerHTML = productVariant
-    ? beverageThumbHTML(productVariant, MENU.find(section => section.id === productGroup.section))
-    : '<span class="thumb-emoji" role="img" aria-label="Escolha a opção para ver a embalagem confirmada">🥤</span>';
+  photo.innerHTML = placeholderHTML(MENU.find(section => section.id === productGroup.section));
 }
 function resolveProductVariant(){ if(!productGroup)return null; const {flavors,packs}=groupDimensions(productGroup), flavor=flavors.length>1?$('#product-options input[name="product-flavor"]:checked')?.value:flavors[0]||'', pack=packs.length>1?$('#product-options input[name="product-pack"]:checked')?.value:packs[0]||''; if(flavors.length>1&&!flavor||packs.length>1&&!pack)return null; return groupVariant(productGroup,flavor,pack); }
 function refreshDimensionPrices() {
@@ -378,20 +380,7 @@ const els = {
    ========================================================= */
 
 function thumbHTML(item, section, size = 104) {
-  const icon = item.icon || section.icon;
-  if (ITEM_PHOTO_SETS[item.id]) {
-    return `<span class="photo-pair" role="group" aria-label="Duas fotos de ${esc(item.name)}, sem principal">${ITEM_PHOTO_SETS[item.id].map((src, index) => `<img src="${src}" alt="${esc('Foto de ' + item.name + ' — imagem ' + (index + 1))}" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`).join('')}</span>`;
-  }
-  const key = section.id === 'bebidas' && item.img === 'antarctica'
-    ? 'lata' : item.img || (item.icon ? null : section.img);
-  const src = (item.id && ITEM_PHOTOS[item.id]) || (key && IMG[key]);
-  if (src) {
-    const photo = item.id && ITEM_PHOTOS[item.id];
-    const alt = section.id === 'bebidas' ? (photo ? 'Foto de ' : 'Ícone ilustrativo de ') + item.name
-      + (item.id === 'bebidas-h2o-600ml' ? ' — 500 ml; sabor a confirmar' : item.id === 'bebidas-guarana-antartica-lata' ? ' — lata 350 ml' : ' — ' + (item.meta || '')) : photo ? 'Foto de ' + item.name : '';
-    return `<img src="${src}" alt="${esc(alt)}" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`;
-  }
-  return `<span class="thumb-emoji" aria-hidden="true">${icon}</span>`;
+  return placeholderHTML(section);
 }
 
 function priceHTML(item) {
