@@ -1038,3 +1038,13 @@ body.product-open { overflow: hidden; }
 /* Fotos igualmente autorizadas do mesmo produto, sem definir uma principal. */
 .photo-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 2px; width: 100%; height: 100%; }
 .card__thumb .photo-pair img { display: block; width: 100%; height: 100%; min-width: 0; object-fit: contain; }
+
+/* Fotos confirmadas; ausência explícita sem substituir por foto de outro produto. */
+.photo-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; width: 100%; min-width: 0; text-align: center; }
+.photo-placeholder .thumb-emoji { font-size: 1.5rem; }
+.photo-unavailable { display: block; color: var(--card-muted); font-size: .625rem; line-height: 1.2; font-weight: 400; overflow-wrap: anywhere; }
+.card__thumb:has(.photo-placeholder) { height: auto; min-height: 104px; padding: 8px 6px 44px; }
+.card--compact .card__thumb:has(.photo-placeholder), .card--info .card__thumb:has(.photo-placeholder) { min-height: 84px; padding: 6px 4px; }
+.card--compact .photo-placeholder .thumb-emoji, .card--info .photo-placeholder .thumb-emoji { font-size: 1.25rem; }
+.product-photo .photo-unavailable { font-size: .75rem; }
+@media (max-width: 480px) { .card__media .card__thumb:has(.photo-placeholder) { min-height: 96px; } }

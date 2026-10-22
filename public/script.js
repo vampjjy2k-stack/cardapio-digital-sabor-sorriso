@@ -54,8 +54,11 @@ const IMG = {
 
 // Bebidas: sete fotos avulsas confirmadas por embalagem; não vieram do PDF.
 // Alimentos: somente os pareamentos reais confirmados no mapa revisado do PDF.
-// Proveniência e pendências: docs/fotos-produtos/associacoes.json.
+// Proveniência histórica: docs/fotos-produtos/associacoes.json.
+// Confirmações incrementais: docs/fotos-produtos/associacoes-confirmadas-20261022.json.
 const ITEM_PHOTOS = {
+  'linha-picanha-x-picanha-03': 'img/produtos/picanha-03.webp',
+  'hamburgueres-frango-fresh': 'img/produtos/frango-fresh.webp',
   'bebidas-guarana-antartica-lata': 'img/guarana-antarctica-350ml.png',
   'bebidas-fanta-laranja-lata': 'img/fanta-laranja-350ml.png',
   'bebidas-fanta-uva-lata': 'img/fanta-uva-350ml.png',
@@ -70,7 +73,14 @@ const ITEM_PHOTOS = {
   'combos-combo-02': 'img/produtos/combo-02.webp',
   'combos-combo-03': 'img/produtos/combo-03.webp',
   'combos-combo-04': 'img/produtos/combo-04.webp',
-  'combos-combo-06': 'img/produtos/combo-06.webp'
+  'combos-combo-06': 'img/produtos/combo-06.webp',
+  'hamburgueres-x-duplo': 'img/produtos/x-duplo.webp',
+  'combos-combo-07': 'img/produtos/combo-07.webp',
+  'porcoes-batata-maluca-p': 'img/produtos/batata-maluca-p.webp',
+  'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'img/produtos/batata-cheddar-bacon-g.webp',
+  'hot-dogs-dogao-quente-salsicha': 'img/produtos/dogao-quente.webp',
+  'hot-dogs-dogao-quente-linguica': 'img/produtos/dogao-quente.webp',
+  'bebidas-h2o-600ml': 'img/h2oh-limao-500ml.webp'
 };
 // Duas fotos de mesma importância; nenhuma foi eleita como principal.
 const ITEM_PHOTO_SETS = {
@@ -89,23 +99,33 @@ const MENU = [
   {
     id: 'hamburgueres', title: 'Hambúrgueres', icon: '🍔', img: 'cheeseburger',
     items: [
-      p('X Tudo', 16, 'Pão bimbu + carne + queijo + presunto + tomate + alface + maionese + ketchup'),
-      p('X Burguer', 11, 'Pão bimbu + carne + queijo + tomate + alface + maionese + ketchup'),
-      p('Hambúrguer', 10, 'Pão bimbu + carne + queijo + maionese + ketchup'),
-      p('X Bacon', 15, 'Pão bimbu + carne + queijo + bacon + tomate + alface + maionese + ketchup'),
-      p('X Calabresa', 14, 'Pão bimbu + carne + queijo + calabresa + tomate + alface + maionese + ketchup'),
-      p('X Salada', 14, 'Pão bimbu + carne + queijo + ovo + tomate + alface + maionese + ketchup'),
-      p('X Duplo', 26, 'Pão bimbu + 2 carnes + 2 queijos + presunto + tomate + alface + maionese + ketchup')
+      p('X Tudo', 16, 'Pão + carne + queijo + presunto + tomate + alface + maionese + ketchup'),
+      p('X Burguer', 11, 'Pão + carne + queijo + tomate + alface + maionese + ketchup'),
+      p('Hambúrguer', 10, 'Pão + carne + queijo + maionese + ketchup'),
+      p('X Bacon', 15, 'Pão + carne + queijo + bacon + tomate + alface + maionese + ketchup'),
+      p('X Calabresa', 14, 'Pão + carne + queijo + calabresa + tomate + alface + maionese + ketchup'),
+      p('X Salada', 14, 'Pão + carne + queijo + ovo + tomate + alface + maionese + ketchup'),
+      p('X Duplo', 26, 'Pão + 2 carnes + 2 queijos + presunto + tomate + alface + maionese + ketchup'),
+      p('Frango Fresh', 24, 'pão Bimbo + filé de peito de frango empanado (120 g) + alface + cheddar em fatia + cebola roxa crua + molho especial')
     ]
   },
   {
     id: 'linha-cheddar', title: 'Linha Cheddar', icon: '🧀', img: 'cheeseburger',
     items: [
-      p('X Cheddar 01', 13, 'pão Bimbo + carne + queijo + cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 02', 17, 'pão Bimbo + 2 carnes + dobro de cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 03', 17, 'pão Bimbo + carne + cheddar + presunto + ovo + bacon + calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 04', 16, 'pão Bimbo + carne + queijo + cheddar + presunto + bacon + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
-      p('X Cheddar 05', 27, 'pão Bimbo + carnes, dois queijos + cheddar + o dobro de presunto + 2 ovos + o dobro de bacon + o dobro de calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup')
+      p('X Cheddar 01', 13, 'pão Bimbo + carne + queijo + queijo cheddar + presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 02', 17, 'pão Bimbo + 2 carnes + dobro de queijo cheddar + dobro de presunto + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 03', 17, 'pão Bimbo + carne + queijo cheddar + presunto + ovo + bacon + calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 04', 16, 'pão Bimbo + carne + queijo + queijo cheddar + presunto + bacon + tomate + alface + maionese temperada + molho Billy Jack + ketchup'),
+      p('X Cheddar 05', 27, 'pão Bimbo + carnes, dois queijos + queijo cheddar + o dobro de presunto + 2 ovos + o dobro de bacon + o dobro de calabresa + tomate + alface + maionese temperada + molho Billy Jack + ketchup')
+    ]
+  },
+  {
+    id: 'linha-picanha', title: 'Linha Picanha', icon: '🥩', img: 'burgerCamadas',
+    items: [
+      p('X Picanha 01', 19, 'pão brioche + hambúrguer picanha 120 gramas + queijo + presunto + tomate + alface + molhos + ketchup'),
+      p('X Picanha 02', 23, 'pão brioche + hambúrguer picanha 120 gramas + queijo + presunto + ovo + bacon + tomate + alface + molhos'),
+      p('X Picanha 03', 36, 'pão brioche + 2 hambúrgueres de picanha 120 gramas (2 carnes) + queijo + presunto + calabresa + 2 ovos + o dobro de bacon + tomate + alface + molhos + ketchup'),
+      p('X Picanha 04', 21, 'pão brioche + hambúrguer de picanha 120 gramas + queijo + presunto + bacon + tomate + alface + molhos + ketchup')
     ]
   },
   {
@@ -281,11 +301,18 @@ const BEVERAGE_GROUPS = [
 
 function variantLine(variant) { return { id: variant.id, opt: variant.opt, ...(variant.id === FANTA_2L_ID ? { flavor: variant.flavor } : {}) }; }
 function beverageLabel(variant) { return [variant.flavor, variant.pack].filter(Boolean).join(' · '); }
-// Pausa visual das fotos: assets e associações originais ficam preservados.
+// Fotos reais somente com correspondência confirmada; sem imagem, aviso explícito.
 function placeholderHTML(section) {
-  return `<span class="thumb-emoji" role="img" aria-label="Ilustração genérica de ${esc(section.title)}">${section.icon}</span>`;
+  return `<span class="photo-placeholder"><span class="thumb-emoji" role="img" aria-label="Ilustração genérica de ${esc(section.title)}">${section.icon}</span><small class="photo-unavailable">Foto de exemplo não disponível</small></span>`;
 }
-function beverageThumbHTML(variant, section) { return placeholderHTML(section); }
+function realPhotoHTML(src, alt, icon, size) {
+  return `<img src="${esc(src)}" alt="${esc(alt)}" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`;
+}
+function beverageThumbHTML(variant, section) {
+  const item = ITEM_INDEX.get(variant.id)?.item;
+  const src = item && ITEM_PHOTOS[item.id];
+  return src ? realPhotoHTML(src, 'Foto de ' + item.name + ' — ' + variant.pack, section.icon, 80) : placeholderHTML(section);
+}
 function groupDimensions(group){ return {flavors:[...new Set(group.variants.map(v=>v.flavor).filter(Boolean))],packs:[...new Set(group.variants.map(v=>v.pack).filter(Boolean))]}; }
 function groupVariant(group,flavor,pack){ return group.variants.find(v=>(!flavor||v.flavor===flavor)&&(!pack||v.pack===pack))||null; }
 function groupHTML(group,section){ const d=groupDimensions(group), v=group.variants[0], prices=group.variants.map(x=>describeLine(variantLine(x)).price).filter(Number.isFinite), summary=[d.flavors.length?`${d.flavors.length} sabores`:'',d.packs.join(' · ')].filter(Boolean).join(' · '), search=group.variants.map(x=>searchText(ITEM_INDEX.get(x.id).item,section)+' '+norm(beverageLabel(x))).join(' '); return `<li class="card card--compact card--beverage" data-card data-group="${group.key}" data-search="${esc(search)}"><button type="button" class="beverage-open" data-open-beverage="${group.key}" aria-haspopup="dialog" aria-controls="product-dialog" aria-label="Escolher opções de ${esc(group.title)}"><span class="card__body"><span class="card__name" role="heading" aria-level="3">${esc(group.title)}</span><span class="beverage-summary" data-beverage-summary>${esc(summary||'Escolher')}</span><span class="card__price" data-price>${prices.length&&prices.every(p=>p===prices[0])?money(prices[0]):`<small>A partir de </small>${money(Math.min(...prices))}`}</span><span class="beverage-open__hint">Escolher <span aria-hidden="true">›</span></span></span><span class="card__thumb" data-beverage-thumb>${beverageThumbHTML(v,section)}</span></button></li>`; }
@@ -294,7 +321,8 @@ function productDimensionsHTML(group){ const {flavors,packs}=groupDimensions(gro
 function updateProductPhoto() {
   const photo = $('#product-photo');
   if (!photo) return;
-  photo.innerHTML = placeholderHTML(MENU.find(section => section.id === productGroup.section));
+  const section = MENU.find(section => section.id === productGroup.section);
+  photo.innerHTML = productVariant ? beverageThumbHTML(productVariant, section) : placeholderHTML(section);
 }
 function resolveProductVariant(){ if(!productGroup)return null; const {flavors,packs}=groupDimensions(productGroup), flavor=flavors.length>1?$('#product-options input[name="product-flavor"]:checked')?.value:flavors[0]||'', pack=packs.length>1?$('#product-options input[name="product-pack"]:checked')?.value:packs[0]||''; if(flavors.length>1&&!flavor||packs.length>1&&!pack)return null; return groupVariant(productGroup,flavor,pack); }
 function refreshDimensionPrices() {
@@ -380,7 +408,16 @@ const els = {
    ========================================================= */
 
 function thumbHTML(item, section, size = 104) {
-  return placeholderHTML(section);
+  const icon = item.icon || section.icon;
+  if (ITEM_PHOTO_SETS[item.id]) {
+    return `<span class="photo-pair" role="group" aria-label="Duas fotos de ${esc(item.name)}, sem principal">${ITEM_PHOTO_SETS[item.id].map((src, index) => realPhotoHTML(src, 'Foto de ' + item.name + ' — imagem ' + (index + 1), icon, size)).join('')}</span>`;
+  }
+  const src = ITEM_PHOTOS[item.id];
+  if (!src) return placeholderHTML(section);
+  const alt = item.id?.startsWith('hot-dogs-dogao-')
+    ? 'Foto genérica de Dogão Quente — proteína não identificada na imagem'
+    : 'Foto de ' + item.name + (item.id === 'bebidas-h2o-600ml' ? ' — 500 ml; Limão' : item.meta ? ' — ' + item.meta : '');
+  return realPhotoHTML(src, alt, icon, size);
 }
 
 function priceHTML(item) {
@@ -410,7 +447,7 @@ function addButtonHTML(item) {
 }
 
 function searchText(item, section) {
-  return norm([section.prefix || '', item.name, item.meta || '', item.desc || '', section.title].join(' '));
+  return norm([section.prefix || '', item.name, item.meta || '', item.desc || '', section.title, item.id === 'bebidas-h2o-600ml' ? 'Limão' : ''].join(' '));
 }
 
 function cardHTML(item, section) {
@@ -422,7 +459,7 @@ function cardHTML(item, section) {
     <div class="card__thumb">${thumbHTML(item, section, 56)}</div>
     <div class="card__body">
       <h3 class="card__name">${esc(item.name)}</h3>
-      ${item.meta ? `<span class="card__meta">${esc(item.id === 'bebidas-h2o-600ml' ? '500 ml · sabor a confirmar' : item.id === 'bebidas-guarana-antartica-lata' ? 'Lata 350 ml' : item.meta)}</span>` : ''}
+      ${item.meta ? `<span class="card__meta">${esc(item.id === 'bebidas-h2o-600ml' ? '500 ml · Limão' : item.id === 'bebidas-guarana-antartica-lata' ? 'Lata 350 ml' : item.meta)}</span>` : ''}
       ${priceHTML(item)}
     </div>
     ${item.options ? '' : plusButtonHTML(item)}
@@ -435,7 +472,7 @@ function cardHTML(item, section) {
   <li class="card" data-card data-search="${search}">
     <div class="card__body">
       <h3 class="card__name">${esc(item.name)}</h3>
-      ${item.meta ? `<span class="card__meta">${esc(item.id === 'bebidas-h2o-600ml' ? '500 ml · sabor a confirmar' : item.id === 'bebidas-guarana-antartica-lata' ? 'Lata 350 ml' : item.meta)}</span>` : ''}
+      ${item.meta ? `<span class="card__meta">${esc(item.id === 'bebidas-h2o-600ml' ? '500 ml · Limão' : item.id === 'bebidas-guarana-antartica-lata' ? 'Lata 350 ml' : item.meta)}</span>` : ''}
       ${item.desc ? `<p class="card__desc" id="desc-${item.id}">${esc(item.desc)}</p>
       <button type="button" class="more-btn" data-more aria-controls="desc-${item.id}" aria-label="Ver mais ingredientes de ${esc(item.name)}" aria-expanded="false" hidden>Ver mais</button>` : ''}
       ${priceHTML(item)}
@@ -720,7 +757,7 @@ function describeLine(line) {
     + (meta ? ` - ${meta}` : '')
     + (label ? ` - ${label}` : '')
     + flavorLabel
-    + (line.id === 'bebidas-h2o-600ml' ? ' - sabor a confirmar' : '');
+    + (line.id === 'bebidas-h2o-600ml' ? ' - Limão' : '');
   return { name, price: price == null ? null : price };
 }
 
@@ -1399,9 +1436,8 @@ function applyImageFallback(img) {
     holder.className = 'brand-text';
     holder.textContent = img.dataset.fallbackText;
   } else {
-    holder.className = 'thumb-emoji';
-    holder.setAttribute('aria-hidden', 'true');
-    holder.textContent = img.dataset.fallback || '🍔';
+    holder.className = 'photo-placeholder';
+    holder.innerHTML = `<span class="thumb-emoji" aria-hidden="true">${esc(img.dataset.fallback || '🍔')}</span><small class="photo-unavailable">Foto de exemplo não disponível</small>`;
   }
   img.replaceWith(holder);
 }

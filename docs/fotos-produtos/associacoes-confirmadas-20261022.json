@@ -1,0 +1,253 @@
+{
+  "manifest_type": "incremental_local_candidate",
+  "date": "2026-10-22",
+  "scope": "Supersessão da pausa anterior para preparação de exibição LOCAL, sem publicação.",
+  "source_of_authorization": "Orientação posterior do coordenador com confirmação literal de João; não autoriza push/deploy.",
+  "quote": "As fotos nomedas são todas as fotos que ela tem, vão ser essas mesmas. As que não tiver foto, O H2OH é sabor limão, eu tenho a imagem. As sem imagem você deixar a imagem genérica mesmo, e coloca algo indicando que o produto não tem imagem de exemplo, algo assim.",
+  "historical_manifest": "associacoes.json",
+  "historical_manifest_unchanged": true,
+  "preparation_constraints": [
+    "Preparação somente do candidato local.",
+    "Revisão Cassandra obrigatória.",
+    "Aprovação obrigatória do SHA exato final antes de qualquer push/deploy ou publicação.",
+    "Sem push, deploy ou publicação.",
+    "Derivados: reencodificação lossless WebP integral, sem crop, edição de pixels ou alteração de alimento."
+  ],
+  "derived_status_note": "Oito derivados integrais lossless gerados e conferidos pixel a pixel contra as fontes RGB; candidato local ainda depende de revisão e aprovação do SHA para publicação.",
+  "records": [
+    {
+      "source": "/workspace/sabor-fotos-revisao/originais/foto-007.jpg",
+      "source_filename": "foto-007.jpg",
+      "source_sha256": "5c2496159281cd965edbc03ca7d712a9ea756c8a4943e2c8fcecad50f91915e3",
+      "source_dimensions": [
+        540,
+        454
+      ],
+      "source_mode": "RGB",
+      "item_ids": [
+        "hamburgueres-x-duplo"
+      ],
+      "asset": "public/img/produtos/x-duplo.webp",
+      "derived_sha256": "f1f73560b296f12a975b98bf5d1abba7eb7836d86b10d867cff798a74b335e52",
+      "derived_dimensions": [
+        540,
+        454
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "X Duplo confirmado; não inferir ingredientes pela imagem."
+      ],
+      "decoded_rgb_pixels_preserved": true
+    },
+    {
+      "source": "/workspace/sabor-fotos-revisao/originais/foto-010.jpg",
+      "source_filename": "foto-010.jpg",
+      "source_sha256": "8aaacce63adba1608b8d7767694b325df5ab2e7dd1d106aa7ad70d84fcdb580d",
+      "source_dimensions": [
+        1000,
+        799
+      ],
+      "source_mode": "RGB",
+      "item_ids": [
+        "combos-combo-07"
+      ],
+      "asset": "public/img/produtos/combo-07.webp",
+      "derived_sha256": "eb49db0df12add008968b28499535dbadbb78b747ab30c7c64462adc72dbd55d",
+      "derived_dimensions": [
+        1000,
+        799
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "Combo 07 confirmado; não inferir quantidade de itens pela imagem."
+      ],
+      "decoded_rgb_pixels_preserved": true
+    },
+    {
+      "source": "/workspace/sabor-fotos-revisao/originais/foto-016.jpg",
+      "source_filename": "foto-016.jpg",
+      "source_sha256": "46373239a7e534e14d61dbb0dce857a0c1ac917d8b4d26fc422349d1e93427e5",
+      "source_dimensions": [
+        750,
+        1000
+      ],
+      "source_mode": "RGB",
+      "item_ids": [
+        "porcoes-batata-maluca-p"
+      ],
+      "asset": "public/img/produtos/batata-maluca-p.webp",
+      "derived_sha256": "29ffa8b1ec4d3aadc55ffdc1e3fb94be195776b7dfb23fc67553641b74e78dc3",
+      "derived_dimensions": [
+        750,
+        1000
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "Batata Maluca P; não reutilizar para outro tamanho ou receita."
+      ],
+      "decoded_rgb_pixels_preserved": true
+    },
+    {
+      "source": "/workspace/sabor-fotos-revisao/originais/foto-015.jpg",
+      "source_filename": "foto-015.jpg",
+      "source_sha256": "535c2f8fa6625a06c6fc5d51c657f9d0c158afcdf7fa8d013eae6e342c11acdb",
+      "source_dimensions": [
+        750,
+        1000
+      ],
+      "source_mode": "RGB",
+      "item_ids": [
+        "porcoes-batata-maluca-g-com-cheddar-e-bacon"
+      ],
+      "asset": "public/img/produtos/batata-cheddar-bacon-g.webp",
+      "derived_sha256": "a9ee7c56fefcf009a88c6b5f8a8fcb1a777cd5614c2aa8259959920a0e6a4141",
+      "derived_dimensions": [
+        750,
+        1000
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "Batata Maluca G com cheddar e bacon; não reutilizar para outro tamanho ou receita."
+      ],
+      "decoded_rgb_pixels_preserved": true
+    },
+    {
+      "source": "/workspace/sabor-fotos-revisao/originais/foto-017.jpg",
+      "source_filename": "foto-017.jpg",
+      "source_sha256": "0154483f12cadcbc91298d9df20836aa1191d5a74b9e939cd49d6c4139cd1a30",
+      "source_dimensions": [
+        1000,
+        750
+      ],
+      "source_mode": "RGB",
+      "item_ids": [
+        "hot-dogs-dogao-quente-salsicha",
+        "hot-dogs-dogao-quente-linguica"
+      ],
+      "asset": "public/img/produtos/dogao-quente.webp",
+      "derived_sha256": "b2bbd64ab3db3694285b8f398e6017e7eb0280b01e00f4c4c7aad5ec541d113d",
+      "derived_dimensions": [
+        1000,
+        750
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "Asset compartilhado; não inferir proteína pela aparência."
+      ],
+      "decoded_rgb_pixels_preserved": true
+    },
+    {
+      "source": "/home/ubuntu/upload/1000026854.jpg",
+      "source_filename": "1000026854.jpg",
+      "source_sha256": "253bdec418bc3b0f770ecf0130e7a171f94569ad5b4abcd5f628add22fb06c7a",
+      "source_dimensions": [
+        507,
+        600
+      ],
+      "source_mode": "RGB",
+      "source_label_evidence": "Rótulo 500 ml, limoneto; João confirma H2OH Limão.",
+      "item_ids": [
+        "bebidas-h2o-600ml"
+      ],
+      "asset": "public/img/h2oh-limao-500ml.webp",
+      "derived_sha256": "5184e83ecd188a78d4d1810adfd032d3ab79459d018df7f79e77f90b668842b1",
+      "derived_dimensions": [
+        507,
+        600
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "Preservar o ID legado; não renomear nem inferir além da confirmação de sabor."
+      ],
+      "decoded_rgb_pixels_preserved": true
+    },
+    {
+      "source": "/workspace/sabor-fotos-revisao/originais/foto-009.jpg",
+      "source_filename": "foto-009.jpg",
+      "source_sha256": "50b475d9d417aae13f3f3b0336f222948877c4c35e177f3de3bdd57808d7d76d",
+      "source_dimensions": [
+        750,
+        1000
+      ],
+      "source_mode": "RGB",
+      "source_caption": "Frango",
+      "source_of_authorization": "João confirma Frango = Frango Fresh, R$24,00 e descrição literal; preparação somente local.",
+      "item_ids": [
+        "hamburgueres-frango-fresh"
+      ],
+      "asset": "public/img/produtos/frango-fresh.webp",
+      "derived_sha256": "78a7bc2d508c5e23f1aeadfbb99bc1d46008d0c8d8a9bfbed95e737449c162ed",
+      "derived_dimensions": [
+        750,
+        1000
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "Vinculada apenas a Frango Fresh; não inferir receita, quantidade ou proteína pela foto."
+      ],
+      "decoded_rgb_pixels_preserved": true,
+      "confirmed_price": 24,
+      "confirmed_description": "pão Bimbo + filé de peito de frango empanado (120 g) + alface + cheddar em fatia + cebola roxa crua + molho especial"
+    },
+    {
+      "source": "/workspace/sabor-fotos-revisao/originais/foto-008.jpg",
+      "source_filename": "foto-008.jpg",
+      "source_sha256": "7be671740a7349d1b611ee4ffabd1314f4ec1d0bf1f5630bf7de6eac1cc4a882",
+      "source_dimensions": [
+        540,
+        960
+      ],
+      "source_mode": "RGB",
+      "source_caption": "Picanha 03",
+      "source_pdf_sha256": "c16dc40408497ae32f8821ea8190f6c3032db6125197c452c0b8b46cc3126db8",
+      "source_pdf_page": 2,
+      "source_pdf_position": 3,
+      "source_of_authorization": "Correção explícita do coordenador: a legenda literal Picanha 03 corresponde diretamente ao item já cadastrado X Picanha 03; não é inferência por aparência ou preço. Preparação somente local.",
+      "item_ids": [
+        "linha-picanha-x-picanha-03"
+      ],
+      "asset": "public/img/produtos/picanha-03.webp",
+      "derived_sha256": "d8cc19b7cef1c8897fb989b3ffb38f1fc8023cca56cafb8f7dda811ebd066adb",
+      "derived_dimensions": [
+        540,
+        960
+      ],
+      "derived_mode": "RGB",
+      "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+      "limits": [
+        "Uso exclusivo em linha-picanha-x-picanha-03; não associar a outros IDs.",
+        "Preservar preço confirmado de R$36; não inferir receita nem preço pela imagem.",
+        "X Picanha 04 começa com pão brioche + por confirmação de João (siga a lógica), sem Bimbo e mantendo R$21."
+      ],
+      "decoded_rgb_pixels_preserved": true
+    }
+  ],
+  "no_photo_items": [
+    {
+      "item_id": "porcoes-batata-maluca-g",
+      "asset": null,
+      "presentation": "imagem genérica",
+      "label": "Foto de exemplo não disponível"
+    },
+    {
+      "item_id": "porcoes-batata-maluca-p-com-cheddar-e-bacon",
+      "asset": null,
+      "presentation": "imagem genérica",
+      "label": "Foto de exemplo não disponível"
+    }
+  ],
+  "excluded": [
+    {
+      "subject": "Fotos X Picanha 01, 02 e 04",
+      "reason": "Sem foto diretamente correspondente autorizada: manter placeholders rotulados. X Picanha 03 tem associação direta pela legenda literal Picanha 03. Preços R$19/R$23/R$36/R$21 preservados; X Picanha 04 com pão brioche + por confirmação de João (siga a lógica), sem Bimbo e mantendo R$21."
+    }
+  ],
+  "preservation": "Originais/histórico de 10 fotos antigas e 7 bebidas preservados; este arquivo é incremental e não substitui nem altera associacoes.json."
+}

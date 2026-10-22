@@ -46,17 +46,20 @@ test('treze combos exibem novos preços e pedido usa 48 + 65 + 32 sem envio', as
   expect(text).toContain('Total: R$ 145,00');
 });
 
-test('Bimbo aparece só nos cinco Cheddars e busca não o associa a outros itens', async ({ page }) => {
+test('Bimbo aparece só nos cinco Cheddars e Frango Fresh confirmados', async ({ page }) => {
   await openApp(page);
   const cheddar = page.locator('#linha-cheddar [data-card]');
   await expect(cheddar).toHaveCount(5);
   for (const item of await cheddar.all()) await expect(item).toContainText('pão Bimbo +');
-  await expect(page.locator('#hamburgueres')).not.toContainText('Bimbo');
+  const traditional = page.locator('#hamburgueres [data-card]').filter({ hasNot: page.locator('[data-add="hamburgueres-frango-fresh"]') });
+  for (const card of await traditional.all()) await expect(card).not.toContainText('Bimbo');
   await expect(page.locator('#artesanais')).not.toContainText('Bimbo');
   await expect(page.locator('#combos')).not.toContainText('Bimbo');
   await page.locator('#search').fill('Bimbo');
-  await expect(page.locator('#search-results')).toHaveText('5 resultados encontrados.');
+  await expect(page.locator('#search-results')).toHaveText('6 resultados encontrados.');
   await expect(page.locator('#linha-cheddar')).toBeVisible();
-  await expect(page.locator('#hamburgueres')).toBeHidden();
+  await expect(page.locator('#hamburgueres')).toBeVisible();
+  await expect(page.locator('#hamburgueres [data-card]:visible')).toHaveCount(1);
+  await expect(page.locator('#hamburgueres [data-card]:visible')).toContainText('Frango Fresh');
   await expect(page.locator('#artesanais')).toBeHidden();
 });

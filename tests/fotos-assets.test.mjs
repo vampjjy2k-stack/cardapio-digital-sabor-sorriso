@@ -18,7 +18,7 @@ const expected = {
   'combo-06.webp': 'combos-combo-06',
 };
 
-test('somente dez derivados de alimentos confirmados entram no site; fontes ficam fora', () => {
+test('derivados históricos e confirmados entram no site; fontes ficam fora', () => {
   assert.equal(existsSync(new URL('docs/fotos-produtos/originais/', root)), false);
   assert.equal(existsSync(new URL('docs/fotos-produtos/preparar.py', root)), false);
   const foods = manifest.records.filter(record => record.page);
@@ -36,7 +36,15 @@ test('somente dez derivados de alimentos confirmados entram no site; fontes fica
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   }
-  assert.deepEqual(readdirSync(new URL('public/img/produtos/', root)).sort(), Object.keys(expected).sort());
+  const files = readdirSync(new URL('public/img/produtos/', root)).sort();
+  const newAssets = ['x-duplo.webp', 'combo-07.webp', 'batata-maluca-p.webp', 'batata-cheddar-bacon-g.webp', 'dogao-quente.webp', 'frango-fresh.webp', 'picanha-03.webp'];
+  assert.deepEqual(files.sort(), [...Object.keys(expected), ...newAssets].sort());
+  assert.ok(existsSync(new URL('public/img/h2oh-limao-500ml.webp', root)));
+  for (const filename of newAssets) {
+    const bytes = readFileSync(new URL(`public/img/produtos/${filename}`, root));
+    assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
+    assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
+  }
   for (const record of foods.filter(record => !record.item_id)) {
     assert.equal(record.asset, null);
     assert.ok(record.pending);
@@ -70,4 +78,31 @@ test('retoque autorizado de câmera tem proveniência localizada; Artesanal 04 p
   const artesanal = manifest.records.find(record => record.item_id === 'artesanais-artesanal-04');
   assert.equal(hash(artesanal.asset), '39c72e1586b1de676db240c812cbbffd3edfc5a9d4c73b9ab6816ef71c539e19');
   assert.match(combo.review_note, /aprovação explícita do SHA final/);
+});
+
+test('oito derivados novos têm hashes, dimensões e proveniência separados do histórico', () => {
+  const incremental = JSON.parse(readFileSync(new URL('docs/fotos-produtos/associacoes-confirmadas-20261022.json', root), 'utf8'));
+  assert.equal(incremental.records.length, 8);
+  const ids = incremental.records.flatMap(record => record.item_ids);
+  assert.equal(ids.length, 9);
+  assert.equal(new Set(ids).size, 9);
+  for (const record of incremental.records) {
+    assert.equal(hash(record.asset), record.derived_sha256);
+    assert.deepEqual(record.derived_dimensions, record.source_dimensions);
+    assert.equal(record.decoded_rgb_pixels_preserved, true);
+    assert.equal(record.derived_mode, 'RGB');
+    assert.match(record.source_sha256, /^[a-f0-9]{64}$/);
+    if (record.item_ids.some(id => /picanha/.test(id))) {
+      assert.deepEqual(record.item_ids, ['linha-picanha-x-picanha-03']);
+      assert.equal(record.source_caption, 'Picanha 03');
+      assert.equal(record.source_filename, 'foto-008.jpg');
+      assert.equal(record.source_sha256, '7be671740a7349d1b611ee4ffabd1314f4ec1d0bf1f5630bf7de6eac1cc4a882');
+      assert.equal(record.source_pdf_page, 2);
+    }
+  }
+  const dog = incremental.records.find(record => record.asset.endsWith('dogao-quente.webp'));
+  assert.deepEqual(dog.item_ids, ['hot-dogs-dogao-quente-salsicha', 'hot-dogs-dogao-quente-linguica']);
+  const h2oh = incremental.records.find(record => record.source_filename === '1000026854.jpg');
+  assert.deepEqual(h2oh.item_ids, ['bebidas-h2o-600ml']);
+  assert.equal(h2oh.source_sha256, '253bdec418bc3b0f770ecf0130e7a171f94569ad5b4abcd5f628add22fb06c7a');
 });

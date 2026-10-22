@@ -68,7 +68,7 @@ test.describe('cardápio responsivo e pesquisa', () => {
     await expect(page.locator('#search-results')).toContainText('0');
     await page.locator('#search').fill('');
     await expect(page.locator('#destaques')).toBeVisible();
-    await expect(page.locator('#category-nav-list > li:visible')).toHaveCount(12);
+    await expect(page.locator('#category-nav-list > li:visible')).toHaveCount(13);
   });
 
   test('categorias navegam e vitaminas selecionam sabor e volume com preço correto', async ({ page }) => {

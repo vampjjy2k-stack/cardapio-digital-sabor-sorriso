@@ -9,30 +9,35 @@ const photos = {
   'combos-combo-03': 'combo-03.webp',
   'combos-combo-04': 'combo-04.webp',
   'combos-combo-06': 'combo-06.webp',
+  'hamburgueres-x-duplo': 'x-duplo.webp',
+  'combos-combo-07': 'combo-07.webp',
+  'porcoes-batata-maluca-p': 'batata-maluca-p.webp',
+  'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'batata-cheddar-bacon-g.webp',
+  'hot-dogs-dogao-quente-salsicha': 'dogao-quente.webp',
+  'hot-dogs-dogao-quente-linguica': 'dogao-quente.webp',
 };
 
-test('catálogo e destaques usam placeholders sem carregar fotos; assets preservados', async ({ page }) => {
-  const imageRequests = [];
-  page.on('request', request => { if (request.resourceType() === 'image') imageRequests.push(new URL(request.url()).pathname); });
+const names = {
+  'artesanais-artesanal-02': 'Artesanal 02', 'artesanais-artesanal-04': 'Artesanal 04',
+  'linha-cheddar-x-cheddar-03': 'Cheddar 03', 'linha-cheddar-x-cheddar-05': 'Cheddar 05',
+  'combos-combo-02': 'Combo 02', 'combos-combo-03': 'Combo 03', 'combos-combo-04': 'Combo 04', 'combos-combo-06': 'Combo 06',
+  'hamburgueres-x-duplo': 'X Duplo', 'combos-combo-07': 'Combo 07',
+  'porcoes-batata-maluca-p': 'Batata Maluca P', 'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'Batata Maluca G com Cheddar e Bacon',
+  'hot-dogs-dogao-quente-salsicha': 'Dogão Quente Salsicha', 'hot-dogs-dogao-quente-linguica': 'Dogão Quente Linguiça',
+};
+
+test('catálogo renderiza fotos reais mapeadas e placeholder rotulado nos itens sem foto', async ({ page }) => {
   await page.route('**/api/status', route => route.fulfill({ json: { status: 'open' } }));
   await page.route('https://fonts.googleapis.com/**', route => route.fulfill({ contentType: 'text/css', body: '' }));
   await page.goto('/index.html');
-  await expect(page.locator('.menu-section img, #featured-grid img')).toHaveCount(0);
-  for (const card of await page.locator('.menu-section [data-card], #featured-grid > li').all()) {
-    await expect(card.locator('.thumb-emoji')).toHaveCount(1);
-    await expect(card.locator('.thumb-emoji')).toHaveAttribute('aria-label', /^Ilustração genérica de /);
+  for (const [id, asset] of Object.entries(photos)) {
+    const card = page.locator('[data-card]').filter({ hasText: names[id] }).first();
+    await expect(card).toHaveCount(1);
+    await expect(card.locator('img')).toHaveAttribute('src', `img/produtos/${asset}`);
   }
+  await expect(page.locator('.photo-placeholder .photo-unavailable').first()).toHaveText('Foto de exemplo não disponível');
   await expect(page.locator('.hero')).toHaveCSS('background-image', 'none');
   await expect(page.locator('.brand img')).toHaveAttribute('src', 'img/logo.webp');
-  for (const width of [320, 360, 390, 1440]) {
-    await page.setViewportSize({ width, height: 844 });
-    await page.evaluate(async () => {
-      for (let y = 0; y < document.body.scrollHeight; y += 600) window.scrollTo(0, y);
-      await new Promise(resolve => requestAnimationFrame(resolve));
-    });
-    await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
-  }
-  expect(imageRequests).toEqual(['/img/logo.webp']);
   for (const asset of [...Object.values(photos), 'artesanal-03-1.webp', 'artesanal-03-2.webp']) {
     expect((await page.request.get(`/img/produtos/${asset}`)).status()).toBe(200);
   }

@@ -167,20 +167,20 @@ test('lineKey separa sabores da Fanta 2L, mas mantém demais IDs e opções comp
   assert.equal(api.describeLine({ id: 'bebidas-h2o-600ml', opt: null }).price, 7);
   assert.equal(api.ITEM_INDEX.get('bebidas-h2o-600ml').item.meta, '500ML');
   assert.equal(api.ITEM_INDEX.get('bebidas-h2o-600ml').item.name, 'H2OH!');
-  assert.equal(api.describeLine({ id: 'bebidas-h2o-600ml', opt: null }).name, 'H2OH! - 500 ml - sabor a confirmar');
+  assert.equal(api.describeLine({ id: 'bebidas-h2o-600ml', opt: null }).name, 'H2OH! - 500 ml - Limão');
   assert.equal(api.ITEM_INDEX.get('bebidas-guarana-antartica-lata').item.price, 7);
   assert.equal(api.ITEM_INDEX.get('bebidas-kuat-2l').item.price, 8);
 });
 
-test('preserva 66 registros e IDs com somente H2OH!, combos e Bimbo autorizados', () => {
+test('preserva 66 registros e IDs com somente H2OH!, combos e descrições autorizadas', () => {
   const api = runtime();
   const base = JSON.parse(fs.readFileSync(new URL('./fixtures/menu-base-7336733.json', import.meta.url), 'utf8'));
-  const current = plain(api.MENU);
+  const current = plain(api.MENU).filter(s => s.id !== 'linha-picanha').map(s => ({ ...s, items: s.items.filter(i => i.id !== 'hamburgueres-frango-fresh') }));
   const baseItems = base.flatMap(s => s.items);
   const items = current.flatMap(s => s.items);
   assert.equal(baseItems.length, 66);
   assert.equal(items.length, 66);
-  assert.equal(api.ITEM_INDEX.size, 66);
+  assert.equal(api.ITEM_INDEX.size, 71);
   assert.deepEqual(items.map(i => i.id), baseItems.map(i => i.id));
   const h2o = baseItems.find(i => i.id === 'bebidas-h2o-600ml');
   h2o.name = 'H2OH!';
@@ -188,8 +188,11 @@ test('preserva 66 registros e IDs com somente H2OH!, combos e Bimbo autorizados'
   for (const item of base.find(section => section.id === 'combos').items) {
     item.price = item.name === 'Combo 02' ? 48 : item.name === 'Combo 03' ? 65 : item.price + 3;
   }
+  for (const item of base.find(section => section.id === 'hamburgueres').items) {
+    item.desc = item.desc.replace(/^Pão bimbu/, 'Pão');
+  }
   for (const item of base.find(section => section.id === 'linha-cheddar').items) {
-    item.desc = item.desc.replace(/^pão bimbu/, 'pão Bimbo');
+    item.desc = item.desc.replace(/^pão bimbu/, 'pão Bimbo').replace(/\bcheddar\b/g, 'queijo cheddar');
   }
   assert.deepEqual(current, base);
   const combinations = items.reduce((sum, item) => sum + (item.options?.length || 1), 0);
@@ -219,20 +222,28 @@ test('todos os 13 combos usam preços novos em catálogo e carrinho, sem alterar
   }
 });
 
-test('pão Bimbo fica restrito aos cinco Cheddars, sem generalização para hambúrgueres ou artesanais', () => {
+test('pão Bimbo nos Cheddars e Frango Fresh confirmados, sem generalização aos demais', () => {
   const api = runtime();
   const base = JSON.parse(fs.readFileSync(new URL('./fixtures/menu-base-7336733.json', import.meta.url), 'utf8'));
   const cheddar = api.MENU.find(section => section.id === 'linha-cheddar');
   assert.equal(cheddar.items.length, 5);
-  for (const item of cheddar.items) assert.match(item.desc, /^pão Bimbo \+/);
+  for (const item of cheddar.items) {
+    assert.match(item.desc, /^pão Bimbo \+/);
+    assert.match(item.desc, /queijo cheddar/);
+  }
   for (const section of api.MENU.filter(section => section.id !== 'linha-cheddar')) {
-    assert.deepEqual(plain(section.items.map(item => item.desc)), base.find(s => s.id === section.id).items.map(item => item.desc));
+    if (section.id === 'linha-picanha') continue;
+    const expected = base.find(s => s.id === section.id).items.map(item =>
+      section.id === 'hamburgueres' ? item.desc.replace(/^Pão bimbu/, 'Pão') : item.desc);
+    assert.deepEqual(plain(section.items.filter(i => i.id !== 'hamburgueres-frango-fresh').map(item => item.desc)), expected);
   }
 });
 
-test('mapa preserva sete bebidas, oito fotos individuais e as duas fotos iguais em importância do Artesanal 03', () => {
+test('mapa preserva fotos reais antigas, novas e placeholders rotulados sem associação', () => {
   const api = runtime();
   const expected = {
+    'linha-picanha-x-picanha-03': 'img/produtos/picanha-03.webp',
+    'hamburgueres-frango-fresh': 'img/produtos/frango-fresh.webp',
     'bebidas-guarana-antartica-lata': 'img/guarana-antarctica-350ml.png',
     'bebidas-fanta-laranja-lata': 'img/fanta-laranja-350ml.png',
     'bebidas-fanta-uva-lata': 'img/fanta-uva-350ml.png',
@@ -248,21 +259,27 @@ test('mapa preserva sete bebidas, oito fotos individuais e as duas fotos iguais 
     'combos-combo-03': 'img/produtos/combo-03.webp',
     'combos-combo-04': 'img/produtos/combo-04.webp',
     'combos-combo-06': 'img/produtos/combo-06.webp',
+    'hamburgueres-x-duplo': 'img/produtos/x-duplo.webp',
+    'combos-combo-07': 'img/produtos/combo-07.webp',
+    'porcoes-batata-maluca-p': 'img/produtos/batata-maluca-p.webp',
+    'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'img/produtos/batata-cheddar-bacon-g.webp',
+    'hot-dogs-dogao-quente-salsicha': 'img/produtos/dogao-quente.webp',
+    'hot-dogs-dogao-quente-linguica': 'img/produtos/dogao-quente.webp',
+    'bebidas-h2o-600ml': 'img/h2oh-limao-500ml.webp',
   };
   assert.deepEqual(plain(api.ITEM_PHOTOS), expected);
-  assert.equal(Object.keys(api.ITEM_PHOTOS).length, 15);
+  assert.equal(Object.keys(api.ITEM_PHOTOS).length, 24);
   for (const [id, path] of Object.entries(expected)) {
     assert.match(id, /^\w[\w-]*$/);
     assert.ok(api.ITEM_INDEX.has(id), `${id} deve apontar para ITEM_INDEX`);
     assert.ok(fs.statSync(new URL(`../public/${path}`, import.meta.url)).size > 0, path);
   }
-  assert.equal(api.ITEM_PHOTOS['bebidas-h2o-600ml'], undefined, 'H2OH! 500ml mantém ausência de foto');
   assert.equal(api.ITEM_PHOTOS['bebidas-fanta-2l'], undefined, 'Fanta 2L mantém ausência de foto');
   assert.equal(api.ITEM_PHOTOS['artesanais-artesanal-03'], undefined);
   assert.deepEqual(plain(api.ITEM_PHOTO_SETS), { 'artesanais-artesanal-03': ['img/produtos/artesanal-03-1.webp', 'img/produtos/artesanal-03-2.webp'] });
   for (const path of api.ITEM_PHOTO_SETS['artesanais-artesanal-03']) assert.ok(fs.statSync(new URL(`../public/${path}`, import.meta.url)).size > 0);
-  assert.equal(api.ITEM_PHOTOS['combos-combo-07'], undefined);
-  assert.equal(api.ITEM_PHOTOS['hamburgueres-x-duplo'], undefined);
+  assert.equal(api.ITEM_PHOTOS['combos-combo-07'], 'img/produtos/combo-07.webp');
+  assert.equal(api.ITEM_PHOTOS['hamburgueres-x-duplo'], 'img/produtos/x-duplo.webp');
   for (const id of ['linha-cheddar-x-cheddar-01', 'linha-cheddar-x-cheddar-02', 'linha-cheddar-x-cheddar-04']) assert.equal(api.ITEM_PHOTOS[id], undefined);
   const uva = fs.readFileSync(new URL('../public/img/fanta-uva-350ml.png', import.meta.url));
   assert.equal(createHash('sha256').update(uva).digest('hex'), '73487550d9eb4ca64e60908fe65f80d67a3139a27aa1f5600ff13b1b735bbc6e');
