@@ -9,7 +9,6 @@ const photos = {
   'combos-combo-03': 'combo-03.webp',
   'combos-combo-04': 'combo-04.webp',
   'combos-combo-06': 'combo-06.webp',
-  'hamburgueres-x-duplo': 'x-duplo.webp',
   'combos-combo-07': 'combo-07.webp',
   'porcoes-batata-maluca-p': 'batata-maluca-p.webp',
   'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'batata-cheddar-bacon-g.webp',
@@ -35,10 +34,13 @@ test('catálogo renderiza fotos reais mapeadas e placeholder rotulado nos itens 
     await expect(card).toHaveCount(1);
     await expect(card.locator('img')).toHaveAttribute('src', `img/produtos/${asset}`);
   }
+  const duplo = page.locator('[data-card]').filter({ has: page.getByRole('heading', { name: 'X Duplo', exact: true }) });
+  await expect(duplo.locator('img')).toHaveCount(0);
+  await expect(duplo.locator('.photo-unavailable')).toHaveText('Foto de exemplo não disponível');
   await expect(page.locator('.photo-placeholder .photo-unavailable').first()).toHaveText('Foto de exemplo não disponível');
   await expect(page.locator('.hero')).toHaveCSS('background-image', 'none');
   await expect(page.locator('.brand img')).toHaveAttribute('src', 'img/logo.webp');
-  for (const asset of [...Object.values(photos), 'artesanal-03-1.webp', 'artesanal-03-2.webp']) {
+  for (const asset of [...Object.values(photos), 'x-duplo.webp', 'artesanal-03-1.webp', 'artesanal-03-2.webp']) {
     expect((await page.request.get(`/img/produtos/${asset}`)).status()).toBe(200);
   }
 });

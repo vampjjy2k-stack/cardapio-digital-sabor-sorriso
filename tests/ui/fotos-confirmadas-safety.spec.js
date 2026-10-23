@@ -29,14 +29,14 @@ test('H2OH! mantém ID legado, foto de 500 ml e Limão no pedido sem envio', asy
 });
 
 test('foto indisponível vira placeholder rotulado; Dogão não atribui proteína visualmente', async ({ page }) => {
-  await page.route('**/img/produtos/x-duplo.webp', r => r.abort());
+  await page.route('**/img/produtos/frango-fresh.webp', r => r.abort());
   await openApp(page);
-  await page.locator('#search').fill('X Duplo');
-  const card = page.locator('#hamburgueres [data-card]').filter({ hasText: 'X Duplo' });
+  await page.locator('#search').fill('Frango Fresh');
+  const card = page.locator('#hamburgueres [data-card]').filter({ hasText: 'Frango Fresh' });
   await card.scrollIntoViewIfNeeded();
   await expect(card.locator('.photo-unavailable')).toHaveText('Foto de exemplo não disponível');
   await expect(card.locator('img')).toHaveCount(0);
-  await expect(card.locator('[data-price]')).toHaveText('R$ 26,00');
+  await expect(card.locator('[data-price]')).toHaveText('R$ 24,00');
   for (const dog of await page.locator('#hot-dogs img[src="img/produtos/dogao-quente.webp"]').all()) {
     await expect(dog).toHaveAttribute('alt', 'Foto genérica de Dogão Quente — proteína não identificada na imagem');
   }

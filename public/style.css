@@ -1048,3 +1048,27 @@ body.product-open { overflow: hidden; }
 .card--compact .photo-placeholder .thumb-emoji, .card--info .photo-placeholder .thumb-emoji { font-size: 1.25rem; }
 .product-photo .photo-unavailable { font-size: .75rem; }
 @media (max-width: 480px) { .card__media .card__thumb:has(.photo-placeholder) { min-height: 96px; } }
+
+/* Encaixe das fotos reais: preservar o arquivo inteiro, sem zoom nem corte.
+   O botão fica fora da imagem; placeholders mantêm o layout já validado. */
+.card:has(> .card__media img) {
+  grid-template-columns: minmax(0, 1fr) clamp(108px, 34vw, 148px);
+}
+.card__media:has(img) { width: 100%; display: grid; gap: 8px; }
+.card__media:has(img) .card__thumb {
+  width: 100%; height: auto; aspect-ratio: 4 / 5;
+  padding: 8px; background: var(--thumb-bg);
+}
+.card__media:has(img) .card__thumb img {
+  display: block; width: 100%; height: 100%; min-width: 0; min-height: 0;
+  object-fit: contain; object-position: center;
+}
+.card__media:has(img) .add-btn {
+  position: static; justify-self: end; margin: 0;
+}
+/* Duas vistas igualmente importantes: cada uma ocupa metade da área, sem corte. */
+.card__media:has(.photo-pair) .card__thumb { aspect-ratio: 1 / 1; padding: 6px; }
+.card__media .photo-pair { gap: 6px; min-height: 0; }
+.card__thumb:has(> img), .product-photo:has(> img) { background: var(--thumb-bg); }
+.card--compact .card__thumb > img, .product-photo > img,
+.product-option__thumb > img { object-position: center; }

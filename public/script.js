@@ -86,6 +86,9 @@ const ITEM_PHOTOS = {
 const ITEM_PHOTO_SETS = {
   'artesanais-artesanal-03': ['img/produtos/artesanal-03-1.webp', 'img/produtos/artesanal-03-2.webp']
 };
+// Somente apresentação: manter o arquivo e a associação confirmada acima.
+// X Duplo: foto escura e já muito fechada na origem; encaixe não recupera o produto.
+const PHOTO_PRESENTATION_PLACEHOLDERS = new Set(['hamburgueres-x-duplo']);
 
 const DRINK_ICON = { '2L': 'garrafa2l', '600ML': 'garrafa600', 'Lata': 'lata' };
 
@@ -409,6 +412,7 @@ const els = {
 
 function thumbHTML(item, section, size = 104) {
   const icon = item.icon || section.icon;
+  if (PHOTO_PRESENTATION_PLACEHOLDERS.has(item.id)) return placeholderHTML(section);
   if (ITEM_PHOTO_SETS[item.id]) {
     return `<span class="photo-pair" role="group" aria-label="Duas fotos de ${esc(item.name)}, sem principal">${ITEM_PHOTO_SETS[item.id].map((src, index) => realPhotoHTML(src, 'Foto de ' + item.name + ' — imagem ' + (index + 1), icon, size)).join('')}</span>`;
   }
