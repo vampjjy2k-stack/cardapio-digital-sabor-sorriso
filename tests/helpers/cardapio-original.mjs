@@ -1,4 +1,4 @@
-// Delta restrito da revisão do cardápio original em 23/10/2026.
+// Deltas explicitamente confirmados para a revisão do cardápio em 23/10/2026.
 // Imagens permanecem fora do Git. Ingredientes atuais de leitura incerta não são removidos.
 export const reviewedDescriptions = {
   'X Tudo': 'Pão + carne + queijo + presunto + ovo + bacon + calabresa + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha',
@@ -9,11 +9,12 @@ export const reviewedDescriptions = {
   'X Salada': 'Pão + carne + queijo + presunto + tomate + alface + molho Billy Jack + maionese temperada + ketchup + batata palha',
   'X Duplo': 'Pão + 2 carnes + 2 ovos + 2 bacon + 2 calabresas + 2 queijos + 2 presuntos + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha',
   'Batata Maluca P': 'Batata + linguiça + calabresa + molhos + ketchup + queijo ralado',
-  'Batata Maluca G': 'Porção grande de batata + linguiça + calabresa + molhos + ketchup + queijo ralado'
+  'Batata Maluca G': 'Porção grande de batata + linguiça + calabresa + molhos + ketchup + queijo ralado',
+  'Combo 04': '3 x-tudos padrão + Batata Maluca + ovos de codorna + 6 anéis de cebola'
 };
 export function applyReviewedDescriptions(menu) {
   for (const section of menu) {
-    if (!['hamburgueres', 'porcoes'].includes(section.id)) continue;
+    if (!['hamburgueres', 'porcoes', 'combos'].includes(section.id)) continue;
     for (const item of section.items) {
       if (Object.hasOwn(reviewedDescriptions, item.name)) item.desc = reviewedDescriptions[item.name];
     }
@@ -25,6 +26,11 @@ export function applyReviewedPhotos(photos) {
   if (photos[oldId]) {
     photos['porcoes-batata-maluca-g'] = photos[oldId];
     delete photos[oldId];
+  }
+  const oldComboId = 'combos-combo-04';
+  if (photos[oldComboId]) {
+    photos['combos-combo-05'] = photos[oldComboId];
+    delete photos[oldComboId];
   }
   return photos;
 }

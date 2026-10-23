@@ -7,7 +7,7 @@ const photos = {
   'linha-cheddar-x-cheddar-05': 'cheddar-05.webp',
   'combos-combo-02': 'combo-02.webp',
   'combos-combo-03': 'combo-03.webp',
-  'combos-combo-04': 'combo-04.webp',
+  'combos-combo-05': 'combo-04.webp',
   'combos-combo-06': 'combo-06.webp',
   'combos-combo-07': 'combo-07.webp',
   'porcoes-batata-maluca-g': 'batata-maluca-p.webp',
@@ -19,7 +19,7 @@ const photos = {
 const names = {
   'artesanais-artesanal-02': 'Artesanal 02', 'artesanais-artesanal-04': 'Artesanal 04',
   'linha-cheddar-x-cheddar-03': 'X Cheddar 03', 'linha-cheddar-x-cheddar-05': 'X Cheddar 05',
-  'combos-combo-02': 'Combo 02', 'combos-combo-03': 'Combo 03', 'combos-combo-04': 'Combo 04', 'combos-combo-06': 'Combo 06',
+  'combos-combo-02': 'Combo 02', 'combos-combo-03': 'Combo 03', 'combos-combo-05': 'Combo 05', 'combos-combo-06': 'Combo 06',
   'hamburgueres-x-duplo': 'X Duplo', 'combos-combo-07': 'Combo 07',
   'porcoes-batata-maluca-g': 'Batata Maluca G', 'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'Batata Maluca G com Cheddar e Bacon',
   'hot-dogs-dogao-quente-salsicha': 'Dogão Quente Salsicha', 'hot-dogs-dogao-quente-linguica': 'Dogão Quente Linguiça',

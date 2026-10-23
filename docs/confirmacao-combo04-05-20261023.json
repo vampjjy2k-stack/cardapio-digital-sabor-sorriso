@@ -1,0 +1,28 @@
+{
+  "parent": "a0bbe7e6f6a80219b01b9c511cac5566949f72f5",
+  "status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+  "confirmation": {
+    "reported_by": "João Lucas",
+    "source": "Confirmação em áudio da Janei, conforme instrução desta tarefa",
+    "photo_mapping": "A foto antes associada ao Combo 04 pertence ao Combo 05; Combo 04 não tem foto."
+  },
+  "photo_change": {
+    "removed_item_id": "combos-combo-04",
+    "added_item_id": "combos-combo-05",
+    "asset": "public/img/produtos/combo-04.webp",
+    "combo_04_display": "Foto de exemplo não disponível",
+    "asset_bytes_changed": false
+  },
+  "combo_04_description": {
+    "before": "3 x-tudos padrão + batata palha + ovos de codorna + 6 anéis de cebola",
+    "after": "3 x-tudos padrão + Batata Maluca + ovos de codorna + 6 anéis de cebola",
+    "price_changed": false,
+    "uncertainty_pending_joao": "O trecho ‘6 anéis de cebola, ou 6 nuggets’ permanece sem decisão. A descrição publicada conserva ‘6 anéis de cebola’; não foi acrescentado ou removido ingrediente nessa parte."
+  },
+  "limits": [
+    "Nenhuma outra descrição, preço, opção, produto ou foto foi alterada.",
+    "Somente este novo candidato local é alterado; base e candidatos anteriores permanecem preservados.",
+    "Revisão de Cassandra e aprovação explícita de João para o SHA final continuam pendentes.",
+    "Sem push ou deploy."
+  ]
+}

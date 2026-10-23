@@ -1,4 +1,4 @@
-# Mapa público — fotos Athena FINAL
+# Mapa público — associações atuais de fotos para revisão
 
 ## Produtos
 
@@ -12,17 +12,17 @@
 | `linha-cheddar-x-cheddar-05` | `/img/produtos/cheddar-05.webp` |
 | `combos-combo-02` | `/img/produtos/combo-02.webp` |
 | `combos-combo-03` | `/img/produtos/combo-03.webp` |
-| `combos-combo-04` | `/img/produtos/combo-04.webp` |
+| `combos-combo-05` | `/img/produtos/combo-04.webp` |
 | `combos-combo-06` | `/img/produtos/combo-06.webp` |
 
-Os dez arquivos são WebP RGBA com fundo removido; o RGB visível vem das fontes autorizadas, com a única exceção do retoque localizado de câmera no Combo 04. Artesanal 03 tem duas fotos no mesmo ID para galeria.
+Os dez arquivos são WebP RGBA com fundo removido; o RGB visível vem das fontes autorizadas, com a única exceção do retoque localizado de câmera no arquivo `combo-04.webp`. Artesanal 03 tem duas fotos no mesmo ID para galeria. A associação de `combo-04.webp` ao Combo 05 segue a confirmação em áudio da Janei; a entrada antiga do manifesto de proveniência é histórica, não a associação exibida neste candidato.
 
 ## Autorização e ressalvas — revisão da Cassandra pendente
 
 - **Artesanal 04 — `foto-003` / `artesanal-04.webp`:** há duas unidades visíveis, uma inteira à esquerda e outra cortada à direita. A fonte mostra luvas pretas em contato com os pães. No derivado, a maior parte das luvas ficou fora do recorte; permanece um pequeno resíduo escuro/cinza junto ao topo do pão da unidade cortada à direita, no ponto de contato da luva. Não se trata de uma luva inteira visível sobre o pão no recorte. A associação permanece com essa ressalva; a foto não confirma que o SKU vendido inclua duas unidades.
-- **Combo 04 — `foto-013` / `combo-04.webp`:** marca de câmera “moto g31” removida por autorização direta do dono. Retoque restrito à borda inferior da bandeja, no retângulo `[104, 942, 238, 963)`; alpha e pixels fora da região idênticos ao derivado anterior. A legenda direta “Combo 04” sustenta a associação, sem alterar a composição vendida.
+- **Combo 05 — `combo-04.webp`:** arquivo originalmente atribuído ao Combo 04 e retocado apenas para remover a marca de câmera “moto g31”, conforme autorização registrada. O retoque permanece restrito à borda inferior da bandeja, no retângulo `[104, 942, 238, 963)`; alpha e pixels fora da região são preservados. A confirmação posterior em áudio da Janei supersede a atribuição anterior: a imagem pertence ao Combo 05, e Combo 04 não tem foto.
 
-Artesanal 04 permanece byte a byte inalterado, sem reconstrução do pão. Combo 04 contém somente o retoque autorizado acima; o manifesto registra a proveniência. Ambas ficam no candidato. Cassandra revisará o novo SHA e a prévia; João deve aprovar explicitamente o SHA final antes de qualquer publicação. Sem push ou deploy.
+Artesanal 04 permanece byte a byte inalterado, sem reconstrução do pão. Combo 04 recebe apenas o aviso genérico de foto indisponível; a foto acima aparece somente no Combo 05. O manifesto de proveniência histórica não foi reescrito. Cassandra revisará o novo SHA e a prévia; João deve aprovar explicitamente o SHA final antes de qualquer publicação. Sem push ou deploy.
 
 ## Bebidas mantidas
 

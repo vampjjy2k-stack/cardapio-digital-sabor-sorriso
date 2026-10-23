@@ -14,7 +14,7 @@ function menu(source) {
   return JSON.parse(vm.runInNewContext(`${data}; JSON.stringify(MENU)`));
 }
 
-test('delta preserva os itens originais exceto as 12 descrições autorizadas', () => {
+test('delta preserva os itens originais exceto as 13 descrições autorizadas', () => {
   const expected = menu(base);
   for (const section of expected) {
     for (const item of section.items) {

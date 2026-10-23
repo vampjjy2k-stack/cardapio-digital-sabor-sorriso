@@ -260,7 +260,7 @@ test('mapa preserva fotos reais antigas, novas e placeholders rotulados sem asso
     'linha-cheddar-x-cheddar-05': 'img/produtos/cheddar-05.webp',
     'combos-combo-02': 'img/produtos/combo-02.webp',
     'combos-combo-03': 'img/produtos/combo-03.webp',
-    'combos-combo-04': 'img/produtos/combo-04.webp',
+    'combos-combo-05': 'img/produtos/combo-04.webp',
     'combos-combo-06': 'img/produtos/combo-06.webp',
     'hamburgueres-x-duplo': 'img/produtos/x-duplo.webp',
     'combos-combo-07': 'img/produtos/combo-07.webp',

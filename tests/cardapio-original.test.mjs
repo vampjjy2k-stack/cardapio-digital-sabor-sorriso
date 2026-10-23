@@ -18,9 +18,9 @@ function data(source) {
 const baseline = data(original);
 const candidate = data(current);
 
-test('somente nove descrições respaldadas mudam; nomes, preços, opções e categorias ficam iguais à produção', () => {
+test('somente dez descrições respaldadas mudam; nomes, preços, opções e categorias ficam iguais à produção', () => {
   assert.deepEqual(candidate.MENU, applyReviewedDescriptions(structuredClone(baseline.MENU)));
-  assert.equal(Object.keys(reviewedDescriptions).length, 9);
+  assert.equal(Object.keys(reviewedDescriptions).length, 10);
   assert.equal(candidate.MENU.flatMap(s => s.items).length, 71);
 });
 
@@ -44,11 +44,13 @@ test('Frango, Cheddars, X-Picanhas e H2OH preservam todos os dados confirmados',
   assert.deepEqual(frango, baseline.MENU.flatMap(s => s.items).find(i => i.name === 'Frango Fresh'));
 });
 
-test('única mudança de foto é P para G, com mesma imagem e aviso genérico na P', () => {
+test('mudanças de foto limitam-se às correções Janei P→G e Combo 04→05, com avisos genéricos onde falta foto', () => {
   assert.deepEqual(candidate.ITEM_PHOTOS, applyReviewedPhotos(structuredClone(baseline.ITEM_PHOTOS)));
   assert.deepEqual(candidate.ITEM_PHOTO_SETS, baseline.ITEM_PHOTO_SETS);
   assert.equal(candidate.ITEM_PHOTOS['porcoes-batata-maluca-p'], undefined);
   assert.equal(candidate.ITEM_PHOTOS['porcoes-batata-maluca-g'], 'img/produtos/batata-maluca-p.webp');
+  assert.equal(candidate.ITEM_PHOTOS['combos-combo-04'], undefined);
+  assert.equal(candidate.ITEM_PHOTOS['combos-combo-05'], 'img/produtos/combo-04.webp');
   const manifest = JSON.parse(readFileSync(new URL('docs/fotos-produtos/associacoes-confirmadas-20261022.json', root)));
   const potato = manifest.records.find(r => r.asset.endsWith('/batata-maluca-p.webp'));
   assert.deepEqual(potato.item_ids, ['porcoes-batata-maluca-g']);
@@ -67,6 +69,7 @@ test('todos os assets e o manifesto histórico continuam byte a byte iguais à b
 
 test('destaques são exatamente os oito combos originais em sequência, sem perder os cinco artesanais', () => {
   assert.deepEqual(candidate.FEATURED_IDS, Array.from({ length: 8 }, (_, i) => `combos-combo-0${i + 1}`));
-  assert.deepEqual(candidate.MENU.find(s => s.id === 'combos'), baseline.MENU.find(s => s.id === 'combos'));
+  const expected = applyReviewedDescriptions(structuredClone(baseline.MENU));
+  assert.deepEqual(candidate.MENU.find(s => s.id === 'combos'), expected.find(s => s.id === 'combos'));
   assert.equal(candidate.MENU.find(s => s.id === 'combos').items.length, 13);
 });
