@@ -31,7 +31,7 @@ for (const width of [320, 360, 390]) {
     const p04 = page.locator('#linha-picanha [data-card]').filter({ hasText: 'X Picanha 04' });
     await expect(p04.locator('.card__desc')).toHaveText('pão brioche + hambúrguer de picanha 120 gramas + queijo + presunto + bacon + tomate + alface + molhos + ketchup');
     await expect(p04.locator('.card__desc')).not.toContainText(/bimbo/i);
-    await expect(page.locator('#linha-picanha .photo-unavailable')).toHaveCount(3);
+    await expect(page.locator('#linha-picanha .photo-unavailable')).toHaveCount(0);
     for (const id of ['01', '02', '03', '04']) await page.locator(`[data-add="linha-picanha-x-picanha-${id}"]`).click();
     await page.locator('#cart-toggle').click();
     await expect(page.locator('.cart-line')).toHaveCount(5);

@@ -46,12 +46,12 @@ for (const width of [320, 390, 430]) {
   }
 }
 
-test('batata P sem foto, G com a foto confirmada e demais associações preservadas', async ({ page }) => {
+test('batata P com ilustração, G com a foto confirmada e demais associações preservadas', async ({ page }) => {
   await openApp(page);
   const p = product(page, 'Batata Maluca P');
   const g = product(page, 'Batata Maluca G');
-  await expect(p.locator('img')).toHaveCount(0);
-  await expect(p.locator('.photo-unavailable')).toHaveText('Foto de exemplo não disponível');
+  await expect(p.locator('img')).toHaveAttribute('src', 'img/ilustracoes/catalogo/porcoes-batata-maluca-p.webp');
+  await expect(p.locator('.photo-disclaimer')).toHaveText('Imagem ilustrativa');
   await expect(g.locator('img')).toHaveAttribute('src', 'img/produtos/batata-maluca-p.webp');
   await expect(g.locator('img')).toHaveAttribute('alt', 'Foto de Batata Maluca G');
   await expect(p.locator('[data-price]')).toHaveText('R$ 16,00');

@@ -32,7 +32,11 @@ test('catálogo renderiza fotos reais mapeadas e placeholder rotulado nos itens 
   for (const [id, asset] of Object.entries(photos)) {
     const card = page.locator('[data-card]').filter({ has: page.getByRole('heading', { name: names[id], exact: true }) }).first();
     await expect(card).toHaveCount(1);
-    await expect(card.locator('img')).toHaveAttribute('src', `img/produtos/${asset}`);
+    await expect(card.locator(`img[src="img/produtos/${asset}"]`)).toHaveCount(1);
+    if (id === 'combos-combo-05') {
+      await expect(card.locator('img[src="img/ilustracoes/catalogo/combos-combo-05.webp"]')).toHaveCount(1);
+      await expect(card.locator('.photo-disclaimer')).toHaveText('Imagem ilustrativa');
+    }
   }
   const duplo = page.locator('[data-card]').filter({ has: page.getByRole('heading', { name: 'X Duplo', exact: true }) });
   await expect(duplo.locator('img')).toHaveCount(0);

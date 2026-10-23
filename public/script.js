@@ -90,18 +90,63 @@ const ITEM_PHOTO_SETS = {
 // X Duplo: foto escura e já muito fechada na origem; encaixe não recupera o produto.
 const PHOTO_PRESENTATION_PLACEHOLDERS = new Set(['hamburgueres-x-duplo']);
 
-// Ilustrações autorizadas: não são fotos do produto nem confirmam receitas/volumes.
-// Manter separadas de ITEM_PHOTOS e dar prioridade às fotos próprias confirmadas.
+// Ilustrações próprias do pacote: cada ativo aparece uma única vez no mapa; variantes têm chave própria.
 const ILLUSTRATIVE_PHOTOS = {
-  sections: {
-    acai: 'img/ilustracoes/acai-generico.webp',
-    vitaminas: 'img/ilustracoes/vitamina-generica.webp'
-  },
   items: {
-    'artesanais-artesanal-01': 'img/ilustracoes/artesanal-generico.webp',
-    'artesanais-artesanal-05': 'img/ilustracoes/artesanal-generico.webp',
-    'artesanais-artesanal-06': 'img/ilustracoes/artesanal-generico.webp'
-  }
+    "hamburgueres-x-tudo": "img/ilustracoes/catalogo/hamburgueres-x-tudo.webp",
+    "hamburgueres-x-burguer": "img/ilustracoes/catalogo/hamburgueres-x-burguer.webp",
+    "hamburgueres-hamburguer": "img/ilustracoes/catalogo/hamburgueres-hamburguer.webp",
+    "hamburgueres-x-bacon": "img/ilustracoes/catalogo/hamburgueres-x-bacon.webp",
+    "hamburgueres-x-calabresa": "img/ilustracoes/catalogo/hamburgueres-x-calabresa.webp",
+    "hamburgueres-x-salada": "img/ilustracoes/catalogo/hamburgueres-x-salada.webp",
+    "linha-cheddar-x-cheddar-01": "img/ilustracoes/catalogo/linha-cheddar-x-cheddar-01.webp",
+    "linha-cheddar-x-cheddar-02": "img/ilustracoes/catalogo/linha-cheddar-x-cheddar-02.webp",
+    "linha-cheddar-x-cheddar-04": "img/ilustracoes/catalogo/linha-cheddar-x-cheddar-04.webp",
+    "linha-picanha-x-picanha-01": "img/ilustracoes/catalogo/linha-picanha-x-picanha-01.webp",
+    "linha-picanha-x-picanha-02": "img/ilustracoes/catalogo/linha-picanha-x-picanha-02.webp",
+    "linha-picanha-x-picanha-04": "img/ilustracoes/catalogo/linha-picanha-x-picanha-04.webp",
+    "artesanais-artesanal-01": "img/ilustracoes/catalogo/artesanais-artesanal-01.webp",
+    "artesanais-artesanal-05": "img/ilustracoes/catalogo/artesanais-artesanal-05.webp",
+    "artesanais-artesanal-06": "img/ilustracoes/catalogo/artesanais-artesanal-06.webp",
+    "combos-combo-01": "img/ilustracoes/catalogo/combos-combo-01.webp",
+    "combos-combo-05": "img/ilustracoes/catalogo/combos-combo-05.webp",
+    "combos-combo-08": "img/ilustracoes/catalogo/combos-combo-08.webp",
+    "combos-mini-01": "img/ilustracoes/catalogo/combos-mini-01.webp",
+    "combos-dupla-perfeita-02": "img/ilustracoes/catalogo/combos-dupla-perfeita-02.webp",
+    "combos-bomba-de-sabor-03": "img/ilustracoes/catalogo/combos-bomba-de-sabor-03.webp",
+    "combos-explosao-de-sabor-04": "img/ilustracoes/catalogo/combos-explosao-de-sabor-04.webp",
+    "combos-brutal-05": "img/ilustracoes/catalogo/combos-brutal-05.webp",
+    "hot-dogs-cachorro-quente-salsicha": "img/ilustracoes/catalogo/hot-dogs-cachorro-quente-salsicha.webp",
+    "hot-dogs-cachorro-quente-linguica": "img/ilustracoes/catalogo/hot-dogs-cachorro-quente-linguica.webp",
+    "porcoes-baguetao-mineiro": "img/ilustracoes/catalogo/porcoes-baguetao-mineiro.webp",
+    "porcoes-batata-maluca-p": "img/ilustracoes/catalogo/porcoes-batata-maluca-p.webp",
+    "porcoes-batata-maluca-p-com-cheddar-e-bacon": "img/ilustracoes/catalogo/porcoes-batata-maluca-p-com-cheddar-e-bacon.webp",
+    "pasteis-carne": "img/ilustracoes/catalogo/pasteis-carne.webp",
+    "pasteis-queijo-e-presunto": "img/ilustracoes/catalogo/pasteis-queijo-e-presunto.webp",
+    "pasteis-pizza": "img/ilustracoes/catalogo/pasteis-pizza.webp",
+    "pasteis-queijo-mussarela": "img/ilustracoes/catalogo/pasteis-queijo-mussarela.webp",
+    "pasteis-carne-com-cheddar": "img/ilustracoes/catalogo/pasteis-carne-com-cheddar.webp",
+    "acai-200-ml": "img/ilustracoes/catalogo/acai-200-ml.webp",
+    "acai-250-ml": "img/ilustracoes/catalogo/acai-250-ml.webp",
+    "acai-300-ml": "img/ilustracoes/catalogo/acai-300-ml.webp",
+    "acai-400-ml": "img/ilustracoes/catalogo/acai-400-ml.webp",
+    "acai-500-ml": "img/ilustracoes/catalogo/acai-500-ml.webp",
+    "acai-790-ml": "img/ilustracoes/catalogo/acai-790-ml.webp",
+    "sucos-maracuja-copo-500ml": "img/ilustracoes/catalogo/sucos-maracuja-copo-500ml.webp",
+    "sucos-acerola-copo-500ml": "img/ilustracoes/catalogo/sucos-acerola-copo-500ml.webp"
+},
+  variants: {
+    "vitaminas-morango-ao-leite:option:0": "img/ilustracoes/catalogo/vitaminas-morango-ao-leite-copo-300ml.webp",
+    "vitaminas-morango-ao-leite:option:1": "img/ilustracoes/catalogo/vitaminas-morango-ao-leite-copo-500ml.webp",
+    "vitaminas-cupuacu-ao-leite:option:0": "img/ilustracoes/catalogo/vitaminas-cupuacu-ao-leite-copo-300ml.webp",
+    "vitaminas-cupuacu-ao-leite:option:1": "img/ilustracoes/catalogo/vitaminas-cupuacu-ao-leite-copo-500ml.webp",
+    "vitaminas-maracuja-ao-leite:option:0": "img/ilustracoes/catalogo/vitaminas-maracuja-ao-leite-copo-300ml.webp",
+    "vitaminas-maracuja-ao-leite:option:1": "img/ilustracoes/catalogo/vitaminas-maracuja-ao-leite-copo-500ml.webp",
+    "vitaminas-graviola-ao-leite:option:0": "img/ilustracoes/catalogo/vitaminas-graviola-ao-leite-copo-300ml.webp",
+    "vitaminas-graviola-ao-leite:option:1": "img/ilustracoes/catalogo/vitaminas-graviola-ao-leite-copo-500ml.webp",
+    "bebidas-fanta-2l:flavor:Uva": "img/ilustracoes/catalogo/bebidas-fanta-2l-uva.webp",
+    "bebidas-fanta-2l:flavor:Laranja": "img/ilustracoes/catalogo/bebidas-fanta-2l-laranja.webp"
+}
 };
 
 const DRINK_ICON = { '2L': 'garrafa2l', '600ML': 'garrafa600', 'Lata': 'lata' };
@@ -162,7 +207,7 @@ const MENU = [
       p('Combo 01', 25, 'X-tudo + batata + guaraná natural'),
       p('Combo 02', 48, '2 x-bacon + batata maluca + 2 anéis de cebola + 2 nuggets + 2 guaraná natural'),
       p('Combo 03', 65, '3 x-burguer + batata + 6 anéis de cebola + 6 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
-      p('Combo 04', 73, '3 x-tudos padrão + Batata Maluca + ovos de codorna + 6 anéis de cebola'),
+      p('Combo 04', 73, '3 X-Tudo podrão + 1 Batata Maluca + ovos de codorna + 6 nuggets'),
       p('Combo 05', 78, '4 x-calabresa + batata maluca + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
       p('Combo 06', 113, '6 x-tudo + batata + 6 anéis de cebola + 6 nuggets + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
       p('Combo 07', 128, '5 x-tudos padrão + batata maluca + 5 anéis de cebola + 5 nuggets + ovos de codorna + 1 refrigerante pakera ou kuat guaraná de 2 litros'),
@@ -325,16 +370,26 @@ function placeholderHTML(section) {
 function realPhotoHTML(src, alt, icon, size) {
   return `<img src="${esc(src)}" alt="${esc(alt)}" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`;
 }
-function illustrativePhotoHTML(section, item, size = 80) {
-  const src = ILLUSTRATIVE_PHOTOS.items[item?.id] || ILLUSTRATIVE_PHOTOS.sections[section.id];
+function illustrativePhotoHTML(section, item, size = 80, srcOverride = null, variantLabel = '') {
+  const src = srcOverride || ILLUSTRATIVE_PHOTOS.items[item?.id];
   if (!src) return placeholderHTML(section);
-  const alt = `Imagem ilustrativa de ${section.title} — exemplo genérico; não representa sabor, ingredientes ou tamanho específicos`;
+  const subject = item?.name || section.title;
+  const variant = variantLabel ? ` — ${variantLabel}` : '';
+  const alt = `Imagem ilustrativa de ${subject}${variant} — exemplo genérico; não representa sabor, ingredientes ou tamanho específicos`;
   return `<span class="photo-illustrative">${realPhotoHTML(src, alt, section.icon, size)}<small class="photo-disclaimer">Imagem ilustrativa</small></span>`;
+}
+function illustrativeVariantPhotoHTML(variant, section, size = 80) {
+  const item = ITEM_INDEX.get(variant?.id)?.item;
+  const key = variant?.id === FANTA_2L_ID
+    ? `${variant.id}:flavor:${variant.flavor}`
+    : variant?.opt != null ? `${variant.id}:option:${variant.opt}` : null;
+  const src = (key && ILLUSTRATIVE_PHOTOS.variants[key]) || ILLUSTRATIVE_PHOTOS.items[variant?.id];
+  return illustrativePhotoHTML(section, item, size, src, variant ? beverageLabel(variant) : '');
 }
 function beverageThumbHTML(variant, section) {
   const item = ITEM_INDEX.get(variant.id)?.item;
   const src = item && ITEM_PHOTOS[item.id];
-  return src ? realPhotoHTML(src, 'Foto de ' + item.name + ' — ' + variant.pack, section.icon, 80) : illustrativePhotoHTML(section, item);
+  return src ? realPhotoHTML(src, 'Foto de ' + item.name + ' — ' + variant.pack, section.icon, 80) : illustrativeVariantPhotoHTML(variant, section);
 }
 function groupDimensions(group){ return {flavors:[...new Set(group.variants.map(v=>v.flavor).filter(Boolean))],packs:[...new Set(group.variants.map(v=>v.pack).filter(Boolean))]}; }
 function groupVariant(group,flavor,pack){ return group.variants.find(v=>(!flavor||v.flavor===flavor)&&(!pack||v.pack===pack))||null; }
@@ -345,7 +400,7 @@ function updateProductPhoto() {
   const photo = $('#product-photo');
   if (!photo) return;
   const section = MENU.find(section => section.id === productGroup.section);
-  photo.innerHTML = productVariant ? beverageThumbHTML(productVariant, section) : illustrativePhotoHTML(section);
+  photo.innerHTML = beverageThumbHTML(productVariant || productGroup.variants[0], section);
 }
 function resolveProductVariant(){ if(!productGroup)return null; const {flavors,packs}=groupDimensions(productGroup), flavor=flavors.length>1?$('#product-options input[name="product-flavor"]:checked')?.value:flavors[0]||'', pack=packs.length>1?$('#product-options input[name="product-pack"]:checked')?.value:packs[0]||''; if(flavors.length>1&&!flavor||packs.length>1&&!pack)return null; return groupVariant(productGroup,flavor,pack); }
 function refreshDimensionPrices() {
@@ -437,6 +492,11 @@ function thumbHTML(item, section, size = 104) {
     return `<span class="photo-pair" role="group" aria-label="Duas fotos de ${esc(item.name)}, sem principal">${ITEM_PHOTO_SETS[item.id].map((src, index) => realPhotoHTML(src, 'Foto de ' + item.name + ' — imagem ' + (index + 1), icon, size)).join('')}</span>`;
   }
   const src = ITEM_PHOTOS[item.id];
+  const illustration = ILLUSTRATIVE_PHOTOS.items[item.id];
+  if (src && illustration) {
+    const half = Math.max(32, Math.floor(size / 2));
+    return `<span class="photo-compare" role="group" aria-label="Foto real e imagem ilustrativa de ${esc(item.name)}"><span class="photo-compare__entry">${realPhotoHTML(src, 'Foto confirmada de ' + item.name, icon, half)}<small class="photo-compare__label">Foto real</small></span><span class="photo-compare__entry photo-compare__entry--illustrative">${illustrativePhotoHTML(section, item, half, illustration)}</span></span>`;
+  }
   if (!src) return illustrativePhotoHTML(section, item, size);
   const alt = item.id?.startsWith('hot-dogs-dogao-')
     ? 'Foto genérica de Dogão Quente — proteína não identificada na imagem'

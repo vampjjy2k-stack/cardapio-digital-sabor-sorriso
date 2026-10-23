@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 for (const width of [320, 360, 390, 430, 1440]) {
   for (const theme of ['light', 'dark']) {
-    test(`fotos inteiras, área responsiva e botão separado: ${width}px ${theme}`, async ({ page }) => {
+    test(`fotos inteiras, moldura quadrada e botão separado: ${width}px ${theme}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 844 });
       await page.route('**/api/status', r => r.fulfill({ json: { status: 'open' } }));
       await page.route('https://fonts.googleapis.com/**', r => r.fulfill({ body: '', contentType: 'text/css' }));
@@ -19,9 +19,7 @@ for (const width of [320, 360, 390, 430, 1440]) {
           const thumb = holder.querySelector('.card__thumb');
           const t = thumb.getBoundingClientRect();
           const button = holder.querySelector('.add-btn').getBoundingClientRect();
-          const pair = !!thumb.querySelector('.photo-pair');
-          const expectedRatio = pair ? 1 : 4 / 5;
-          if (Math.abs(t.width / t.height - expectedRatio) > 0.02) errors.push('proporção da área');
+          if (Math.abs(t.width / t.height - 1) > 0.02) errors.push('proporção da moldura');
           if (t.width < 108 || t.width > 149) errors.push('largura responsiva');
           if (button.top < t.bottom + 7 || button.width < 44 || button.height < 44) errors.push('botão cobre foto/área de toque');
           for (const img of thumb.querySelectorAll('img')) {

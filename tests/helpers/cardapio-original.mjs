@@ -10,7 +10,7 @@ export const reviewedDescriptions = {
   'X Duplo': 'Pão + 2 carnes + 2 ovos + 2 bacon + 2 calabresas + 2 queijos + 2 presuntos + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha',
   'Batata Maluca P': 'Batata + linguiça + calabresa + molhos + ketchup + queijo ralado',
   'Batata Maluca G': 'Porção grande de batata + linguiça + calabresa + molhos + ketchup + queijo ralado',
-  'Combo 04': '3 x-tudos padrão + Batata Maluca + ovos de codorna + 6 anéis de cebola'
+  'Combo 04': '3 X-Tudo podrão + 1 Batata Maluca + ovos de codorna + 6 nuggets'
 };
 export function applyReviewedDescriptions(menu) {
   for (const section of menu) {

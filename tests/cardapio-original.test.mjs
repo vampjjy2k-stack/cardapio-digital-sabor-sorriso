@@ -24,6 +24,12 @@ test('somente dez descrições respaldadas mudam; nomes, preços, opções e cat
   assert.equal(candidate.MENU.flatMap(s => s.items).length, 71);
 });
 
+test('Combo 04 usa a resposta final de Janei sem alterar o preço confirmado', () => {
+  const combo = candidate.MENU.find(section => section.id === 'combos').items.find(item => item.name === 'Combo 04');
+  assert.equal(combo.desc, '3 X-Tudo podrão + 1 Batata Maluca + ovos de codorna + 6 nuggets');
+  assert.equal(combo.price, 73);
+});
+
 test('X Tudo recupera ovo, bacon, calabresa e complementos; X Salada segue a receita legível sem ovo', () => {
   const items = candidate.MENU.find(s => s.id === 'hamburgueres').items;
   const tudo = items.find(i => i.name === 'X Tudo');

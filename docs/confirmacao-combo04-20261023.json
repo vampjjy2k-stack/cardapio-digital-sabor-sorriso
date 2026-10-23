@@ -1,0 +1,23 @@
+{
+  "parent": "9bb0cca5e3727f0426405956cd345b2fb3054a47",
+  "status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+  "confirmation_source": "Atualização do dono, registrada em 23/10/2026.",
+  "combo_04": {
+    "description": "3 X-Tudo podrão + 1 Batata Maluca + ovos de codorna + 6 nuggets",
+    "change": "substitui 6 anéis de cebola por 6 nuggets; preserva 3 X-Tudo podrão e 1 Batata Maluca",
+    "price": 73,
+    "price_changed": false,
+    "photo": null
+  },
+  "combo_05": {
+    "photo_asset": "public/img/produtos/combo-04.webp",
+    "illustration_asset": "public/img/ilustracoes/catalogo/combos-combo-05.webp",
+    "real_photo_preserved": true,
+    "illustration_disclaimer": "Imagem ilustrativa"
+  },
+  "constraints": [
+    "Nenhum preço antigo inserido ou preço alterado.",
+    "A foto real permanece somente no Combo 05.",
+    "Sem push, deploy ou publicação."
+  ]
+}

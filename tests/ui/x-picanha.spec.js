@@ -14,15 +14,18 @@ for (const width of [320, 390, 1440]) {
     await expect(page.locator('#store-status')).toContainText('Aberto');
     const section = page.locator('#linha-picanha');
     await expect(section.locator('[data-card]')).toHaveCount(4);
-    await expect(section.locator('img')).toHaveCount(1);
-    const photo = section.locator('img');
+    await expect(section.locator('img')).toHaveCount(4);
+    await expect(section.locator('img[src="img/ilustracoes/catalogo/linha-picanha-x-picanha-01.webp"]')).toHaveCount(1);
+    await expect(section.locator('img[src="img/ilustracoes/catalogo/linha-picanha-x-picanha-02.webp"]')).toHaveCount(1);
+    await expect(section.locator('img[src="img/ilustracoes/catalogo/linha-picanha-x-picanha-04.webp"]')).toHaveCount(1);
+    const photo = section.locator('img[src="img/produtos/picanha-03.webp"]');
     await expect(photo).toHaveAttribute('src', 'img/produtos/picanha-03.webp');
     await photo.scrollIntoViewIfNeeded();
     await expect(photo).toHaveJSProperty('complete', true);
     expect(await photo.evaluate(img => img.naturalWidth)).toBe(540);
     await expect(section.locator('[data-card]').filter({ has: page.locator('[data-add="linha-picanha-x-picanha-03"]') }).locator('img')).toHaveCount(1);
-    await expect(section.locator('.photo-unavailable')).toHaveCount(3);
-    await expect(section.locator('.thumb-emoji')).toHaveCount(3);
+    await expect(section.locator('.photo-unavailable')).toHaveCount(0);
+    await expect(section.locator('.thumb-emoji')).toHaveCount(0);
     const prices = [19, 23, 36, 21];
     for (const [index, price] of prices.entries()) {
       const name = `X Picanha 0${index + 1}`;

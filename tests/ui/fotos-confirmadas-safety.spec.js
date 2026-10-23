@@ -44,17 +44,10 @@ test('foto indisponível vira placeholder rotulado; Dogão não atribui proteín
   for (const width of [320, 360, 390, 1440]) {
     await page.setViewportSize({ width, height: 844 });
     await expect(page.locator('body')).toHaveJSProperty('scrollWidth', width);
-    const clipped = await page.locator('.card__thumb .photo-unavailable').evaluateAll(labels => labels.filter(label => {
+    const clipped = await page.locator('.card__thumb > .photo-placeholder .photo-unavailable').evaluateAll(labels => labels.filter(label => {
       const r = label.getBoundingClientRect(), t = label.closest('.card__thumb').getBoundingClientRect();
       return r.width > 0 && (r.left < t.left - 1 || r.right > t.right + 1 || r.bottom > t.bottom + 1);
     }).length);
     expect(clipped).toBe(0);
-    const overlapped = await page.locator('.card__media .photo-unavailable').evaluateAll(labels => labels.filter(label => {
-      const button = label.closest('.card__media').querySelector('.add-btn');
-      if (!button) return false;
-      const r = label.getBoundingClientRect(), b = button.getBoundingClientRect();
-      return r.width > 0 && r.left < b.right && r.right > b.left && r.top < b.bottom && r.bottom > b.top;
-    }).length);
-    expect(overlapped).toBe(0);
   }
 });

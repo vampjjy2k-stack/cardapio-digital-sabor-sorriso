@@ -344,7 +344,7 @@ h1, h2, h3, p { margin: 0; }
 .card__media { position: relative; width: 104px; }
 .card__thumb {
   width: 104px; height: 104px;
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; aspect-ratio: 1 / 1;
   background: var(--thumb-bg); border-radius: 14px; padding: 6px;
 }
 .card__thumb img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -1052,10 +1052,10 @@ body.product-open { overflow: hidden; }
 }
 .card__media:has(img) { width: 100%; display: grid; gap: 8px; }
 .card__media:has(img) .card__thumb {
-  width: 100%; height: auto; aspect-ratio: 4 / 5;
+  width: 100%; height: auto; aspect-ratio: 1 / 1;
   padding: 8px; background: var(--thumb-bg);
 }
-.card__media:has(img) .card__thumb img {
+.card__media:has(img) .card__thumb > img {
   display: block; width: 100%; height: 100%; min-width: 0; min-height: 0;
   object-fit: contain; object-position: center;
 }
@@ -1074,10 +1074,29 @@ body.product-open { overflow: hidden; }
   display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center;
   gap: 4px; width: 100%; height: 100%; min-width: 0; min-height: 0;
 }
+.photo-illustrative img {
+  display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
+  aspect-ratio: 1 / 1; object-fit: contain; object-position: center;
+}
 .photo-disclaimer {
   display: block; max-width: 100%; color: var(--card-ink); text-align: center;
   font-size: .6875rem; line-height: 1.25; font-weight: 600; overflow-wrap: normal;
 }
+.photo-compare {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center;
+  gap: 4px; width: 100%; height: 100%; min-width: 0;
+}
+.photo-compare__entry {
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center;
+  align-items: center; gap: 2px; min-width: 0; text-align: center;
+}
+.photo-compare__entry > img,
+.photo-compare__entry--illustrative .photo-illustrative img {
+  width: 100%; height: auto; max-height: 60px; aspect-ratio: 1 / 1; object-fit: contain;
+}
+.photo-compare__entry--illustrative .photo-illustrative { height: auto; }
+.photo-compare__entry--illustrative .photo-disclaimer,
+.photo-compare__label { font-size: .5rem; line-height: 1.1; font-weight: 700; }
 .card--compact .card__thumb:has(.photo-illustrative) { height: auto; min-height: 88px; }
 .card--compact .photo-illustrative img { width: 100%; height: auto; aspect-ratio: 1 / 1; }
 .card--compact:has(> .card__thumb .photo-illustrative) { grid-template-columns: 80px minmax(0, 1fr) auto; }

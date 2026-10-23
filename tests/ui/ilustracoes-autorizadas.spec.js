@@ -37,9 +37,11 @@ for (const width of [320, 390, 430]) for (const theme of ['dark', 'light']) {
     await expect(page.locator('#acai .photo-disclaimer')).toHaveCount(6);
     await expect(page.locator('#vitaminas .photo-disclaimer')).toHaveCount(1);
     await expect(page.locator('#artesanais .photo-disclaimer')).toHaveCount(3);
+    const acaiSources = await page.locator('#acai .photo-disclaimer').evaluateAll(labels => labels.map(label => label.closest('.photo-illustrative').querySelector('img').getAttribute('src')));
+    expect(new Set(acaiSources).size).toBe(6);
     for (const n of [1, 5, 6]) {
-      await expect(artisan(page, n).locator('img')).toHaveAttribute('src', 'img/ilustracoes/artesanal-generico.webp');
-      await expect(artisan(page, n).locator('img')).toHaveAttribute('alt', /^Imagem ilustrativa de Artesanais — exemplo genérico;/);
+      await expect(artisan(page, n).locator('img')).toHaveAttribute('src', `img/ilustracoes/catalogo/artesanais-artesanal-0${n}.webp`);
+      await expect(artisan(page, n).locator('img')).toHaveAttribute('alt', new RegExp(`^Imagem ilustrativa de Artesanal 0${n} — exemplo genérico;`));
     }
     for (const n of [2, 3, 4]) {
       await expect(artisan(page, n).locator('.photo-disclaimer')).toHaveCount(0);
@@ -54,17 +56,23 @@ for (const width of [320, 390, 430]) for (const theme of ['dark', 'light']) {
   });
 }
 
-test('todas as vitaminas usam o mesmo exemplo genérico antes/depois da seleção, preservam preço e carrinho', async ({ page }) => {
+test('vitaminas usam a ilustração própria de cada sabor e tamanho, preservam preço e carrinho', async ({ page }) => {
   await openApp(page);
   await page.locator('[data-open-beverage="vitaminas"]').click();
   const photo = page.locator('#product-photo');
   await expect(photo.locator('.photo-disclaimer')).toHaveText('Imagem ilustrativa');
+  const assets = {
+    'Morango ao Leite': ['vitaminas-morango-ao-leite-copo-300ml.webp', 'vitaminas-morango-ao-leite-copo-500ml.webp'],
+    'Cupuaçu ao Leite': ['vitaminas-cupuacu-ao-leite-copo-300ml.webp', 'vitaminas-cupuacu-ao-leite-copo-500ml.webp'],
+    'Maracujá ao Leite': ['vitaminas-maracuja-ao-leite-copo-300ml.webp', 'vitaminas-maracuja-ao-leite-copo-500ml.webp'],
+    'Graviola ao Leite': ['vitaminas-graviola-ao-leite-copo-300ml.webp', 'vitaminas-graviola-ao-leite-copo-500ml.webp']
+  };
   for (const [flavor, prices] of [['Morango ao Leite', [10, 13]], ['Cupuaçu ao Leite', [10, 13]], ['Maracujá ao Leite', [12, 15]], ['Graviola ao Leite', [10, 13]]]) {
     await page.locator(`input[name="product-flavor"][value="${flavor}"]`).check();
     for (const [index, pack] of ['Copo 300ML', 'Copo 500ML'].entries()) {
       await page.locator(`input[name="product-pack"][value="${pack}"]`).check();
-      await expect(photo.locator('img')).toHaveAttribute('src', 'img/ilustracoes/vitamina-generica.webp');
-      await expect(photo.locator('img')).toHaveAttribute('alt', 'Imagem ilustrativa de Vitaminas — exemplo genérico; não representa sabor, ingredientes ou tamanho específicos');
+      await expect(photo.locator('img')).toHaveAttribute('src', `img/ilustracoes/catalogo/${assets[flavor][index]}`);
+      await expect(photo.locator('img')).toHaveAttribute('alt', new RegExp(`^Imagem ilustrativa de ${flavor} — ${flavor} · ${pack} — exemplo genérico;`));
       await expect(photo.locator('.photo-disclaimer')).toHaveText('Imagem ilustrativa');
       await expect(page.locator('#product-add')).toContainText(`R$ ${prices[index]},00`);
     }
@@ -79,7 +87,20 @@ test('todas as vitaminas usam o mesmo exemplo genérico antes/depois da seleçã
   await expect(page.locator('#cart-subtotal')).toHaveText('R$ 13,00');
   await page.locator('.cart-line [data-action="edit"]').click();
   await expect(photo.locator('.photo-disclaimer')).toHaveText('Imagem ilustrativa');
-  await expect(photo.locator('img')).toHaveAttribute('src', 'img/ilustracoes/vitamina-generica.webp');
+  await expect(photo.locator('img')).toHaveAttribute('src', 'img/ilustracoes/catalogo/vitaminas-graviola-ao-leite-copo-500ml.webp');
+});
+
+test('Fanta PET 2 L usa uma ilustração distinta por sabor', async ({ page }) => {
+  await openApp(page);
+  await page.locator('[data-open-beverage="fanta"]').click();
+  const expected = { Uva: 'bebidas-fanta-2l-uva.webp', Laranja: 'bebidas-fanta-2l-laranja.webp' };
+  for (const flavor of ['Uva', 'Laranja']) {
+    await page.locator(`input[name="product-flavor"][value="${flavor}"]`).check();
+    await page.locator('input[name="product-pack"][value="PET 2 L"]').check();
+    await expect(page.locator('#product-photo .photo-disclaimer')).toHaveText('Imagem ilustrativa');
+    await expect(page.locator('#product-photo img')).toHaveAttribute('src', `img/ilustracoes/catalogo/${expected[flavor]}`);
+    await expect(page.locator('#product-photo img')).toHaveAttribute('alt', new RegExp(`^Imagem ilustrativa de Fanta — ${flavor} · PET 2 L — exemplo genérico;`));
+  }
 });
 
 test('falha da imagem ilustrativa mantém aviso e oferece fallback sem afetar fotos reais', async ({ page }) => {

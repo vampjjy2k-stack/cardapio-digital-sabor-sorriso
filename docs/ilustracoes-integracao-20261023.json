@@ -1,0 +1,914 @@
+{
+  "title": "Integração local das ilustrações do cardápio",
+  "status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+  "candidate_parent": "9bb0cca5e3727f0426405956cd345b2fb3054a47",
+  "source_catalog_base": "a0bbe7e6f6a80219b01b9c511cac5566949f72f5",
+  "source_checkout_head": "9bb0cca5e3727f0426405956cd345b2fb3054a47",
+  "source_package_zip": "/workspace/sabor-cardapio-imagens-avaliacao-20261023/sabor-imagens-webp-640.zip",
+  "source_package_zip_sha256": "39b18d79c546ab4ef98a8567a61e9dea62a65501507718c73b6771324b0f1d95",
+  "source_manifest_in_candidate": "docs/ilustracoes-pacote-20261023.json",
+  "source_manifest_sha256": "1cbcabb135d050c7148d30c66a9112a904914d46ed4096efea172298829ce5da",
+  "asset_count": 51,
+  "distinct_assets": 51,
+  "reuse": false,
+  "display_rule": "Fotos reais com correspondência confirmada continuam prioritárias. Quando um ativo ilustrativo do manifesto também pertence ao mesmo item com foto real confirmada, os dois aparecem lado a lado e o segundo recebe o selo Imagem ilustrativa.",
+  "records": [
+    {
+      "item_id": "hamburgueres-x-tudo",
+      "section": "Hambúrgueres",
+      "item_name": "X Tudo",
+      "source_webp": "webp-640/hamburgueres-x-tudo.webp",
+      "app_asset": "img/ilustracoes/catalogo/hamburgueres-x-tudo.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 91306,
+      "sha256": "c7ac740bc4f87b63e8573d761a4ee3c34fc7d1354a6d744e427a760d011d78fb",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "hamburgueres-x-burguer",
+      "section": "Hambúrgueres",
+      "item_name": "X Burguer",
+      "source_webp": "webp-640/hamburgueres-x-burguer.webp",
+      "app_asset": "img/ilustracoes/catalogo/hamburgueres-x-burguer.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 66974,
+      "sha256": "9a199a61610ee1a31dd548b8eeff06c0bb0d450113a39b168e515226ccabce6d",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "hamburgueres-hamburguer",
+      "section": "Hambúrgueres",
+      "item_name": "Hambúrguer",
+      "source_webp": "webp-640/hamburgueres-hamburguer.webp",
+      "app_asset": "img/ilustracoes/catalogo/hamburgueres-hamburguer.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 73394,
+      "sha256": "0c98a0ed6d2d182f638d1613315d160bd833604e75e15399fb327a2172699662",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "hamburgueres-x-bacon",
+      "section": "Hambúrgueres",
+      "item_name": "X Bacon",
+      "source_webp": "webp-640/hamburgueres-x-bacon.webp",
+      "app_asset": "img/ilustracoes/catalogo/hamburgueres-x-bacon.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 72162,
+      "sha256": "20e9fc7fc795d5a4b4ebbbd477b907e55fe8a736b129e8e8cafac75958d41ff3",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "hamburgueres-x-calabresa",
+      "section": "Hambúrgueres",
+      "item_name": "X Calabresa",
+      "source_webp": "webp-640/hamburgueres-x-calabresa.webp",
+      "app_asset": "img/ilustracoes/catalogo/hamburgueres-x-calabresa.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 79888,
+      "sha256": "e1ff0e76565611321dca4da8be00e1fdbb38e019a2ffce15502ba554a9c7c2a1",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "hamburgueres-x-salada",
+      "section": "Hambúrgueres",
+      "item_name": "X Salada",
+      "source_webp": "webp-640/hamburgueres-x-salada.webp",
+      "app_asset": "img/ilustracoes/catalogo/hamburgueres-x-salada.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 71886,
+      "sha256": "e306db00c13d2c2447b5fa74f7f7b822ecbd1989e8b3d42cb90be96d2455a9f2",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "linha-cheddar-x-cheddar-01",
+      "section": "Linha Cheddar",
+      "item_name": "X Cheddar 01",
+      "source_webp": "webp-640/linha-cheddar-x-cheddar-01.webp",
+      "app_asset": "img/ilustracoes/catalogo/linha-cheddar-x-cheddar-01.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 68158,
+      "sha256": "7ddf78c4d88292a59a47b04d771899a9cbad67389aa077e58afb47fb7eef6530",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "linha-cheddar-x-cheddar-02",
+      "section": "Linha Cheddar",
+      "item_name": "X Cheddar 02",
+      "source_webp": "webp-640/linha-cheddar-x-cheddar-02.webp",
+      "app_asset": "img/ilustracoes/catalogo/linha-cheddar-x-cheddar-02.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 67874,
+      "sha256": "9ae5c00cf6119c646b940f8771383ae33ee0559b1a8435c8e9e9c22416e732c2",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "linha-cheddar-x-cheddar-04",
+      "section": "Linha Cheddar",
+      "item_name": "X Cheddar 04",
+      "source_webp": "webp-640/linha-cheddar-x-cheddar-04.webp",
+      "app_asset": "img/ilustracoes/catalogo/linha-cheddar-x-cheddar-04.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 88656,
+      "sha256": "6860e44d5d127b5897dfd0c9dcf34365b790997fd458e7a9e0f4f12590726357",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "linha-picanha-x-picanha-01",
+      "section": "Linha Picanha",
+      "item_name": "X Picanha 01",
+      "source_webp": "webp-640/linha-picanha-x-picanha-01.webp",
+      "app_asset": "img/ilustracoes/catalogo/linha-picanha-x-picanha-01.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 74308,
+      "sha256": "ea1235ae14ccad2bd28246ae7427a3a221239b889d8e82e1321fddabe4b39d75",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "linha-picanha-x-picanha-02",
+      "section": "Linha Picanha",
+      "item_name": "X Picanha 02",
+      "source_webp": "webp-640/linha-picanha-x-picanha-02.webp",
+      "app_asset": "img/ilustracoes/catalogo/linha-picanha-x-picanha-02.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 91628,
+      "sha256": "003e909e04356cf64717a42d8d883e1d70a0fb070b2902c651a959bc4425fe56",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "linha-picanha-x-picanha-04",
+      "section": "Linha Picanha",
+      "item_name": "X Picanha 04",
+      "source_webp": "webp-640/linha-picanha-x-picanha-04.webp",
+      "app_asset": "img/ilustracoes/catalogo/linha-picanha-x-picanha-04.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 74150,
+      "sha256": "7a61f3ff5edc4f3f50833e1fe429eafb45166fc08a47e136a52be229a19291e2",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "artesanais-artesanal-01",
+      "section": "Artesanais",
+      "item_name": "Artesanal 01",
+      "source_webp": "webp-640/artesanais-artesanal-01.webp",
+      "app_asset": "img/ilustracoes/catalogo/artesanais-artesanal-01.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 83024,
+      "sha256": "6c499b0890e3a42e3dc1a716602d68c02984c19b86f041c759b155d7ae791781",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "artesanais-artesanal-05",
+      "section": "Artesanais",
+      "item_name": "Artesanal 05",
+      "source_webp": "webp-640/artesanais-artesanal-05.webp",
+      "app_asset": "img/ilustracoes/catalogo/artesanais-artesanal-05.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 81850,
+      "sha256": "08d21a4b52f5d3af5d3bd81aeacabe303078030406246e730f70806644e9c26b",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "artesanais-artesanal-06",
+      "section": "Artesanais",
+      "item_name": "Artesanal 06",
+      "source_webp": "webp-640/artesanais-artesanal-06.webp",
+      "app_asset": "img/ilustracoes/catalogo/artesanais-artesanal-06.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 85282,
+      "sha256": "7e53ed45ce10b71a34ef86b2bb7c93c04ff78957e8b2727c667d9145cbd04fed",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-combo-01",
+      "section": "Combos",
+      "item_name": "Combo 01",
+      "source_webp": "webp-640/combos-combo-01.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-combo-01.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 85304,
+      "sha256": "3dee2c3ec036a4dc3a42402b098695da9c6ea26b3904c90352610d9cc9e27569",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-combo-05",
+      "section": "Combos",
+      "item_name": "Combo 05",
+      "source_webp": "webp-640/combos-combo-05.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-combo-05.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 95196,
+      "sha256": "7e3442a61766bc88c95db515e135a8ae13e9476a84291abea449ed50de51e335",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-combo-08",
+      "section": "Combos",
+      "item_name": "Combo 08",
+      "source_webp": "webp-640/combos-combo-08.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-combo-08.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 114664,
+      "sha256": "5ac8917b6c082d4b4374c3b2fb1e6133eee3e7ee019a535a0343e31e0091c75b",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-mini-01",
+      "section": "Combos",
+      "item_name": "Mini 01",
+      "source_webp": "webp-640/combos-mini-01.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-mini-01.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 66582,
+      "sha256": "328c9475d465eac04ea4ae5baa6b3380bd4d144887644025c625cf3575da083c",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-dupla-perfeita-02",
+      "section": "Combos",
+      "item_name": "Dupla Perfeita 02",
+      "source_webp": "webp-640/combos-dupla-perfeita-02.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-dupla-perfeita-02.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 77884,
+      "sha256": "29cc05ac2a6ee69cdf53b3d5d9687e49727297588c53789a3ddb6dbf21345413",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-bomba-de-sabor-03",
+      "section": "Combos",
+      "item_name": "Bomba de Sabor 03",
+      "source_webp": "webp-640/combos-bomba-de-sabor-03.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-bomba-de-sabor-03.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 97714,
+      "sha256": "57891c2c45e65e529cacaf484c8c069cf88bef77a03e3b1dbd0576a864ed7dba",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-explosao-de-sabor-04",
+      "section": "Combos",
+      "item_name": "Explosão de Sabor 04",
+      "source_webp": "webp-640/combos-explosao-de-sabor-04.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-explosao-de-sabor-04.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 101622,
+      "sha256": "d26957dfc4cf63a348349641ef3b9417222ccd9c3d1f476c38cd5bf8f514dd59",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "combos-brutal-05",
+      "section": "Combos",
+      "item_name": "Brutal 05",
+      "source_webp": "webp-640/combos-brutal-05.webp",
+      "app_asset": "img/ilustracoes/catalogo/combos-brutal-05.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 113830,
+      "sha256": "067e995fd15c00d406eddb7c2a124b5028bdddc4bb3729fa2138e972b8f41f8b",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "hot-dogs-cachorro-quente-salsicha",
+      "section": "Hot Dogs",
+      "item_name": "Cachorro Quente Salsicha",
+      "source_webp": "webp-640/hot-dogs-cachorro-quente-salsicha.webp",
+      "app_asset": "img/ilustracoes/catalogo/hot-dogs-cachorro-quente-salsicha.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 65358,
+      "sha256": "095d6b57facb744b3f283efe71d67acc403bc8694b703c98b536fb7abc9bf6a4",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "hot-dogs-cachorro-quente-linguica",
+      "section": "Hot Dogs",
+      "item_name": "Cachorro Quente Linguiça",
+      "source_webp": "webp-640/hot-dogs-cachorro-quente-linguica.webp",
+      "app_asset": "img/ilustracoes/catalogo/hot-dogs-cachorro-quente-linguica.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 77446,
+      "sha256": "6fd9c9a21de3a44d14653f4fc5be6715cd132f444648771bd3eb3192ad51cc0c",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "porcoes-baguetao-mineiro",
+      "section": "Porções",
+      "item_name": "Baguetão Mineiro",
+      "source_webp": "webp-640/porcoes-baguetao-mineiro.webp",
+      "app_asset": "img/ilustracoes/catalogo/porcoes-baguetao-mineiro.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 98436,
+      "sha256": "1512e9876765ff264c1e54e1e0138281ce5a236cf7ad7bae582228bcfc62d78a",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "porcoes-batata-maluca-p",
+      "section": "Porções",
+      "item_name": "Batata Maluca P",
+      "source_webp": "webp-640/porcoes-batata-maluca-p.webp",
+      "app_asset": "img/ilustracoes/catalogo/porcoes-batata-maluca-p.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 92392,
+      "sha256": "3507b14b7d30c3531de2f423c718d79390a1e84d43772eee11f64679c7742afd",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "porcoes-batata-maluca-p-com-cheddar-e-bacon",
+      "section": "Porções",
+      "item_name": "Batata Maluca P com Cheddar e Bacon",
+      "source_webp": "webp-640/porcoes-batata-maluca-p-com-cheddar-e-bacon.webp",
+      "app_asset": "img/ilustracoes/catalogo/porcoes-batata-maluca-p-com-cheddar-e-bacon.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 56454,
+      "sha256": "0e491e54265a46a91fe398523436ddee37a5b14f0aadc296eb984adaa022364c",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "pasteis-carne",
+      "section": "Pastéis",
+      "item_name": "Pastel de Carne",
+      "source_webp": "webp-640/pasteis-carne.webp",
+      "app_asset": "img/ilustracoes/catalogo/pasteis-carne.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 96330,
+      "sha256": "cad03532642cdf8a5164836bce3f33019cfe9b552919dd4828b07002d357af24",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "pasteis-queijo-e-presunto",
+      "section": "Pastéis",
+      "item_name": "Pastel de Queijo e Presunto",
+      "source_webp": "webp-640/pasteis-queijo-e-presunto.webp",
+      "app_asset": "img/ilustracoes/catalogo/pasteis-queijo-e-presunto.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 64418,
+      "sha256": "844a66cd35445172be852552bb00621743ffcd8216d8b128dee89d91b86b449a",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "pasteis-pizza",
+      "section": "Pastéis",
+      "item_name": "Pastel de Pizza",
+      "source_webp": "webp-640/pasteis-pizza.webp",
+      "app_asset": "img/ilustracoes/catalogo/pasteis-pizza.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 73346,
+      "sha256": "eb79560a841b34d0482bf7701bdb6c4234507d33c6e405665e7d60f104e76129",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "pasteis-queijo-mussarela",
+      "section": "Pastéis",
+      "item_name": "Pastel de Queijo Mussarela",
+      "source_webp": "webp-640/pasteis-queijo-mussarela.webp",
+      "app_asset": "img/ilustracoes/catalogo/pasteis-queijo-mussarela.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 76266,
+      "sha256": "2e79d0866c8e314e046ecce30b64a3ba38d26e5d0e47b1351ec57758b5e4b979",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "pasteis-carne-com-cheddar",
+      "section": "Pastéis",
+      "item_name": "Pastel de Carne com Cheddar",
+      "source_webp": "webp-640/pasteis-carne-com-cheddar.webp",
+      "app_asset": "img/ilustracoes/catalogo/pasteis-carne-com-cheddar.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 94514,
+      "sha256": "571a5db520d14f5846ae5d9d397308ba32268059f84cfe5c5a8382bcd671651c",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "acai-200-ml",
+      "section": "Açaí",
+      "item_name": "Açaí",
+      "source_webp": "webp-640/acai-200-ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/acai-200-ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 76964,
+      "sha256": "b97ab1df2caf948a06c75cb338622871b54cfba82a3a3efc0bad8c2bacabfc9e",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "acai-250-ml",
+      "section": "Açaí",
+      "item_name": "Açaí",
+      "source_webp": "webp-640/acai-250-ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/acai-250-ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 66182,
+      "sha256": "d0ad6ea3a380f8f0fdac3e6d96f78af710c710368a7b7af8e804db698ac974f6",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "acai-300-ml",
+      "section": "Açaí",
+      "item_name": "Açaí",
+      "source_webp": "webp-640/acai-300-ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/acai-300-ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 77508,
+      "sha256": "66f4ba02bbf2f91c0400a3ab6876f365028f91d8948b8175dfddb29274add3d8",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "acai-400-ml",
+      "section": "Açaí",
+      "item_name": "Açaí",
+      "source_webp": "webp-640/acai-400-ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/acai-400-ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 80124,
+      "sha256": "8a6ac2cd443f2fc9aad73ad5b32ea4f83fd2748a2f8030d02285d5f3a8b2126b",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "acai-500-ml",
+      "section": "Açaí",
+      "item_name": "Açaí",
+      "source_webp": "webp-640/acai-500-ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/acai-500-ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 70516,
+      "sha256": "bba264aab82ce03a27beb6844c2c5737777d037ded9f3b8f1890e2f7b31020d0",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "acai-790-ml",
+      "section": "Açaí",
+      "item_name": "Açaí",
+      "source_webp": "webp-640/acai-790-ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/acai-790-ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 76854,
+      "sha256": "95cb10eaf896c81c0e56d52a64ffa4401dd8b66c751095b212352ed07102e0d3",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "vitaminas-morango-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Morango ao Leite",
+      "source_webp": "webp-640/vitaminas-morango-ao-leite-copo-300ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-morango-ao-leite-copo-300ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 55022,
+      "sha256": "4bf3212799f2df15c35b8ffd2256809406b18e6399976d097acdfa00569b3c7c",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-morango-ao-leite:option:0"
+    },
+    {
+      "item_id": "vitaminas-morango-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Morango ao Leite",
+      "source_webp": "webp-640/vitaminas-morango-ao-leite-copo-500ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-morango-ao-leite-copo-500ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 54302,
+      "sha256": "8fc48ac9a8654afeff0c44047f6740e27e435d1e7f1594dbdd4d501e8aed9797",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-morango-ao-leite:option:1"
+    },
+    {
+      "item_id": "vitaminas-cupuacu-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Cupuaçu ao Leite",
+      "source_webp": "webp-640/vitaminas-cupuacu-ao-leite-copo-300ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-cupuacu-ao-leite-copo-300ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 39454,
+      "sha256": "c171f4835d8daab611e9404bfbd2ff81da9f2a99fbb77aee7d13f22c3bcf11d0",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-cupuacu-ao-leite:option:0"
+    },
+    {
+      "item_id": "vitaminas-cupuacu-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Cupuaçu ao Leite",
+      "source_webp": "webp-640/vitaminas-cupuacu-ao-leite-copo-500ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-cupuacu-ao-leite-copo-500ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 52084,
+      "sha256": "556787ee5a3c1f7c7580fdda03d04d107df75e950935236e165965d2eeaa515e",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-cupuacu-ao-leite:option:1"
+    },
+    {
+      "item_id": "vitaminas-maracuja-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Maracujá ao Leite",
+      "source_webp": "webp-640/vitaminas-maracuja-ao-leite-copo-300ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-maracuja-ao-leite-copo-300ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 55296,
+      "sha256": "e25a8e8f40c21b8565e2d10d7712bafcfde94c29fabb712b36dd20edf733591a",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-maracuja-ao-leite:option:0"
+    },
+    {
+      "item_id": "vitaminas-maracuja-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Maracujá ao Leite",
+      "source_webp": "webp-640/vitaminas-maracuja-ao-leite-copo-500ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-maracuja-ao-leite-copo-500ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 58786,
+      "sha256": "73e1797f5e2e441e9d3d36ca9a474f7722f4224bf17bd2ce56ec67905dd775a1",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-maracuja-ao-leite:option:1"
+    },
+    {
+      "item_id": "vitaminas-graviola-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Graviola ao Leite",
+      "source_webp": "webp-640/vitaminas-graviola-ao-leite-copo-300ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-graviola-ao-leite-copo-300ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 38936,
+      "sha256": "2a4bfbef4367550aba2403d6faf96d0b91449afb4b5cccaf741244533f479ef6",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-graviola-ao-leite:option:0"
+    },
+    {
+      "item_id": "vitaminas-graviola-ao-leite",
+      "section": "Vitaminas",
+      "item_name": "Vitamina de Graviola ao Leite",
+      "source_webp": "webp-640/vitaminas-graviola-ao-leite-copo-500ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/vitaminas-graviola-ao-leite-copo-500ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 49746,
+      "sha256": "d37e5e6c8d989faf5cadb7fbb6323fdf668993a71a9c275303544c3011d3eba8",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "vitaminas-graviola-ao-leite:option:1"
+    },
+    {
+      "item_id": "sucos-maracuja-copo-500ml",
+      "section": "Sucos Naturais",
+      "item_name": "Suco de Maracujá",
+      "source_webp": "webp-640/sucos-maracuja-copo-500ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/sucos-maracuja-copo-500ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 52126,
+      "sha256": "a489f3aa249c3257ad65a1c498b082182060dc5b4678ecf7edeecb9ac782619d",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "sucos-acerola-copo-500ml",
+      "section": "Sucos Naturais",
+      "item_name": "Suco de Acerola",
+      "source_webp": "webp-640/sucos-acerola-copo-500ml.webp",
+      "app_asset": "img/ilustracoes/catalogo/sucos-acerola-copo-500ml.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 61354,
+      "sha256": "d6d191072f73b06b07c64dfa52c3d3b0d69dfc6f36318b4ef051a1c218208220",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": null
+    },
+    {
+      "item_id": "bebidas-fanta-2l",
+      "section": "Bebidas",
+      "item_name": "Fanta 2 L",
+      "source_webp": "webp-640/bebidas-fanta-2l-uva.webp",
+      "app_asset": "img/ilustracoes/catalogo/bebidas-fanta-2l-uva.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 29934,
+      "sha256": "71c8e3380c864b2066ae7975f56bb3e805cc29954e47be0b5381b39f1ec302de",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "bebidas-fanta-2l:flavor:Uva"
+    },
+    {
+      "item_id": "bebidas-fanta-2l",
+      "section": "Bebidas",
+      "item_name": "Fanta 2 L",
+      "source_webp": "webp-640/bebidas-fanta-2l-laranja.webp",
+      "app_asset": "img/ilustracoes/catalogo/bebidas-fanta-2l-laranja.webp",
+      "format": "WebP",
+      "dimensions_px": [
+        640,
+        640
+      ],
+      "bytes": 20208,
+      "sha256": "992312b585a6443d4af9fb2635ecd0d9150e08bf1d4047361e57a9ecb1f21951",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_real_size": false,
+      "variant_key": "bebidas-fanta-2l:flavor:Laranja"
+    }
+  ],
+  "exceptions_and_review_notes": [
+    {
+      "item_id": "combos-combo-05",
+      "issue": "O manifesto contém uma ilustração própria para Combo 05, cuja foto real foi confirmada para esse mesmo combo pela Janei no checkout revisado.",
+      "handling": "A foto real img/produtos/combo-04.webp permanece intacta e mapeada somente ao Combo 05; a ilustração exclusiva combos-combo-05.webp aparece ao lado, com selo visível Imagem ilustrativa. Combo 04 continua sem foto."
+    },
+    {
+      "item_id": "hamburgueres-x-duplo",
+      "issue": "X Duplo está excluído do pacote de 51; o README/manifeste diz foto real confirmada, mas os registros históricos de associação o marcam como pendente e o checkout atual mostra placeholder.",
+      "handling": "Não foi associada uma ilustração nem uma foto nova por inferência; o placeholder atual foi preservado. Revisão documental necessária."
+    },
+    {
+      "item_id": "linha-picanha-x-picanha-03",
+      "issue": "O pacote não inclui ilustração X Picanha 03; contém somente 01, 02 e 04.",
+      "handling": "A foto real confirmada de X Picanha 03 foi preservada; sem substituição ou duplicação."
+    }
+  ],
+  "combo_04_confirmation": {
+    "description": "3 X-Tudo podrão + 1 Batata Maluca + ovos de codorna + 6 nuggets",
+    "price_before_and_after": 73,
+    "price_changed": false,
+    "photo": "none; the real photo remains mapped only to Combo 05"
+  },
+  "constraints": [
+    "Nenhum preço foi alterado.",
+    "Fotos reais de correspondência segura foram preservadas.",
+    "Todos os 51 WebPs do ZIP foram verificados contra SHA-256 e tamanho do manifesto.",
+    "Cada arquivo ilustrativo tem caminho único, associação literal do manifesto e selo Imagem ilustrativa.",
+    "Sem push, deploy ou publicação."
+  ]
+}

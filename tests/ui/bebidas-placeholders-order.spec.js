@@ -27,11 +27,13 @@ async function placeholder(root) {
 
 test('placeholder rotulado permanece em variantes sem foto antes e depois da seleção', async ({ page }) => {
   await openApp(page);
-  await expect(page.locator('#sucos img')).toHaveCount(0);
-  await expect(page.locator('#vitaminas img')).toHaveAttribute('src', 'img/ilustracoes/vitamina-generica.webp');
+  await expect(page.locator('#sucos img')).toHaveCount(1);
+  await expect(page.locator('#sucos .photo-disclaimer')).toHaveText('Imagem ilustrativa');
+  await expect(page.locator('#vitaminas img')).toHaveAttribute('src', 'img/ilustracoes/catalogo/vitaminas-morango-ao-leite-copo-300ml.webp');
   await expect(page.locator('#vitaminas .photo-disclaimer')).toHaveText('Imagem ilustrativa');
   const coca = await product(page, 'coca-cola');
-  await placeholder(coca);
+  await expect(coca.locator('#product-photo img')).toHaveAttribute('src', 'img/coca-cola-lata.png');
+  await expect(coca.locator('#product-photo img')).toHaveAttribute('alt', 'Foto de Coca Cola — Lata 350 ml');
   for (const pack of ['Lata 350 ml', 'PET 600 ml', 'PET 2 L']) {
     await choose(page, 'coca-cola', null, pack);
     await expect(coca.locator('#product-photo img')).toHaveCount(1);
@@ -42,7 +44,10 @@ test('placeholder rotulado permanece em variantes sem foto antes e depois da sel
   const fanta = await product(page, 'fanta');
   for (const [flavor, pack] of [['Uva', 'Lata 350 ml'], ['Laranja', 'Lata 350 ml'], ['Uva', 'PET 2 L']]) {
     await choose(page, 'fanta', flavor, pack);
-    if (pack === 'PET 2 L') await placeholder(fanta);
+    if (pack === 'PET 2 L') {
+      await expect(fanta.locator('#product-photo img')).toHaveAttribute('src', `img/ilustracoes/catalogo/bebidas-fanta-2l-${flavor.toLowerCase()}.webp`);
+      await expect(fanta.locator('#product-photo .photo-disclaimer')).toHaveText('Imagem ilustrativa');
+    }
     else await expect(fanta.locator('#product-photo img')).toHaveAttribute('src', `img/fanta-${flavor.toLowerCase()}-350ml.png`);
   }
   await page.locator('#product-close').click();
