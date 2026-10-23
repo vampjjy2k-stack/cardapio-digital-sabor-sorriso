@@ -1,0 +1,57 @@
+{
+  "parent": "e49f8264a2355126c288203b2cd6be8bddd41beb",
+  "status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
+  "authorization": "João autorizou as imagens ilustrativas fornecidas com aviso explícito; não há aprovação presumida do pai ou deste SHA.",
+  "limits": [
+    "Exemplo visual genérico: não confirma sabor, ingrediente, cobertura, receita, embalagem ou volume.",
+    "Vitaminas reutilizam a mesma imagem genérica em todos os sabores/tamanhos e no modal.",
+    "Fotos reais confirmadas mantêm precedência e não recebem aviso ilustrativo.",
+    "Fontes originais permanecem fora do Git e não são sobrescritas."
+  ],
+  "records": [
+    {
+      "source_path": "/workspace/sabor-assets-ia-avaliacao-20261023/acai-ilustrativo-ia.png",
+      "source_sha256": "5e2ad8efbc1017259c1dd01a9d44a192bc0ebcf4da378ac3193c25d658b2b736",
+      "asset": "img/ilustracoes/acai-generico.webp",
+      "output_sha256": "bad4d05665fb71bccc6fd7e239bcf2e999164ca78f02288f058bcf1c55fe9581",
+      "transformation": "PNG -> WebP 640x640, qualidade 85, sem recorte",
+      "scope": {
+        "section_ids": [
+          "acai"
+        ]
+      },
+      "disclaimer": "Imagem ilustrativa",
+      "confirms_recipe_or_flavor": false
+    },
+    {
+      "source_path": "/workspace/sabor-assets-ia-avaliacao-20261023/vitamina-ilustrativa-ia.png",
+      "source_sha256": "a357bc9d0553daa12546ef4f5a33873e6086ffb18babe990f7add25ec4048d08",
+      "asset": "img/ilustracoes/vitamina-generica.webp",
+      "output_sha256": "5b848a7f37ec46af9f7a22904dec1d0c730b789c0b67bb5cbd3bcda8eb5b9f9d",
+      "transformation": "PNG -> WebP 640x640, qualidade 85, sem recorte",
+      "scope": {
+        "section_ids": [
+          "vitaminas"
+        ]
+      },
+      "disclaimer": "Imagem ilustrativa",
+      "confirms_recipe_or_flavor": false
+    },
+    {
+      "source_path": "/workspace/sabor-original/public/img/cheeseburger.webp",
+      "source_sha256": "7f0a684e90b68ee4bd4c7f0d5ea65a2f25b8e95927746c0a88fc08f03bdc5657",
+      "asset": "img/ilustracoes/artesanal-generico.webp",
+      "output_sha256": "7f0a684e90b68ee4bd4c7f0d5ea65a2f25b8e95927746c0a88fc08f03bdc5657",
+      "transformation": "Cópia byte a byte do cheeseburger.webp autorizado",
+      "scope": {
+        "item_ids": [
+          "artesanais-artesanal-01",
+          "artesanais-artesanal-05",
+          "artesanais-artesanal-06"
+        ]
+      },
+      "disclaimer": "Imagem ilustrativa",
+      "confirms_recipe_or_flavor": false
+    }
+  ]
+}

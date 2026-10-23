@@ -27,7 +27,9 @@ async function placeholder(root) {
 
 test('placeholder rotulado permanece em variantes sem foto antes e depois da seleção', async ({ page }) => {
   await openApp(page);
-  await expect(page.locator('#sucos img, #vitaminas img')).toHaveCount(0);
+  await expect(page.locator('#sucos img')).toHaveCount(0);
+  await expect(page.locator('#vitaminas img')).toHaveAttribute('src', 'img/ilustracoes/vitamina-generica.webp');
+  await expect(page.locator('#vitaminas .photo-disclaimer')).toHaveText('Imagem ilustrativa');
   const coca = await product(page, 'coca-cola');
   await placeholder(coca);
   for (const pack of ['Lata 350 ml', 'PET 600 ml', 'PET 2 L']) {

@@ -1068,3 +1068,20 @@ body.product-open { overflow: hidden; }
 .card__thumb:has(> img), .product-photo:has(> img) { background: var(--thumb-bg); }
 .card--compact .card__thumb > img, .product-photo > img,
 .product-option__thumb > img { object-position: center; }
+
+/* Ilustrações: aviso em texto fora da imagem, sem tratar exemplo como foto real. */
+.photo-illustrative {
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center;
+  gap: 4px; width: 100%; height: 100%; min-width: 0; min-height: 0;
+}
+.photo-disclaimer {
+  display: block; max-width: 100%; color: var(--card-ink); text-align: center;
+  font-size: .6875rem; line-height: 1.25; font-weight: 600; overflow-wrap: normal;
+}
+.card--compact .card__thumb:has(.photo-illustrative) { height: auto; min-height: 88px; }
+.card--compact .photo-illustrative img { width: 100%; height: auto; aspect-ratio: 1 / 1; }
+.card--compact:has(> .card__thumb .photo-illustrative) { grid-template-columns: 80px minmax(0, 1fr) auto; }
+.card--compact > .card__thumb:has(.photo-illustrative) { width: 80px; }
+.card--beverage .card__thumb:has(.photo-illustrative) { min-height: 104px; }
+.product-photo .photo-illustrative img { height: 104px; width: auto; max-width: 100%; }
+.product-photo .photo-disclaimer { font-size: .75rem; }

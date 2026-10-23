@@ -90,6 +90,20 @@ const ITEM_PHOTO_SETS = {
 // X Duplo: foto escura e já muito fechada na origem; encaixe não recupera o produto.
 const PHOTO_PRESENTATION_PLACEHOLDERS = new Set(['hamburgueres-x-duplo']);
 
+// Ilustrações autorizadas: não são fotos do produto nem confirmam receitas/volumes.
+// Manter separadas de ITEM_PHOTOS e dar prioridade às fotos próprias confirmadas.
+const ILLUSTRATIVE_PHOTOS = {
+  sections: {
+    acai: 'img/ilustracoes/acai-generico.webp',
+    vitaminas: 'img/ilustracoes/vitamina-generica.webp'
+  },
+  items: {
+    'artesanais-artesanal-01': 'img/ilustracoes/artesanal-generico.webp',
+    'artesanais-artesanal-05': 'img/ilustracoes/artesanal-generico.webp',
+    'artesanais-artesanal-06': 'img/ilustracoes/artesanal-generico.webp'
+  }
+};
+
 const DRINK_ICON = { '2L': 'garrafa2l', '600ML': 'garrafa600', 'Lata': 'lata' };
 
 /* =========================================================
@@ -311,10 +325,16 @@ function placeholderHTML(section) {
 function realPhotoHTML(src, alt, icon, size) {
   return `<img src="${esc(src)}" alt="${esc(alt)}" width="${size}" height="${size}" loading="lazy" decoding="async" data-fallback="${icon}">`;
 }
+function illustrativePhotoHTML(section, item, size = 80) {
+  const src = ILLUSTRATIVE_PHOTOS.items[item?.id] || ILLUSTRATIVE_PHOTOS.sections[section.id];
+  if (!src) return placeholderHTML(section);
+  const alt = `Imagem ilustrativa de ${section.title} — exemplo genérico; não representa sabor, ingredientes ou tamanho específicos`;
+  return `<span class="photo-illustrative">${realPhotoHTML(src, alt, section.icon, size)}<small class="photo-disclaimer">Imagem ilustrativa</small></span>`;
+}
 function beverageThumbHTML(variant, section) {
   const item = ITEM_INDEX.get(variant.id)?.item;
   const src = item && ITEM_PHOTOS[item.id];
-  return src ? realPhotoHTML(src, 'Foto de ' + item.name + ' — ' + variant.pack, section.icon, 80) : placeholderHTML(section);
+  return src ? realPhotoHTML(src, 'Foto de ' + item.name + ' — ' + variant.pack, section.icon, 80) : illustrativePhotoHTML(section, item);
 }
 function groupDimensions(group){ return {flavors:[...new Set(group.variants.map(v=>v.flavor).filter(Boolean))],packs:[...new Set(group.variants.map(v=>v.pack).filter(Boolean))]}; }
 function groupVariant(group,flavor,pack){ return group.variants.find(v=>(!flavor||v.flavor===flavor)&&(!pack||v.pack===pack))||null; }
@@ -325,7 +345,7 @@ function updateProductPhoto() {
   const photo = $('#product-photo');
   if (!photo) return;
   const section = MENU.find(section => section.id === productGroup.section);
-  photo.innerHTML = productVariant ? beverageThumbHTML(productVariant, section) : placeholderHTML(section);
+  photo.innerHTML = productVariant ? beverageThumbHTML(productVariant, section) : illustrativePhotoHTML(section);
 }
 function resolveProductVariant(){ if(!productGroup)return null; const {flavors,packs}=groupDimensions(productGroup), flavor=flavors.length>1?$('#product-options input[name="product-flavor"]:checked')?.value:flavors[0]||'', pack=packs.length>1?$('#product-options input[name="product-pack"]:checked')?.value:packs[0]||''; if(flavors.length>1&&!flavor||packs.length>1&&!pack)return null; return groupVariant(productGroup,flavor,pack); }
 function refreshDimensionPrices() {
@@ -417,7 +437,7 @@ function thumbHTML(item, section, size = 104) {
     return `<span class="photo-pair" role="group" aria-label="Duas fotos de ${esc(item.name)}, sem principal">${ITEM_PHOTO_SETS[item.id].map((src, index) => realPhotoHTML(src, 'Foto de ' + item.name + ' — imagem ' + (index + 1), icon, size)).join('')}</span>`;
   }
   const src = ITEM_PHOTOS[item.id];
-  if (!src) return placeholderHTML(section);
+  if (!src) return illustrativePhotoHTML(section, item, size);
   const alt = item.id?.startsWith('hot-dogs-dogao-')
     ? 'Foto genérica de Dogão Quente — proteína não identificada na imagem'
     : 'Foto de ' + item.name + (item.id === 'bebidas-h2o-600ml' ? ' — 500 ml; Limão' : item.meta ? ' — ' + item.meta : '');
