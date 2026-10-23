@@ -90,7 +90,7 @@ test('oito derivados novos têm hashes, dimensões e proveniência separados do 
     assert.equal(hash(record.asset), record.derived_sha256);
     assert.deepEqual(record.derived_dimensions, record.source_dimensions);
     assert.equal(record.decoded_rgb_pixels_preserved, true);
-    assert.equal(record.derived_mode, 'RGB');
+    assert.equal(record.derived_mode, record.asset === 'public/img/h2oh-limao-500ml.webp' ? 'RGBA' : 'RGB');
     assert.match(record.source_sha256, /^[a-f0-9]{64}$/);
     if (record.item_ids.some(id => /picanha/.test(id))) {
       assert.deepEqual(record.item_ids, ['linha-picanha-x-picanha-03']);
@@ -105,4 +105,12 @@ test('oito derivados novos têm hashes, dimensões e proveniência separados do 
   const h2oh = incremental.records.find(record => record.source_filename === '1000026854.jpg');
   assert.deepEqual(h2oh.item_ids, ['bebidas-h2o-600ml']);
   assert.equal(h2oh.source_sha256, '253bdec418bc3b0f770ecf0130e7a171f94569ad5b4abcd5f628add22fb06c7a');
+  assert.equal(h2oh.derived_sha256, 'b1c8da102b45536095e1bfada1dc7dfabce15248e11857fa56f2ef008072b097');
+  assert.deepEqual(h2oh.derived_dimensions, [507, 600]);
+  const alpha = h2oh.alpha_edit_provenance;
+  assert.equal(alpha.before_asset_sha256, '5184e83ecd188a78d4d1810adfd032d3ab79459d018df7f79e77f90b668842b1');
+  assert.equal(alpha.before_commit, '72952cc919e251dca977b9d9809863fd91678951');
+  assert.equal(alpha.decoded_rgb_sha256, '18c318b2c9033a13c1eec4706d908124a5e9ee69f6b2dde7946e524418dc024e');
+  assert.equal(alpha.only_external_background_alpha_changed, true);
+  assert.deepEqual([alpha.transparent_pixels, alpha.opaque_pixels, alpha.intermediate_alpha_pixels], [233140, 66070, 4990]);
 });
