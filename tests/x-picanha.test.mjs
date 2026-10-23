@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import { execFileSync } from 'node:child_process';
+import { applyReviewedDescriptions, applyReviewedPhotos } from './helpers/cardapio-original.mjs';
 
 const root = new URL('..', import.meta.url);
 const currentScript = fs.readFileSync(new URL('../public/script.js', import.meta.url), 'utf8');
@@ -143,7 +144,9 @@ test('mantém itens do candidato de fotos, exceto adições Picanha e Frango Fre
   const current = currentRuntime();
   const base = baseRuntime();
   const withoutPicanha = api => plain(api.MENU.filter(section => section.id !== 'linha-picanha')).map(section => ({ ...section, items: section.items.filter(item => item.id !== 'hamburgueres-frango-fresh') }));
-  assert.deepEqual(withoutPicanha(current), withoutPicanha(base));
+  const expected = withoutPicanha(base);
+  applyReviewedDescriptions(expected);
+  assert.deepEqual(withoutPicanha(current), expected);
 });
 
 test('mantém fotos do candidato anterior, adiciona Frango Fresh e foto literal exclusiva de Picanha 03', () => {
@@ -152,7 +155,9 @@ test('mantém fotos do candidato anterior, adiciona Frango Fresh e foto literal 
   const photos = plain(current.ITEM_PHOTOS);
   delete photos['hamburgueres-frango-fresh'];
   delete photos['linha-picanha-x-picanha-03'];
-  assert.deepEqual(photos, plain(base.ITEM_PHOTOS));
+  const expectedPhotos = plain(base.ITEM_PHOTOS);
+  applyReviewedPhotos(expectedPhotos);
+  assert.deepEqual(photos, expectedPhotos);
   assert.deepEqual(plain(current.ITEM_PHOTO_SETS), plain(base.ITEM_PHOTO_SETS));
   assert.equal(current.ITEM_PHOTOS['linha-picanha-x-picanha-01'], undefined);
   assert.equal(current.ITEM_PHOTOS['linha-picanha-x-picanha-02'], undefined);
@@ -200,11 +205,14 @@ test('correção Picanha 03 preserva catálogo de bcab8ed exceto brioche autoriz
   const current = currentRuntime();
   const expected = plain(previous.MENU);
   expected.find(s => s.id === 'linha-picanha').items.find(i => i.name === 'X Picanha 04').desc = 'pão brioche + ' + expected.find(s => s.id === 'linha-picanha').items.find(i => i.name === 'X Picanha 04').desc;
+  applyReviewedDescriptions(expected);
   assert.deepEqual(plain(current.MENU), expected, 'apenas o prefixo brioche do 04 pode mudar; todos os preços, itens e demais receitas são preservados');
   const photos = plain(current.ITEM_PHOTOS);
   assert.equal(photos['linha-picanha-x-picanha-03'], 'img/produtos/picanha-03.webp');
   delete photos['linha-picanha-x-picanha-03'];
-  assert.deepEqual(photos, plain(previous.ITEM_PHOTOS));
+  const expectedPhotos = plain(previous.ITEM_PHOTOS);
+  applyReviewedPhotos(expectedPhotos);
+  assert.deepEqual(photos, expectedPhotos);
   assert.deepEqual(plain(current.ITEM_PHOTO_SETS), plain(previous.ITEM_PHOTO_SETS));
   const manifest = JSON.parse(fs.readFileSync(new URL('../docs/fotos-produtos/associacoes-confirmadas-20261022.json', import.meta.url), 'utf8'));
   const picanha = manifest.records.filter(r => r.item_ids.some(id => id.startsWith('linha-picanha-')));
@@ -220,7 +228,10 @@ test('delta do candidato 15c6189 limita-se ao brioche no X Picanha 04', () => {
   const expected = plain(previous.MENU);
   const item = expected.find(s => s.id === 'linha-picanha').items.find(i => i.id === 'linha-picanha-x-picanha-04');
   item.desc = 'pão brioche + ' + item.desc;
+  applyReviewedDescriptions(expected);
   assert.deepEqual(plain(current.MENU), expected);
-  assert.deepEqual(plain(current.ITEM_PHOTOS), plain(previous.ITEM_PHOTOS));
+  const expectedPhotos = plain(previous.ITEM_PHOTOS);
+  applyReviewedPhotos(expectedPhotos);
+  assert.deepEqual(plain(current.ITEM_PHOTOS), expectedPhotos);
   assert.deepEqual(plain(current.ITEM_PHOTO_SETS), plain(previous.ITEM_PHOTO_SETS));
 });

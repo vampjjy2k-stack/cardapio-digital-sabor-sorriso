@@ -12,8 +12,8 @@ test('confirmações mobile preservam complementos, proteínas, fotos reais e pl
   await page.goto('/index.html');
   const traditional = page.locator('#hamburgueres');
   for (const card of await traditional.locator('[data-card]').filter({ hasNot: page.locator('[data-add="hamburgueres-frango-fresh"]') }).all()) await expect(card).not.toContainText(/bimbo|bimbu/i);
-  await expect(traditional).toContainText('Pão + carne + queijo + maionese + ketchup');
-  await expect(traditional).toContainText('2 carnes + 2 queijos + presunto + tomate + alface + maionese + ketchup');
+  await expect(traditional).toContainText('Pão + carne + queijo + presunto + ovo + bacon');
+  await expect(traditional).toContainText('Pão + 2 carnes + 2 ovos + 2 bacon');
   for (const card of await page.locator('#linha-cheddar [data-card]').all()) {
     await expect(card).toContainText('pão Bimbo');
     await expect(card).toContainText('queijo cheddar');

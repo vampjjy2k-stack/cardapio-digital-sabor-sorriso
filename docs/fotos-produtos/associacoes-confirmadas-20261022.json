@@ -75,7 +75,7 @@
       ],
       "source_mode": "RGB",
       "item_ids": [
-        "porcoes-batata-maluca-p"
+        "porcoes-batata-maluca-g"
       ],
       "asset": "public/img/produtos/batata-maluca-p.webp",
       "derived_sha256": "29ffa8b1ec4d3aadc55ffdc1e3fb94be195776b7dfb23fc67553641b74e78dc3",
@@ -86,7 +86,8 @@
       "derived_mode": "RGB",
       "review_status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
       "limits": [
-        "Batata Maluca P; não reutilizar para outro tamanho ou receita."
+        "Janei corrigiu explicitamente em 23/10/2026: a foto antes aplicada na P é da Batata Maluca G (porção grande); a P não tem foto.",
+        "Nome histórico do asset preservado sem alteração de bytes; associação anterior à P substituída somente por esta confirmação."
       ],
       "decoded_rgb_pixels_preserved": true
     },
@@ -241,7 +242,7 @@
   ],
   "no_photo_items": [
     {
-      "item_id": "porcoes-batata-maluca-g",
+      "item_id": "porcoes-batata-maluca-p",
       "asset": null,
       "presentation": "imagem genérica",
       "label": "Foto de exemplo não disponível"

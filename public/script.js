@@ -76,7 +76,7 @@ const ITEM_PHOTOS = {
   'combos-combo-06': 'img/produtos/combo-06.webp',
   'hamburgueres-x-duplo': 'img/produtos/x-duplo.webp',
   'combos-combo-07': 'img/produtos/combo-07.webp',
-  'porcoes-batata-maluca-p': 'img/produtos/batata-maluca-p.webp',
+  'porcoes-batata-maluca-g': 'img/produtos/batata-maluca-p.webp',
   'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'img/produtos/batata-cheddar-bacon-g.webp',
   'hot-dogs-dogao-quente-salsicha': 'img/produtos/dogao-quente.webp',
   'hot-dogs-dogao-quente-linguica': 'img/produtos/dogao-quente.webp',
@@ -102,13 +102,13 @@ const MENU = [
   {
     id: 'hamburgueres', title: 'Hambúrgueres', icon: '🍔', img: 'cheeseburger',
     items: [
-      p('X Tudo', 16, 'Pão + carne + queijo + presunto + tomate + alface + maionese + ketchup'),
-      p('X Burguer', 11, 'Pão + carne + queijo + tomate + alface + maionese + ketchup'),
-      p('Hambúrguer', 10, 'Pão + carne + queijo + maionese + ketchup'),
-      p('X Bacon', 15, 'Pão + carne + queijo + bacon + tomate + alface + maionese + ketchup'),
-      p('X Calabresa', 14, 'Pão + carne + queijo + calabresa + tomate + alface + maionese + ketchup'),
-      p('X Salada', 14, 'Pão + carne + queijo + ovo + tomate + alface + maionese + ketchup'),
-      p('X Duplo', 26, 'Pão + 2 carnes + 2 queijos + presunto + tomate + alface + maionese + ketchup'),
+      p('X Tudo', 16, 'Pão + carne + queijo + presunto + ovo + bacon + calabresa + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha'),
+      p('X Burguer', 11, 'Pão + carne + queijo + presunto + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha'),
+      p('Hambúrguer', 10, 'Pão + carne + queijo + tomate + alface + molho + molho Billy Jack + maionese temperada + ketchup + batata palha'),
+      p('X Bacon', 15, 'Pão + carne + queijo + presunto + bacon + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha'),
+      p('X Calabresa', 14, 'Pão + carne + queijo + presunto + calabresa + cebola + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha'),
+      p('X Salada', 14, 'Pão + carne + queijo + presunto + tomate + alface + molho Billy Jack + maionese temperada + ketchup + batata palha'),
+      p('X Duplo', 26, 'Pão + 2 carnes + 2 ovos + 2 bacon + 2 calabresas + 2 queijos + 2 presuntos + tomate + alface + milho + ervilha + molho Billy Jack + maionese temperada + ketchup + batata palha'),
       p('Frango Fresh', 24, 'pão Bimbo + filé de peito de frango empanado (120 g) + alface + cheddar em fatia + cebola roxa crua + molho especial')
     ]
   },
@@ -173,8 +173,8 @@ const MENU = [
     id: 'porcoes', title: 'Porções', icon: '🍟',
     items: [
       p('Baguetão Mineiro', 24, 'Pão baguete + linguiça mineira gourmet + molho especial + geleia de pimenta + queijo mussarela + bacon + creme cheddar + salada', { icon: '🥖' }),
-      p('Batata Maluca P', 16, 'Porção de batata frita com molho especial', { icon: '🍟' }),
-      p('Batata Maluca G', 27, 'Porção grande de batata frita com molho especial', { icon: '🍟' }),
+      p('Batata Maluca P', 16, 'Batata + linguiça + calabresa + molhos + ketchup + queijo ralado', { icon: '🍟' }),
+      p('Batata Maluca G', 27, 'Porção grande de batata + linguiça + calabresa + molhos + ketchup + queijo ralado', { icon: '🍟' }),
       p('Batata Maluca P com Cheddar e Bacon', 18, 'Batata frita com creme cheddar e farofa de bacon', { icon: '🍟' }),
       p('Batata Maluca G com Cheddar e Bacon', 32, 'Porção grande de batata frita com creme cheddar e farofa de bacon', { icon: '🍟' })
     ]
@@ -240,7 +240,7 @@ const MENU = [
   }
 ];
 
-const FEATURED_IDS = ['combos-combo-06', 'combos-combo-08', 'combos-mini-01'];
+const FEATURED_IDS = ['combos-combo-01', 'combos-combo-02', 'combos-combo-03', 'combos-combo-04', 'combos-combo-05', 'combos-combo-06', 'combos-combo-07', 'combos-combo-08'];
 
 /* =========================================================
    UTILIDADES
@@ -515,7 +515,7 @@ function sectionHTML(section) {
 function featuredHTML(item, section) {
   return `
   <li class="feat-card" data-card>
-    <span class="badge">🔥 Popular</span>
+    <span class="badge">Combo</span>
     <div class="feat-card__media">${thumbHTML(item, section, 168)}</div>
     <div class="feat-card__body">
       <h3 class="card__name">${esc(item.name)}</h3>

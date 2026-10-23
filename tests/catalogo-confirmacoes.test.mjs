@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
+import { applyReviewedDescriptions } from './helpers/cardapio-original.mjs';
 
 const baseSHA = '46de50afe46bb268b7efe70498213096ff86d520';
 const root = new URL('../', import.meta.url);
@@ -22,6 +23,7 @@ test('delta preserva os itens originais exceto as 12 descrições autorizadas', 
     }
   }
   const original = menu(current).filter(s => s.id !== 'linha-picanha').map(s => ({ ...s, items: s.items.filter(i => i.name !== 'Frango Fresh') }));
+  applyReviewedDescriptions(expected);
   assert.deepEqual(original, expected);
 });
 

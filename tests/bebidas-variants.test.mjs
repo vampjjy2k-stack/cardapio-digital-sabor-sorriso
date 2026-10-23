@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import { createHash } from 'node:crypto';
+import { applyReviewedDescriptions, applyReviewedPhotos } from './helpers/cardapio-original.mjs';
 
 const script = fs.readFileSync(new URL('../public/script.js', import.meta.url), 'utf8');
 
@@ -194,6 +195,7 @@ test('preserva 66 registros e IDs com somente H2OH!, combos e descrições autor
   for (const item of base.find(section => section.id === 'linha-cheddar').items) {
     item.desc = item.desc.replace(/^pão bimbu/, 'pão Bimbo').replace(/\bcheddar\b/g, 'queijo cheddar');
   }
+  applyReviewedDescriptions(base);
   assert.deepEqual(current, base);
   const combinations = items.reduce((sum, item) => sum + (item.options?.length || 1), 0);
   assert.equal(combinations, 70);
@@ -225,6 +227,7 @@ test('todos os 13 combos usam preços novos em catálogo e carrinho, sem alterar
 test('pão Bimbo nos Cheddars e Frango Fresh confirmados, sem generalização aos demais', () => {
   const api = runtime();
   const base = JSON.parse(fs.readFileSync(new URL('./fixtures/menu-base-7336733.json', import.meta.url), 'utf8'));
+  applyReviewedDescriptions(base);
   const cheddar = api.MENU.find(section => section.id === 'linha-cheddar');
   assert.equal(cheddar.items.length, 5);
   for (const item of cheddar.items) {
@@ -261,12 +264,13 @@ test('mapa preserva fotos reais antigas, novas e placeholders rotulados sem asso
     'combos-combo-06': 'img/produtos/combo-06.webp',
     'hamburgueres-x-duplo': 'img/produtos/x-duplo.webp',
     'combos-combo-07': 'img/produtos/combo-07.webp',
-    'porcoes-batata-maluca-p': 'img/produtos/batata-maluca-p.webp',
+    'porcoes-batata-maluca-g': 'img/produtos/batata-maluca-p.webp',
     'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'img/produtos/batata-cheddar-bacon-g.webp',
     'hot-dogs-dogao-quente-salsicha': 'img/produtos/dogao-quente.webp',
     'hot-dogs-dogao-quente-linguica': 'img/produtos/dogao-quente.webp',
     'bebidas-h2o-600ml': 'img/h2oh-limao-500ml.webp',
   };
+  applyReviewedPhotos(expected);
   assert.deepEqual(plain(api.ITEM_PHOTOS), expected);
   assert.equal(Object.keys(api.ITEM_PHOTOS).length, 24);
   for (const [id, path] of Object.entries(expected)) {

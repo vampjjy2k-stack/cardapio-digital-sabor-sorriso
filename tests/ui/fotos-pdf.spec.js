@@ -10,7 +10,7 @@ const photos = {
   'combos-combo-04': 'combo-04.webp',
   'combos-combo-06': 'combo-06.webp',
   'combos-combo-07': 'combo-07.webp',
-  'porcoes-batata-maluca-p': 'batata-maluca-p.webp',
+  'porcoes-batata-maluca-g': 'batata-maluca-p.webp',
   'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'batata-cheddar-bacon-g.webp',
   'hot-dogs-dogao-quente-salsicha': 'dogao-quente.webp',
   'hot-dogs-dogao-quente-linguica': 'dogao-quente.webp',
@@ -18,10 +18,10 @@ const photos = {
 
 const names = {
   'artesanais-artesanal-02': 'Artesanal 02', 'artesanais-artesanal-04': 'Artesanal 04',
-  'linha-cheddar-x-cheddar-03': 'Cheddar 03', 'linha-cheddar-x-cheddar-05': 'Cheddar 05',
+  'linha-cheddar-x-cheddar-03': 'X Cheddar 03', 'linha-cheddar-x-cheddar-05': 'X Cheddar 05',
   'combos-combo-02': 'Combo 02', 'combos-combo-03': 'Combo 03', 'combos-combo-04': 'Combo 04', 'combos-combo-06': 'Combo 06',
   'hamburgueres-x-duplo': 'X Duplo', 'combos-combo-07': 'Combo 07',
-  'porcoes-batata-maluca-p': 'Batata Maluca P', 'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'Batata Maluca G com Cheddar e Bacon',
+  'porcoes-batata-maluca-g': 'Batata Maluca G', 'porcoes-batata-maluca-g-com-cheddar-e-bacon': 'Batata Maluca G com Cheddar e Bacon',
   'hot-dogs-dogao-quente-salsicha': 'Dogão Quente Salsicha', 'hot-dogs-dogao-quente-linguica': 'Dogão Quente Linguiça',
 };
 
@@ -30,7 +30,7 @@ test('catálogo renderiza fotos reais mapeadas e placeholder rotulado nos itens 
   await page.route('https://fonts.googleapis.com/**', route => route.fulfill({ contentType: 'text/css', body: '' }));
   await page.goto('/index.html');
   for (const [id, asset] of Object.entries(photos)) {
-    const card = page.locator('[data-card]').filter({ hasText: names[id] }).first();
+    const card = page.locator('[data-card]').filter({ has: page.getByRole('heading', { name: names[id], exact: true }) }).first();
     await expect(card).toHaveCount(1);
     await expect(card.locator('img')).toHaveAttribute('src', `img/produtos/${asset}`);
   }
