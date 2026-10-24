@@ -1319,9 +1319,54 @@ function closeCart() {
   document.body.classList.remove('no-scroll');
   els.cartToggle.setAttribute('aria-expanded', 'false');
   if (lastFocused && typeof lastFocused.focus === 'function' && !lastFocused.hidden) lastFocused.focus({ preventScroll: true });
+  reloadForAppUpdateIfSafe();
 }
 
 const isCartOpen = () => els.drawer.classList.contains('is-open');
+
+/* =========================================================
+   DETECÇÃO DE NOVA VERSÃO
+   ========================================================= */
+
+const APP_VERSION = window.SABOR_APP_VERSION || '';
+const APP_VERSION_PATTERN = /^[a-f0-9]{40}$/i;
+let appUpdateAvailable = false;
+let appVersionCheckInProgress = false;
+
+function reloadForAppUpdateIfSafe() {
+  if (!appUpdateAvailable || document.visibilityState === 'hidden' || isCartOpen() || $('#product-dialog').open) return;
+  window.location.reload();
+}
+
+async function checkForAppUpdate() {
+  if (!APP_VERSION_PATTERN.test(APP_VERSION) || appVersionCheckInProgress || document.visibilityState === 'hidden') return;
+  appVersionCheckInProgress = true;
+  try {
+    const response = await fetch(`/version.json?check=${Date.now()}`, {
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    });
+    if (!response.ok) return;
+    const { version } = await response.json();
+    if (!APP_VERSION_PATTERN.test(version || '') || version === APP_VERSION) return;
+    appUpdateAvailable = true;
+    reloadForAppUpdateIfSafe();
+  } catch (error) {
+    // Falha temporária não bloqueia o cardápio; a checagem periódica tenta novamente.
+  } finally {
+    appVersionCheckInProgress = false;
+  }
+}
+
+function startAppVersionChecks() {
+  if (!APP_VERSION_PATTERN.test(APP_VERSION)) return;
+  checkForAppUpdate();
+  window.setInterval(checkForAppUpdate, 60_000);
+  window.addEventListener('focus', checkForAppUpdate);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') checkForAppUpdate();
+  });
+}
 
 /* =========================================================
    WHATSAPP
@@ -1606,12 +1651,16 @@ document.addEventListener('change', event => {
 });
 
 $('#address-neighborhood').addEventListener('change', renderCart);
-['#address-street', '#address-number'].forEach(sel => {
+['#address-street', '#address-number', '#address-reference'].forEach(sel => {
   const el = document.querySelector(sel);
-  if (el) el.addEventListener('input', () => {
-    saveDeliveryData();
-    updateCheckoutState();
-  });
+  if (el) {
+    const saveAddress = () => {
+      saveDeliveryData();
+      updateCheckoutState();
+    };
+    el.addEventListener('input', saveAddress);
+    el.addEventListener('change', saveAddress);
+  }
 });
 
 els.cartToggle.addEventListener('click', openCart);
@@ -1672,6 +1721,7 @@ window.addEventListener('resize', debounce(measureClamps, 200));
 applyTheme(currentTheme(), false);
 renderMenu();
 initProductDialog();
+$('#product-dialog').addEventListener('close', reloadForAppUpdateIfSafe);
 $('#address-neighborhood').innerHTML = '<option value="" disabled selected>Selecione seu bairro</option>' + DELIVERY_FEES.map(entry =>
   `<option value="${esc(entry.neighborhood)}">${esc(entry.neighborhood)} — ${money(entry.fee)}</option>`).join('');
 neighborhoodPicker.init();
@@ -1680,6 +1730,7 @@ renderCart();
 initAdminShortcut();
 loadStoreStatus();
 startStatusPolling();
+startAppVersionChecks();
 chips = $$('.chip', els.navList);
 chipItems = chips.map(chip => chip.parentElement);
 sectionEls = $$('.menu-section', els.menu);

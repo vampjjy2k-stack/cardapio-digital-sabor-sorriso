@@ -12,3 +12,9 @@
 
 /admin.js
   Cache-Control: no-cache
+
+/build-info.js
+  Cache-Control: no-store
+
+/version.json
+  Cache-Control: no-store
