@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler pages dev public --kv SABOR_SORRISO_KV --do ADMIN_LOGIN_LIMITER=AdminLoginLimiter@sabor-sorriso-admin-login-limiter",
+    "build": "node scripts/write-build-version.mjs",
     "test": "node --test tests/*.test.mjs",
     "deploy": "wrangler pages deploy public --project-name sabor-sorriso",
     "test:ui": "playwright test",
