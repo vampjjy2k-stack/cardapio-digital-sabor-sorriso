@@ -34,8 +34,8 @@ test('catálogo renderiza fotos reais mapeadas e placeholder rotulado nos itens 
     await expect(card).toHaveCount(1);
     await expect(card.locator(`img[src="img/produtos/${asset}"]`)).toHaveCount(1);
     if (id === 'combos-combo-05') {
-      await expect(card.locator('img[src="img/ilustracoes/catalogo/combos-combo-05.webp"]')).toHaveCount(1);
-      await expect(card.locator('.photo-disclaimer')).toHaveText('Imagem ilustrativa');
+      await expect(card.locator('img[src^="img/ilustracoes/catalogo/"]')).toHaveCount(0);
+      await expect(card.locator('.photo-disclaimer')).toHaveCount(0);
     }
   }
   const duplo = page.locator('[data-card]').filter({ has: page.getByRole('heading', { name: 'X Duplo', exact: true }) });

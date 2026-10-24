@@ -2,22 +2,39 @@
   "parent": "9bb0cca5e3727f0426405956cd345b2fb3054a47",
   "status": "candidato_local_aguardando_revisao_cassandra_e_aprovacao_sha",
   "confirmation_source": "Atualização do dono, registrada em 23/10/2026.",
+  "candidate_base": "7f91c2bcc5dd03e56b607618d3e0d17d999d7f2a",
   "combo_04": {
     "description": "3 X-Tudo podrão + 1 Batata Maluca + ovos de codorna + 6 nuggets",
     "change": "substitui 6 anéis de cebola por 6 nuggets; preserva 3 X-Tudo podrão e 1 Batata Maluca",
     "price": 73,
     "price_changed": false,
-    "photo": null
+    "photo": null,
+    "illustration_asset": "public/img/ilustracoes/catalogo/combos-combo-04.webp",
+    "illustration_disclaimer": "Imagem ilustrativa",
+    "illustration_confirms_exact_recipe_or_portion": false,
+    "illustration_generation": {
+      "model": "gpt-image-2.5",
+      "quality": "medium",
+      "source_png": "/workspace/sabor-cardapio-combo04-05-candidato-evidencias-20261023/combos-combo-04-original.png",
+      "source_png_sha256": "436803947e23ba85972fd332a82d84bae22d253d4ab816154f7404489931812e",
+      "app_webp": "public/img/ilustracoes/catalogo/combos-combo-04.webp",
+      "app_webp_sha256": "6651f9e4131e31b248347848fe1a05535a80525c5c5a9c4aafc657d1acac423b",
+      "label_required": "Imagem ilustrativa",
+      "confirms_exact_recipe_or_portion": false
+    }
   },
   "combo_05": {
     "photo_asset": "public/img/produtos/combo-04.webp",
-    "illustration_asset": "public/img/ilustracoes/catalogo/combos-combo-05.webp",
     "real_photo_preserved": true,
-    "illustration_disclaimer": "Imagem ilustrativa"
+    "only_real_photo_visible": true,
+    "removed_illustration_asset_preserved_unbound": "public/img/ilustracoes/catalogo/combos-combo-05.webp",
+    "illustration_asset": null,
+    "illustration_removed_from_active_mapping": true
   },
   "constraints": [
     "Nenhum preço antigo inserido ou preço alterado.",
     "A foto real permanece somente no Combo 05.",
-    "Sem push, deploy ou publicação."
+    "Sem push, deploy ou publicação.",
+    "A ilustração histórica do Combo 05 permanece no repositório, sem vínculo ativo e sem exibição."
   ]
 }

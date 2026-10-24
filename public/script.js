@@ -109,7 +109,7 @@ const ILLUSTRATIVE_PHOTOS = {
     "artesanais-artesanal-05": "img/ilustracoes/catalogo/artesanais-artesanal-05.webp",
     "artesanais-artesanal-06": "img/ilustracoes/catalogo/artesanais-artesanal-06.webp",
     "combos-combo-01": "img/ilustracoes/catalogo/combos-combo-01.webp",
-    "combos-combo-05": "img/ilustracoes/catalogo/combos-combo-05.webp",
+    "combos-combo-04": "img/ilustracoes/catalogo/combos-combo-04.webp",
     "combos-combo-08": "img/ilustracoes/catalogo/combos-combo-08.webp",
     "combos-mini-01": "img/ilustracoes/catalogo/combos-mini-01.webp",
     "combos-dupla-perfeita-02": "img/ilustracoes/catalogo/combos-dupla-perfeita-02.webp",

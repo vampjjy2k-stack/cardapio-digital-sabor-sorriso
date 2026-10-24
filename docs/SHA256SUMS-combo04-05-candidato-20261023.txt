@@ -1,0 +1,3 @@
+# SHA256 de Combo 04 ativo e Combo 05 histórico preservado (não associado)
+6651f9e4131e31b248347848fe1a05535a80525c5c5a9c4aafc657d1acac423b  img/ilustracoes/catalogo/combos-combo-04.webp
+7e3442a61766bc88c95db515e135a8ae13e9476a84291abea449ed50de51e335  img/ilustracoes/catalogo/combos-combo-05.webp
