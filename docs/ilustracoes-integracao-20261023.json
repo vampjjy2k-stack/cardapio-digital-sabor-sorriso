@@ -896,8 +896,8 @@
   "exceptions_and_review_notes": [
     {
       "item_id": "combos-combo-05",
-      "issue": "O manifesto contém uma ilustração própria para Combo 05, cuja foto real foi confirmada para esse mesmo combo pela Janei no checkout revisado.",
-      "handling": "A foto real img/produtos/combo-04.webp permanece intacta e mapeada somente ao Combo 05; a ilustração exclusiva combos-combo-05.webp aparece ao lado, com selo visível Imagem ilustrativa. Combo 04 continua sem foto."
+      "issue": "O manifesto do pacote de origem inclui uma ilustração própria para Combo 05, mas neste candidato ela permanece como ativo histórico sem vínculo; a foto real confirmada é a única imagem exibida no Combo 05.",
+      "handling": "Combo 04 exibe a ilustração própria img/ilustracoes/catalogo/combos-combo-04.webp com o selo “Imagem ilustrativa”. Combo 05 exibe somente a foto real img/produtos/combo-04.webp; combos-combo-05.webp permanece preservada como ativo histórico, sem associação ou exibição."
     },
     {
       "item_id": "hamburgueres-x-duplo",
@@ -914,7 +914,7 @@
     "description": "3 X-Tudo podrão + 1 Batata Maluca + ovos de codorna + 6 nuggets",
     "price_before_and_after": 73,
     "price_changed": false,
-    "photo": "none; the real photo remains mapped only to Combo 05"
+    "photo": "img/ilustracoes/catalogo/combos-combo-04.webp: ilustração exibida com selo “Imagem ilustrativa”; Combo 04 não tem foto real associada. A foto real img/produtos/combo-04.webp permanece somente no Combo 05."
   },
   "constraints": [
     "Nenhum preço foi alterado.",
